@@ -1,42 +1,51 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using Assets.Scripts.Helpers;
 using UnityEngine;
 
+/// <summary>
+/// Author: Karol Kozuch
+/// 
+/// Default controller for the player.
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField]
+    private InputController _inputController;
     [SerializeField]
     private float _maxVelocity = 500f;
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-    /// <summary>
-    /// Rotates moving vector so that it's Z axis is always aiming where the player's looking.
-    /// </summary>
-    /// <param name="move"></param>
-    /// <returns></returns>
-    Vector3 RotateMoveVector(Vector3 move)
-    {
-        return -(transform.rotation * move);
+
     }
 
     Vector3 ReadAxes()
     {
-        float horizontalAxis = Input.GetAxisRaw("Horizontal");
-        float verticalAxis = Input.GetAxisRaw("Vertical");
+        if (Application.isEditor)
+        {
+            float horizontalAxis = Input.GetAxisRaw("Horizontal");
+            float verticalAxis = Input.GetAxisRaw("Vertical");
+            //Horizontal axis comes through the player's eyes and makes them move forwards or backwards
+            return new Vector3(horizontalAxis, 0, verticalAxis);
+        }
 
-        //Vertical axis comes through the player's eyes and makes them move forward or backwards
-        return new Vector3(horizontalAxis, 0, verticalAxis);
+        var inputAxes = _inputController.TouchPadAxis;
+        return new Vector3(inputAxes.x, 0, inputAxes.y);
     }
+
     void MovePlayer(Vector3 axes)
     {
         float timeDelta = Time.deltaTime;
-        Vector3 currentVelocity = axes * _maxVelocity;
+        Vector3 currentVelocity = axes;
+        currentVelocity *= _maxVelocity;
         currentVelocity *= timeDelta;
-        currentVelocity = RotateMoveVector(currentVelocity);
+
+        //The editor itself applies correction to movement accordingly to player rotation,
+        //but the deployed app does not. Apply it manually so the player will walk forward always
+        //in the direction they're looking.
+        if (Application.isEditor == false)
+        {
+            currentVelocity = VectorManipulator.RotateVector(transform.rotation, currentVelocity);
+        }
 
         gameObject.transform.Translate(currentVelocity);
     }
