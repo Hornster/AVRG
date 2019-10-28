@@ -8,8 +8,8 @@ using Assets.Scripts.Shared.Enums;
 
 namespace Assets.Scripts.Factories.EnemyFactory.Interface
 {
-    interface IEnemyFactory
+    interface IObstacleFactory
     {
-        IObstacle CreateObstacle(ObstacleTypeEnum type);
+        IObstacle CreateObstacle(ObstacleTypeEnum type, ObstacleIniData iniData);
     }
 }

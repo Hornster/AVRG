@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Shared.Enums
 {
-    enum ObstacleTypeEnum
+    public enum ObstacleTypeEnum
     {
         PhysicalBlock = 0,
         EnergyBlock = 1
