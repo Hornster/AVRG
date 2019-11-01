@@ -117,7 +117,7 @@ public class OVRSceneSampleController : MonoBehaviour
 			Cursor.lockState = CursorLockMode.Locked;
         }
 
-        // CameraController updates
+        // CameraToggler updates
         if (cameraController != null)
         {
             // Add a GridCube component to this object

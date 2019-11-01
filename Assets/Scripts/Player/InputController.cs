@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityScript.Steps;
 
 /// <summary>
 /// Author: Karol Kozuch
@@ -24,7 +25,11 @@ public class InputController : MonoBehaviour
     /// <summary>
     /// Used mainly when in editor.
     /// </summary>
-    private static UnityAction _onDefaultAxesChange = null;
+    private static UnityAction<Vector3> _onDefaultAxesChange = null;
+    /// <summary>
+    /// Used mainly when in editor. Called upon detection of mouse movement.
+    /// </summary>
+    private static UnityAction<Vector2> _onMouseAxesChange = null;
 
     #endregion Keyboard and Mouse
 
@@ -42,6 +47,10 @@ public class InputController : MonoBehaviour
     /// Stores values read from default, raw axes (that is, the horizontal and vertical). X = horizontal, z = vertical. Used in editor.
     /// </summary>
     public Vector3 DefaultAxesValues { get; private set; } = new Vector3();
+    /// <summary>
+    /// Stores values read from mouse axes.
+    /// </summary>
+    public Vector2 MouseAxesValues { get; private set; } = new Vector2();
 
     void Awake()
     {
@@ -51,7 +60,10 @@ public class InputController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (Application.isEditor)
+        {
+            InputAllowed = true;
+        }
     }
 
     // Update is called once per frame
@@ -62,9 +74,17 @@ public class InputController : MonoBehaviour
             return;
         }
 
-        CheckVRInput();
+        if (Application.isEditor)
+        {
+            CheckDefaultInput();
+            CheckMouseInput();
+        }
+        else
+        {
+            CheckVRInput();
 
-        ControllerDetected = CheckControllerPresence(ControllerDetected);
+            ControllerDetected = CheckControllerPresence(ControllerDetected);
+        }
     }
 
     void OnDestroy()
@@ -102,12 +122,29 @@ public class InputController : MonoBehaviour
     private void CheckDefaultInput()
     {
         DefaultAxesValues = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        if(DefaultAxesValues.x != 0.0f || DefaultAxesValues.y != 0.0f)
+        if(ChkIfNonZeroVector(new Vector2(DefaultAxesValues.x, DefaultAxesValues.y)))
         {
-            _onDefaultAxesChange?.Invoke();
+            _onDefaultAxesChange?.Invoke(DefaultAxesValues);
         }
     }
 
+    private void CheckMouseInput()
+    {
+        MouseAxesValues = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        if (ChkIfNonZeroVector(MouseAxesValues))
+        {
+            _onMouseAxesChange?.Invoke(MouseAxesValues);
+        }
+    }
+
+    private bool ChkIfNonZeroVector(Vector2 vector)
+    {
+        const float detectionThreshold = 0.00001f;
+        return vector.x > detectionThreshold 
+                || vector.x < -detectionThreshold
+                || vector.y > detectionThreshold 
+                || vector.y < -detectionThreshold;
+    }
     /// <summary>
     /// Checks whether has the presence of a controller changed.
     /// </summary>
@@ -155,9 +192,14 @@ public class InputController : MonoBehaviour
         _onTouchDown += action;
     }
 
-    public static void RegisterOnDefaultAxesChange(UnityAction action)
+    public static void RegisterOnDefaultAxesChange(UnityAction<Vector3> action)
     {
         _onDefaultAxesChange = action;
+    }
+
+    public static void RegisterOnMouseAxesChange(UnityAction<Vector2> action)
+    {
+        _onMouseAxesChange = action;
     }
     #endregion EventRegistering
     
