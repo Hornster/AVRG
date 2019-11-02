@@ -1,4 +1,7 @@
-﻿using Assets.Scripts.Helpers;
+﻿using System;
+using Assets.Scripts.Helpers;
+using Assets.Scripts.Player.Interface;
+using Assets.Scripts.Player.Weapons;
 using UnityEngine;
 
 /// <summary>
@@ -12,20 +15,24 @@ public class PlayerController : MonoBehaviour
     private InputController _inputController;
     [SerializeField]
     private float _maxVelocity = 500f;
+
+    private WeaponsManager _weaponsManager;
+    private IWeapon _currentWeapon;
     // Start is called before the first frame update
     void Start()
     {
-
+        _weaponsManager = GetComponentInChildren<WeaponsManager>();
+        if (_weaponsManager == null)
+        {
+            throw new Exception("Error: weapon manager not found in player.");
+        }
     }
 
     Vector3 ReadAxes()
     {
         if (Application.isEditor)
         {
-            float horizontalAxis = Input.GetAxisRaw("Horizontal");
-            float verticalAxis = Input.GetAxisRaw("Vertical");
-            //Horizontal axis comes through the player's eyes and makes them move forwards or backwards
-            return new Vector3(horizontalAxis, 0, verticalAxis);
+            return _inputController.DefaultAxesValues;
         }
 
         var inputAxes = _inputController.TouchPadAxis;

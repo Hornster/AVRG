@@ -30,6 +30,14 @@ public class InputController : MonoBehaviour
     /// Used mainly when in editor. Called upon detection of mouse movement.
     /// </summary>
     private static UnityAction<Vector2> _onMouseAxesChange = null;
+    /// <summary>
+    /// Used mainly when in editor. Called when the left mouse button has been pressed (once).
+    /// </summary>
+    private static UnityAction _onMouseLeftDown = null;
+    /// <summary>
+    /// Used mainly when in editor. Called when the left mouse button has been released.
+    /// </summary>
+    private static UnityAction _onMouseLeftUp = null;
 
     #endregion Keyboard and Mouse
 
@@ -194,12 +202,22 @@ public class InputController : MonoBehaviour
 
     public static void RegisterOnDefaultAxesChange(UnityAction<Vector3> action)
     {
-        _onDefaultAxesChange = action;
+        _onDefaultAxesChange += action;
     }
 
     public static void RegisterOnMouseAxesChange(UnityAction<Vector2> action)
     {
-        _onMouseAxesChange = action;
+        _onMouseAxesChange += action;
+    }
+
+    public static void RegisterOnMouseLeftDown(UnityAction action)
+    {
+        _onMouseLeftDown += action;
+    }
+
+    public static void RegisterOnMouseLeftUp(UnityAction action)
+    {
+        _onMouseLeftUp += action;
     }
     #endregion EventRegistering
     
