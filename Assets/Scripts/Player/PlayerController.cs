@@ -1,7 +1,11 @@
-﻿using System;
+﻿
+using System;
+using System.Collections.Generic;
+using Assets.Scripts.Data;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Player.Interface;
 using Assets.Scripts.Player.Weapons;
+using Assets.Scripts.Shared.Enums;
 using UnityEngine;
 
 /// <summary>
@@ -18,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     private WeaponsManager _weaponsManager;
     private IWeapon _currentWeapon;
+    public TeamEnum TeamEnum { get; private set; }
     // Start is called before the first frame update
     void Start()
     {
@@ -26,8 +31,20 @@ public class PlayerController : MonoBehaviour
         {
             throw new Exception("Error: weapon manager not found in player.");
         }
+        var playerWeapons = new List<WeaponData>();
+        playerWeapons.Add(new WeaponData()
+        {
+            GloveType = GloveType.Glove,
+            ProjectileType = ProjectileTypeEnum.Physical
+        });
+        _weaponsManager.CreateWeapons(playerWeapons);
+        _currentWeapon = _weaponsManager.GetCurrentWeapon();
+        InputController.RegisterOnMouseLeftDown(UsePrimaryWeapon);
     }
-
+    /// <summary>
+    /// Reads horizontal and vertical axes, depending on whether is the game in editor mode or not.
+    /// </summary>
+    /// <returns></returns>
     Vector3 ReadAxes()
     {
         if (Application.isEditor)
@@ -38,7 +55,10 @@ public class PlayerController : MonoBehaviour
         var inputAxes = _inputController.TouchPadAxis;
         return new Vector3(inputAxes.x, 0, inputAxes.y);
     }
-
+    /// <summary>
+    /// Performs player movement.
+    /// </summary>
+    /// <param name="axes">Axes along which the movement shall be performed. Must be normalized.</param>
     void MovePlayer(Vector3 axes)
     {
         float timeDelta = Time.deltaTime;
@@ -55,6 +75,21 @@ public class PlayerController : MonoBehaviour
         }
 
         gameObject.transform.Translate(currentVelocity);
+    }
+    /// <summary>
+    /// Calculates the direction vector, where the player is currently looking.
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 CalcDirectionVector()
+    {
+        return transform.rotation * Vector3.up;
+    }
+    /// <summary>
+    /// Uses primary weapon.
+    /// </summary>
+    private void UsePrimaryWeapon()
+    {
+        _currentWeapon.TryHookingObject(CalcDirectionVector(), TeamEnum);
     }
     // Update is called once per frame
     void Update()

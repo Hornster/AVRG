@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Enemies.Interface;
+﻿using Assets.Scripts.Enemies.Interface;
 using Assets.Scripts.Player.Interface;
 using Assets.Scripts.Shared.Enums;
 using UnityEngine;
 using HookingResultEnum = Assets.Scripts.Shared.Enums.HookingResultEnum;
 
-namespace Assets.Scripts.Player
+namespace Assets.Scripts.Player.Weapons
 {
     /// <summary>
     /// Author: Karol Kozuch
@@ -37,6 +32,7 @@ namespace Assets.Scripts.Player
         /// <param name="team">Team of the using player.</param>
         public HookingResultEnum TryHookingObject(Vector3 direction, TeamEnum team)
         {
+            Debug.DrawRay(gameObject.transform.position, direction*100, Color.red);
             if (Physics.Raycast(gameObject.transform.position, direction, out _raycastHit))
             {
                 HookedObstacle = _raycastHit.transform.gameObject.GetComponent<IObstacle>();

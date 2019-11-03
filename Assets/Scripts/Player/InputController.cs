@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 using UnityScript.Steps;
 
 /// <summary>
@@ -134,6 +135,16 @@ public class InputController : MonoBehaviour
         {
             _onDefaultAxesChange?.Invoke(DefaultAxesValues);
         }
+
+        if (Input.GetMouseButtonDown((int) MouseButton.LeftMouse))
+        {
+            _onMouseLeftDown?.Invoke();
+        }
+        else if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
+        {
+            _onMouseLeftUp?.Invoke();
+        }
+        
     }
 
     private void CheckMouseInput()

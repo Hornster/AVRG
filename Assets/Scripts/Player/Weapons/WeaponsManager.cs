@@ -25,6 +25,18 @@ namespace Assets.Scripts.Player.Weapons
         [SerializeField]
         private IWeaponsFactory _weaponsFactory;
 
+        void Start()
+        {
+            _weaponsFactory = gameObject.GetComponentInChildren<IWeaponsFactory>();
+            if (_weaponsFactory == null)
+            {
+                _weaponsFactory = gameObject.GetComponentInParent<IWeaponsFactory>();
+                if (_weaponsFactory == null)
+                {
+                    throw new Exception("Weapons factory not found!");
+                }
+            }
+        }
         /// <summary>
         /// Checks if the CurrentWeaponIndex has gone outside of _availableWeapons list.
         /// If yes - sets it (index) to 0.
@@ -66,6 +78,14 @@ namespace Assets.Scripts.Player.Weapons
             CurrentWeaponIndex++;
             ChkWeaponIndex();
 
+            return _availableWeapons[CurrentWeaponIndex];
+        }
+        /// <summary>
+        /// Gets current weapon available for the player.
+        /// </summary>
+        /// <returns></returns>
+        public IWeapon GetCurrentWeapon()
+        {
             return _availableWeapons[CurrentWeaponIndex];
         }
     }
