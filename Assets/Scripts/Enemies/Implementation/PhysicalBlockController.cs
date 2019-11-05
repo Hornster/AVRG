@@ -21,13 +21,13 @@ namespace Assets.Scripts.Enemies.Implementation
         [SerializeField]
         private Color _selectedColor;
         /// <summary>
+        /// Renderer of the object, stores the material.
+        /// </summary>
+        private Renderer _renderer;
+        /// <summary>
         /// Rigidbody component of the object.
         /// </summary>
         private Rigidbody _rigidBody;
-        /// <summary>
-        /// Material of the object.
-        /// </summary>
-        private Material _material;
         /// <summary>
         /// Type of glove the object will react to.
         /// </summary>
@@ -41,10 +41,10 @@ namespace Assets.Scripts.Enemies.Implementation
                 throw new Exception("Error - rigid body not found in physical block.");
             }
 
-            _material = GetComponent<Material>();
-            if (_material == null)
+            _renderer = GetComponent<Renderer>();
+            if (_renderer == null)
             {
-                throw new Exception("Error - material not found for this physical block.");
+                throw new Exception("Error - renderer (and material) not found for this physical block.");
             }
         }
 
@@ -78,14 +78,14 @@ namespace Assets.Scripts.Enemies.Implementation
         /// <param name="team">What team color should the highlight have?</param>
         public void SelectObject(TeamEnum team)
         {
-            _material.color = ColorHelper.GetHighlightColor(team);
+            _renderer.material.color = ColorHelper.GetHighlightColor(team);
         }
         /// <summary>
         /// Resets the color of the material, removing the highlight.
         /// </summary>
         public void DeselectObject()
         {
-            _material.color = Color.white;
+            _renderer.material.color = Color.white;
         }
         /// <summary>
         /// Checks if type of object is the same as type of the glove that tried to hook it.
@@ -95,6 +95,14 @@ namespace Assets.Scripts.Enemies.Implementation
         public bool ChkGloveType(ProjectileTypeEnum projectileType)
         {
             return projectileType == ObjectType;
+        }
+        /// <summary>
+        /// Retrieves position of the gameobject.
+        /// </summary>
+        /// <returns></returns>
+        public Vector3 GetPosition()
+        {
+            return gameObject.transform.position;
         }
     }
 }

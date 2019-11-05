@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
-using UnityScript.Steps;
 
 /// <summary>
 /// Author: Karol Kozuch
@@ -34,11 +30,15 @@ public class InputController : MonoBehaviour
     /// <summary>
     /// Used mainly when in editor. Called when the left mouse button has been pressed (once).
     /// </summary>
-    private static UnityAction _onMouseLeftDown = null;
+    private static UnityAction _onMouseLeftPressed = null;
     /// <summary>
     /// Used mainly when in editor. Called when the left mouse button has been released.
     /// </summary>
     private static UnityAction _onMouseLeftUp = null;
+    /// <summary>
+    /// Used mainly when in editor. Called when the left mouse button is constantly being pressed.
+    /// </summary>
+    private static UnityAction _onMouseLeftDown = null;
 
     #endregion Keyboard and Mouse
 
@@ -131,20 +131,23 @@ public class InputController : MonoBehaviour
     private void CheckDefaultInput()
     {
         DefaultAxesValues = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        if(ChkIfNonZeroVector(new Vector2(DefaultAxesValues.x, DefaultAxesValues.y)))
+        if (ChkIfNonZeroVector(new Vector2(DefaultAxesValues.x, DefaultAxesValues.y)))
         {
             _onDefaultAxesChange?.Invoke(DefaultAxesValues);
         }
 
-        if (Input.GetMouseButtonDown((int) MouseButton.LeftMouse))
+        if (Input.GetMouseButtonDown((int)MouseButton.LeftMouse))
         {
-            _onMouseLeftDown?.Invoke();
+            _onMouseLeftPressed?.Invoke();
         }
-        else if (Input.GetMouseButtonUp((int) MouseButton.LeftMouse))
+        else if (Input.GetMouseButtonUp((int)MouseButton.LeftMouse))
         {
             _onMouseLeftUp?.Invoke();
         }
-        
+        else if (Input.GetMouseButton((int)MouseButton.LeftMouse))
+        {
+            _onMouseLeftDown?.Invoke();
+        }
     }
 
     private void CheckMouseInput()
@@ -159,9 +162,9 @@ public class InputController : MonoBehaviour
     private bool ChkIfNonZeroVector(Vector2 vector)
     {
         const float detectionThreshold = 0.00001f;
-        return vector.x > detectionThreshold 
+        return vector.x > detectionThreshold
                 || vector.x < -detectionThreshold
-                || vector.y > detectionThreshold 
+                || vector.y > detectionThreshold
                 || vector.y < -detectionThreshold;
     }
     /// <summary>
@@ -171,7 +174,7 @@ public class InputController : MonoBehaviour
     /// <returns></returns>
     private bool CheckControllerPresence(bool currentControllerState)
     {
-        bool isControllerPresent = OVRInput.IsControllerConnected(OVRInput.Controller.Remote) 
+        bool isControllerPresent = OVRInput.IsControllerConnected(OVRInput.Controller.Remote)
                                    || OVRInput.IsControllerConnected(OVRInput.Controller.LTrackedRemote)
                                    || OVRInput.IsControllerConnected(OVRInput.Controller.RTrackedRemote);
 
@@ -215,12 +218,26 @@ public class InputController : MonoBehaviour
     {
         _onDefaultAxesChange += action;
     }
-
+    /// <summary>
+    /// Register handler - LMB was released last frame.
+    /// </summary>
+    /// <param name="action"></param>
     public static void RegisterOnMouseAxesChange(UnityAction<Vector2> action)
     {
         _onMouseAxesChange += action;
     }
-
+    /// <summary>
+    /// Register handler - LMB was pressed last frame (non-continuous).
+    /// </summary>
+    /// <param name="action"></param>
+    public static void RegisterOnMouseLeftPressed(UnityAction action)
+    {
+        _onMouseLeftPressed += action;
+    }
+    /// <summary>
+    /// Register handler - LMB is being constantly pressed down.
+    /// </summary>
+    /// <param name="action"></param>
     public static void RegisterOnMouseLeftDown(UnityAction action)
     {
         _onMouseLeftDown += action;
@@ -231,7 +248,7 @@ public class InputController : MonoBehaviour
         _onMouseLeftUp += action;
     }
     #endregion EventRegistering
-    
+
     /// <summary>
     /// Called when user puts on the headset.
     /// </summary>

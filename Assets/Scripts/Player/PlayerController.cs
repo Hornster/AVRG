@@ -39,7 +39,9 @@ public class PlayerController : MonoBehaviour
         });
         _weaponsManager.CreateWeapons(playerWeapons);
         _currentWeapon = _weaponsManager.GetCurrentWeapon();
+        //TODO change back to OnLMBPressed later, when will be working
         InputController.RegisterOnMouseLeftDown(UsePrimaryWeapon);
+        InputController.RegisterOnMouseLeftUp(StopUsingPrimaryWeapon);
     }
     /// <summary>
     /// Reads horizontal and vertical axes, depending on whether is the game in editor mode or not.
@@ -82,14 +84,21 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     private Vector3 CalcDirectionVector()
     {
-        return transform.rotation * Vector3.up;
+        return transform.rotation * Vector3.forward;
     }
     /// <summary>
     /// Uses primary weapon.
     /// </summary>
     private void UsePrimaryWeapon()
     {
-        _currentWeapon.TryHookingObject(CalcDirectionVector(), TeamEnum);
+        _currentWeapon.UseWeapon(CalcDirectionVector(), TeamEnum);
+    }
+    /// <summary>
+    /// User stopped using primary weapon.
+    /// </summary>
+    private void StopUsingPrimaryWeapon()
+    {
+        _currentWeapon.StopUsingWeapon();
     }
     // Update is called once per frame
     void Update()

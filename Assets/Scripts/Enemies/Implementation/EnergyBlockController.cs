@@ -98,5 +98,15 @@ namespace Assets.Scripts.Enemies.Implementation
         {
             return projectileType == ObjectType;
         }
+
+
+        /// <summary>
+        /// Retrieves position of the gameobject.
+        /// </summary>
+        /// <returns></returns>
+        public Vector3 GetPosition()
+        {
+            return gameObject.transform.position;
+        }
     }
 }

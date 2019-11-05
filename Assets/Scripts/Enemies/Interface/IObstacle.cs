@@ -39,5 +39,10 @@ namespace Assets.Scripts.Enemies.Interface
         /// <param name="projectileType">Type of hooking glove.</param>
         /// <returns>True if types match, false otherwise.</returns>
         bool ChkGloveType(ProjectileTypeEnum projectileType);
+        /// <summary>
+        /// Retrieves the position of the obstacle in global space.
+        /// </summary>
+        /// <returns></returns>
+        Vector3 GetPosition();
     }
 }

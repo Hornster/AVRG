@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Shared.Enums
 {
+    /// <summary>
+    /// Types of obstacles.
+    /// </summary>
     public enum ObstacleTypeEnum
     {
         PhysicalBlock = 0,

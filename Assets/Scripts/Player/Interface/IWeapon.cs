@@ -31,11 +31,11 @@ namespace Assets.Scripts.Player.Interface
         /// <param name="direction">Direction in global coords of the raycast.</param>
         /// <param name="team">Team of the using player.</param>
         /// <param name="gloveType">Type of glove that tries to hook the object.</param>
-        HookingResultEnum TryHookingObject(Vector3 direction, TeamEnum team);
+        HookingResultEnum UseWeapon(Vector3 direction, TeamEnum team);
 
         /// <summary>
         /// Called when the player stops holding the object.
         /// </summary>
-        void UnhookObject();
+        void StopUsingWeapon();
     }
 }
