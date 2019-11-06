@@ -103,16 +103,17 @@ namespace Assets.Scripts.Player.Weapons
         /// </summary>
         private void ApplyForceToObstacle()
         {
+            Vector3 currentDistance = HookedObstacle.GetPosition() - transform.position;
             var forceCalculator = ForceCalculator.GetInstance();
-            Vector3 glovePositionalForce = forceCalculator.GlovePositionalForce(transform.position,
-                HookedObstacle.GetPosition(), _hookingReferenceDistance, Strength);
-            Vector3 gloveRotationalForce = forceCalculator.GloveRotationalForce(Vector3.forward, transform.rotation, _hookingReferenceDistance, Strength);
-
+            Vector3 glovePositionalForce = forceCalculator.GlovePositionalForce(currentDistance, _hookingReferenceDistance, Strength);
+            Vector3 gloveRotationalForce = forceCalculator.GloveRotationalForce(currentDistance, Vector3.forward, transform.rotation, Strength);
+            Debug.DrawRay(HookedObstacle.GetPosition(), gloveRotationalForce, Color.red);
             Vector3 totalForce = glovePositionalForce + gloveRotationalForce;
+
             HookedObstacle.ApplyForce(totalForce);
-            Debug.Log("RefVector: " + _hookingReferenceDistance);
-            Debug.Log("PositionalForce " + glovePositionalForce);
-            Debug.Log("Rotational force " + gloveRotationalForce);
+            //Debug.Log("RefVector: " + _hookingReferenceDistance);
+            //Debug.Log("PositionalForce " + glovePositionalForce);
+            //Debug.Log("Rotational force " + gloveRotationalForce);
         }
         /// <summary>
         /// Casts a ray. If any objects are on the way - tries to hook the ray to one of these, starting
