@@ -41,9 +41,17 @@ namespace Assets.Scripts.Player.Helpers
         public Vector3 GlovePositionalForce(Vector3 distanceAfterMovement, Vector3 referenceDistance, float gloveStrength)
         {
             Vector3 movementForce = distanceAfterMovement - referenceDistance;
-            movementForce = -movementForce.normalized;
+            float movementForceValue = movementForce.magnitude;
+            movementForce = -movementForce;
 
-            return movementForce * gloveStrength;
+            if (movementForceValue >= gloveStrength)
+            {
+                movementForce = movementForce.normalized;
+                movementForce *= gloveStrength;
+                return movementForce;
+            }
+
+            return movementForce;
             //return Vector3.zero;
         }
 
@@ -60,31 +68,33 @@ namespace Assets.Scripts.Player.Helpers
         {
             Vector3 distanceAfterRotation = rotation * rotationReferenceVector * distanceAfterMovement.magnitude;
             Vector3 rotationForce = distanceAfterRotation - distanceAfterMovement;
-            rotationForce = rotationForce.normalized;
-            //Direction is correct
 
-            Debug.Log("referenceDistance: " + distanceAfterMovement);
-            Debug.Log("Dist after rotation: " + distanceAfterRotation);
-            Debug.Log("Rotation force: " + rotationForce);
+            if (rotationForce.magnitude >= gloveStrength)
+            {
+                rotationForce = rotationForce.normalized;
+                rotationForce *= gloveStrength;
+                return rotationForce;
+            }
 
-            return rotationForce * gloveStrength;
-            //return Vector3.zero;
+            return rotationForce;
         }
         /// <summary>
-        /// Calculates dampening force that can help with stopping orbiting object. Uses currentForceOnObject
+        /// Calculates dampening force that can help with stopping orbiting object.
         /// as reference.
         /// </summary>
         /// <param name="objectVelocity">Current object velocity.</param>
-        /// <param name="currentForceOnObject">Current force applied on object. Dampening vector will inherit its length (value).</param>
         /// <param name="dampeningFactor">Scales the dampening vector to given percent of the current force.</param>
         /// <returns></returns>
-        public Vector3 DampeningForce(Vector3 objectVelocity, Vector3 currentForceOnObject, float dampeningFactor)
+        public Vector3 DampeningForce(Vector3 objectVelocity, float dampeningFactor)
         {
-            Vector3 dampeningForce = -objectVelocity.normalized;
-            dampeningForce *= currentForceOnObject.magnitude;
-            dampeningForce *= dampeningFactor;
+            objectVelocity = -objectVelocity;
+            objectVelocity *= dampeningFactor;
+            return objectVelocity;
+            //Vector3 dampeningForce = -objectVelocity.normalized;
+            //dampeningForce *= dampeningFactor;
 
-            return dampeningForce;
+            //return dampeningForce;
+            //return Vector3.zero;
         }
 
         /// <summary>

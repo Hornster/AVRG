@@ -48,7 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lineRenderer: {fileID: 76167948124773939}
-  _strength: 1
+  _strength: 10
+  _dampeningFactor: 0.2
 --- !u!23 &-4098989565905180980
 MeshRenderer:
   m_ObjectHideFlags: 0

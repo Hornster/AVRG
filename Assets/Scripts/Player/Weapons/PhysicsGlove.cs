@@ -31,6 +31,10 @@ namespace Assets.Scripts.Player.Weapons
         [SerializeField]
         private float _strength;
         /// <summary>
+        /// Defines what part of velocity is used to generate resistance force.
+        /// </summary>
+        [SerializeField] private float _dampeningFactor;    //set to 0.25, will work this way with changes in calculator
+        /// <summary>
         /// Stores the most recent raycast hit.
         /// </summary>
         private RaycastHit _raycastHit;
@@ -107,9 +111,12 @@ namespace Assets.Scripts.Player.Weapons
             var forceCalculator = ForceCalculator.GetInstance();
             Vector3 glovePositionalForce = forceCalculator.GlovePositionalForce(currentDistance, _hookingReferenceDistance, Strength);
             Vector3 gloveRotationalForce = forceCalculator.GloveRotationalForce(currentDistance, Vector3.forward, transform.rotation, Strength);
-            Debug.DrawRay(HookedObstacle.GetPosition(), gloveRotationalForce, Color.red);
-            Vector3 totalForce = glovePositionalForce + gloveRotationalForce;
+            
 
+            Vector3 dampeningForce = forceCalculator.DampeningForce(HookedObstacle.GetVelocity(), _dampeningFactor);
+
+            Vector3 totalForce = glovePositionalForce + gloveRotationalForce;
+            totalForce += dampeningForce;
             HookedObstacle.ApplyForce(totalForce);
             //Debug.Log("RefVector: " + _hookingReferenceDistance);
             //Debug.Log("PositionalForce " + glovePositionalForce);

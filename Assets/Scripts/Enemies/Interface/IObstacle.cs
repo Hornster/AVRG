@@ -44,5 +44,10 @@ namespace Assets.Scripts.Enemies.Interface
         /// </summary>
         /// <returns></returns>
         Vector3 GetPosition();
+        /// <summary>
+        /// Returns current velocity of the object.
+        /// </summary>
+        /// <returns></returns>
+        Vector3 GetVelocity();
     }
 }

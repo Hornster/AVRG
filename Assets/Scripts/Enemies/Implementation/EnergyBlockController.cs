@@ -108,5 +108,15 @@ namespace Assets.Scripts.Enemies.Implementation
         {
             return gameObject.transform.position;
         }
+
+
+        /// <summary>
+        /// Returns the velocity of the block.
+        /// </summary>
+        /// <returns></returns>
+        public Vector3 GetVelocity()
+        {
+            return _rigidBody.velocity;
+        }
     }
 }
