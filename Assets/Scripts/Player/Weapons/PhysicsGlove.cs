@@ -2,6 +2,7 @@
 using Assets.Scripts.Player.Interface;
 using Assets.Scripts.Player.Weapons.Aesthetics;
 using Assets.Scripts.Shared.Enums;
+using Assets.Scripts.Player.Helpers;
 using UnityEngine;
 using HookingResultEnum = Assets.Scripts.Shared.Enums.HookingResultEnum;
 
@@ -20,14 +21,28 @@ namespace Assets.Scripts.Player.Weapons
         [SerializeField]
         private GloveLineRenderer _lineRenderer;
         /// <summary>
-        /// The currently hooked obstacle by this glove. If none is hooked - null.
+        /// Defines the value of force that this glove can apply to hooked obstacles.
         /// </summary>
-        public IObstacle HookedObstacle { get; private set; }
+        public float Strength { get{ return _strength; } }
+        /// <summary>
+        /// Stores the value of force that this glove can apply to hooked obstacles and allows for its modification
+        /// from the editor level.
+        /// </summary>
+        [SerializeField]
+        private float _strength;
         /// <summary>
         /// Stores the most recent raycast hit.
         /// </summary>
         private RaycastHit _raycastHit;
+        /// <summary>
+        /// Offset of the object towards the glove upon hooking it up.
+        /// </summary>
+        private Vector3 _hookingReferenceDistance;
 
+        /// <summary>
+        /// The currently hooked obstacle by this glove. If none is hooked - null.
+        /// </summary>
+        public IObstacle HookedObstacle { get; private set; }
         public ProjectileTypeEnum ProjectileType { get; } = ProjectileTypeEnum.Physical;
 
         /// <summary>
@@ -39,6 +54,11 @@ namespace Assets.Scripts.Player.Weapons
             {
                 _lineRenderer.DrawLine(transform.position, HookedObstacle.GetPosition());
             }
+        }
+
+        private void SaveReferenceVector()
+        {
+            _hookingReferenceDistance = HookedObstacle.GetPosition() - transform.position;
         }
         /// <summary>
         /// Prompts erasing of previously drawn line between connected object and glove.
@@ -70,12 +90,29 @@ namespace Assets.Scripts.Player.Weapons
                 }
 
                 HookedObstacle.SelectObject(team);
+                SaveReferenceVector();
                 DrawHookingLine();
 
                 return HookingResultEnum.ObjectHooked;
             }
 
             return HookingResultEnum.NoObjectFound;
+        }
+        /// <summary>
+        /// Applies force to the held obstacle, if necessary.
+        /// </summary>
+        private void ApplyForceToObstacle()
+        {
+            var forceCalculator = ForceCalculator.GetInstance();
+            Vector3 glovePositionalForce = forceCalculator.GlovePositionalForce(transform.position,
+                HookedObstacle.GetPosition(), _hookingReferenceDistance, Strength);
+            Vector3 gloveRotationalForce = forceCalculator.GloveRotationalForce(Vector3.forward, transform.rotation, _hookingReferenceDistance, Strength);
+
+            Vector3 totalForce = glovePositionalForce + gloveRotationalForce;
+            HookedObstacle.ApplyForce(totalForce);
+            Debug.Log("RefVector: " + _hookingReferenceDistance);
+            Debug.Log("PositionalForce " + glovePositionalForce);
+            Debug.Log("Rotational force " + gloveRotationalForce);
         }
         /// <summary>
         /// Casts a ray. If any objects are on the way - tries to hook the ray to one of these, starting
@@ -85,14 +122,13 @@ namespace Assets.Scripts.Player.Weapons
         /// <param name="team">Team of the using player.</param>
         public HookingResultEnum UseWeapon(Vector3 direction, TeamEnum team)
         {
-            Debug.DrawRay(gameObject.transform.position, direction * 100, Color.red);
-            Debug.Log("Raycast direction: " + direction);
             if (HookedObstacle == null)
             {
                 return TryHookingObject(direction, team);
             }
             else
             {
+                ApplyForceToObstacle();
                 DrawHookingLine();
 
                 return HookingResultEnum.ObjectHooked;

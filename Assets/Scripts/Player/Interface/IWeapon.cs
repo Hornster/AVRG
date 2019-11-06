@@ -16,6 +16,10 @@ namespace Assets.Scripts.Player.Interface
     public interface IWeapon
     {
         /// <summary>
+        /// Defines the strength of the weapon (ex. dealt damage per shot).
+        /// </summary>
+        float Strength { get; }
+        /// <summary>
         /// The currently hooked obstacle by this glove. If none is hooked - null.
         /// </summary>
         IObstacle HookedObstacle { get; }
