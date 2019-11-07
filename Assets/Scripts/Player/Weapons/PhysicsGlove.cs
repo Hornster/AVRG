@@ -1,8 +1,10 @@
-﻿using Assets.Scripts.Enemies.Interface;
+﻿using Assets.Scripts.Data;
+using Assets.Scripts.Enemies.Interface;
 using Assets.Scripts.Player.Interface;
 using Assets.Scripts.Player.Weapons.Aesthetics;
 using Assets.Scripts.Shared.Enums;
 using Assets.Scripts.Player.Helpers;
+using Assets.Scripts.Shared.Helpers;
 using UnityEngine;
 using HookingResultEnum = Assets.Scripts.Shared.Enums.HookingResultEnum;
 
@@ -56,7 +58,9 @@ namespace Assets.Scripts.Player.Weapons
         {
             if (HookedObstacle != null)
             {
-                _lineRenderer.DrawLine(transform.position, HookedObstacle.GetPosition());
+                Vector3 secondControlPoint = VectorManipulator.CreateVectorFromRotation(PlayerConstants.PlayerRotationRefVector, transform.rotation, _strength);
+                secondControlPoint += transform.position;
+                _lineRenderer.DrawBezierSquared(transform.position, secondControlPoint, HookedObstacle.GetPosition());
             }
         }
 
@@ -110,17 +114,13 @@ namespace Assets.Scripts.Player.Weapons
             Vector3 currentDistance = HookedObstacle.GetPosition() - transform.position;
             var forceCalculator = ForceCalculator.GetInstance();
             Vector3 glovePositionalForce = forceCalculator.GlovePositionalForce(currentDistance, _hookingReferenceDistance, Strength);
-            Vector3 gloveRotationalForce = forceCalculator.GloveRotationalForce(currentDistance, Vector3.forward, transform.rotation, Strength);
+            Vector3 gloveRotationalForce = forceCalculator.GloveRotationalForce(currentDistance, PlayerConstants.PlayerRotationRefVector, transform.rotation, Strength);
             
-
             Vector3 dampeningForce = forceCalculator.DampeningForce(HookedObstacle.GetVelocity(), _dampeningFactor);
 
             Vector3 totalForce = glovePositionalForce + gloveRotationalForce;
             totalForce += dampeningForce;
             HookedObstacle.ApplyForce(totalForce);
-            //Debug.Log("RefVector: " + _hookingReferenceDistance);
-            //Debug.Log("PositionalForce " + glovePositionalForce);
-            //Debug.Log("Rotational force " + gloveRotationalForce);
         }
         /// <summary>
         /// Casts a ray. If any objects are on the way - tries to hook the ray to one of these, starting

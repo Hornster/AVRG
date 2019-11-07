@@ -209,5 +209,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lineRenderer: {fileID: 8095572551043180561}
   _lineColor: {r: 1, g: 0, b: 0, a: 0}
-  _width: 0.5
-  _verticesCount: 2
+  _width: 0.2
+  VerticesCount: 10

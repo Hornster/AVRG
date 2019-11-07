@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     private Vector3 CalcDirectionVector()
     {
-        return transform.rotation * Vector3.forward;
+        return transform.rotation * PlayerConstants.PlayerRotationRefVector;
     }
     /// <summary>
     /// Uses primary weapon.

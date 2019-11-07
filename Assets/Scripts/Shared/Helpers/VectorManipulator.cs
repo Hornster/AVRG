@@ -19,5 +19,16 @@ namespace Assets.Scripts.Shared.Helpers
         {
             return rotation * vector;
         }
+        /// <summary>
+        /// Rotates a vector by provided rotation and sets it to provided length.
+        /// </summary>
+        /// <param name="normalizedRotationReference">Rotation reference vector. Must be NORMALIZED.</param>
+        /// <param name="rotation">Rotation applied to reference vector.</param>
+        /// <param name="length">Length of the resulting vector.</param>
+        /// <returns></returns>
+        public static Vector3 CreateVectorFromRotation(Vector3 normalizedRotationReference, Quaternion rotation, float length)
+        {
+            return RotateVector(rotation, normalizedRotationReference) * length;
+        }
     }
 }
