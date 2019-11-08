@@ -23,5 +23,13 @@ namespace Assets.Scripts.Factories
         /// Transform component of the parent. Can be null.
         /// </summary>
         public Transform ParentTransform { get; set; }
+
+        public ObstacleIniData()
+        {
+            Position = Vector3.zero;
+            Rotation = Quaternion.identity;
+            Scale = Vector3.one;
+            ParentTransform = null;
+        }
     }
 }

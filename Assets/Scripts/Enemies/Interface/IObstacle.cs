@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Factories;
+using Assets.Scripts.Maps.Interfaces;
 using Assets.Scripts.Shared.Enums;
 using UnityEngine;
 
@@ -12,7 +14,7 @@ namespace Assets.Scripts.Enemies.Interface
     /// Interface defining simple enemies, usually blocks or gates, that do not
     /// try to attack player on purpose and have no attacking AI.
     /// </summary>
-    public interface IObstacle
+    public interface IObstacle : IPoolable
     {
         /// <summary>
         /// Applies force to object.

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Enemies.Interface;
+using Assets.Scripts.Factories;
 using Assets.Scripts.Shared.Enums;
 using Assets.Scripts.Shared.Helpers;
 using UnityEngine;
@@ -111,6 +112,34 @@ namespace Assets.Scripts.Enemies.Implementation
         public Vector3 GetVelocity()
         {
             return _rigidBody.velocity;
+        }
+        /// <summary>
+        /// Applies new data to obstacle.
+        /// </summary>
+        /// <param name="newData">Data to be applied to obstacle.</param>
+        public void Mutate(ObstacleIniData newData)
+        {
+            gameObject.transform.position = newData.Position;
+            gameObject.transform.localScale = newData.Scale;
+            gameObject.transform.rotation = newData.Rotation;
+            if (newData.ParentTransform != null)
+            {
+                gameObject.transform.SetParent(newData.ParentTransform);
+            }
+        }
+        /// <summary>
+        /// Enables the gameobject of the obstacle.
+        /// </summary>
+        public void Enable()
+        {
+            gameObject.SetActive(true);
+        }
+        /// <summary>
+        /// Disables the gameobject of the obstacle.
+        /// </summary>
+        public void Disable()
+        {
+            gameObject.SetActive(false);
         }
     }
 }
