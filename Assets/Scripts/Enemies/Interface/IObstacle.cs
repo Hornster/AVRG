@@ -14,7 +14,7 @@ namespace Assets.Scripts.Enemies.Interface
     /// Interface defining simple enemies, usually blocks or gates, that do not
     /// try to attack player on purpose and have no attacking AI.
     /// </summary>
-    public interface IObstacle : IPoolable
+    public interface IObstacle : IPoolableObstacle
     {
         /// <summary>
         /// Applies force to object.

@@ -3,7 +3,7 @@ using Assets.Scripts.Shared.Enums;
 
 namespace Assets.Scripts.Factories.Interface
 {
-    interface IObstacleFactory
+    public interface IObstacleFactory
     {
         IObstacle CreateObstacle(ObstacleTypeEnum type, ObstacleIniData iniData);
     }

@@ -7,9 +7,13 @@ using Assets.Scripts.Factories;
 
 namespace Assets.Scripts.Maps.Interfaces
 {
-    public interface IPoolable
+    /// <summary>
+    /// Author: Karol Kozuch
+    ///
+    /// Interface for objects that can be used within a pool.
+    /// </summary>
+    public interface IPoolableObstacle
     {
-
         /// <summary>
         /// Applies new data to obstacle.
         /// </summary>
