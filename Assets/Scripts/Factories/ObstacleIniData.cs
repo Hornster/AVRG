@@ -23,13 +23,21 @@ namespace Assets.Scripts.Factories
         /// Transform component of the parent. Can be null.
         /// </summary>
         public Transform ParentTransform { get; set; }
-
+        /// <summary>
+        /// Mass of the obstacle.
+        /// </summary>
+        public float Mass { get; set; }
+        /// <summary>
+        /// Initializes the data with default values.
+        /// </summary>
         public ObstacleIniData()
         {
             Position = Vector3.zero;
             Rotation = Quaternion.identity;
             Scale = Vector3.one;
             ParentTransform = null;
+            Mass = 1.0f;
         }
+
     }
 }

@@ -21,6 +21,10 @@ namespace Assets.Scripts.Enemies.Implementation
         [SerializeField]
         private Color _selectedColor;
         /// <summary>
+        /// Renderer of the object, stores the material.
+        /// </summary>
+        private Renderer _renderer;
+        /// <summary>
         /// Rigidbody component of the object.
         /// </summary>
         private Rigidbody _rigidBody;
@@ -43,10 +47,10 @@ namespace Assets.Scripts.Enemies.Implementation
                 throw new Exception("Error - rigid body not found in energy block.");
             }
 
-            _material = GetComponent<Material>();
-            if (_material == null)
+            _renderer = GetComponent<Renderer>();
+            if (_renderer == null)
             {
-                throw new Exception("Error - material not found for this energy block.");
+                throw new Exception("Error - renderer (and material) not found for this energy block.");
             }
         }
 
@@ -80,14 +84,14 @@ namespace Assets.Scripts.Enemies.Implementation
         /// <param name="team">What team color should the highlight have?</param>
         public void SelectObject(TeamEnum team)
         {
-            _material.color = ColorHelper.GetHighlightColor(team);
+            _renderer.material.color = ColorHelper.GetHighlightColor(team);
         }
         /// <summary>
         /// Resets the color of the material, removing the highlight.
         /// </summary>
         public void DeselectObject()
         {
-            _material.color = Color.white;
+            _renderer.material.color = Color.white;
         }
 
         /// <summary>
@@ -129,6 +133,7 @@ namespace Assets.Scripts.Enemies.Implementation
             gameObject.transform.position = newData.Position;
             gameObject.transform.localScale = newData.Scale;
             gameObject.transform.rotation = newData.Rotation;
+            _rigidBody.mass = newData.Mass;
             if (newData.ParentTransform != null)
             {
                 gameObject.transform.SetParent(newData.ParentTransform);

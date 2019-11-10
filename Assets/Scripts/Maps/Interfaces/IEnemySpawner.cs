@@ -19,9 +19,6 @@ namespace Assets.Scripts.Maps.Interfaces
         /// Defines amount of time, in seconds, between each spawn. Counts for all pools and all types of obstacles.
         /// </summary>
         float SpawnCooldown { get; set; }
-        /// <summary>
-        /// Called when all parameters are set. Begins process of initializing the object pools of the spawner.
-        /// </summary>
-        void Initialize(int maxObstaclesPerPool = SpawnerConstants.MaxPoolObstacles, int startingObstaclesPerPool = SpawnerConstants.StartingPoolObstacles);
+          
     }
 }

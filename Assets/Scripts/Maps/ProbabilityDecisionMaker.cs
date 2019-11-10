@@ -18,17 +18,37 @@ namespace Assets.Scripts.Maps
         /// Stores ranges of probabilities for all obstacles (min, max).
         /// </summary>
         private static Dictionary<ObstacleTypeEnum, Tuple<float, float>> _obstacleTypeSpawnChance = new Dictionary<ObstacleTypeEnum, Tuple<float, float>>();
-
-        public static ProbabilityDecisionMaker GetInstance()
-        {
-            return _instance ?? (_instance = new ProbabilityDecisionMaker());
-        }
-
-
+       
         /// <summary>
         /// Random generator used for decision what object shall be spawned.
         /// </summary>
         private Random _randomGenerator = new Random();
+
+        private ObstacleTypeEnum[] obstacleTypes;
+
+        /// <summary>
+        /// Initializes spawn chances with default values.
+        /// </summary>
+        private ProbabilityDecisionMaker()
+        {
+            var defaultSpawnChances = new Dictionary<ObstacleTypeEnum, float>();
+            obstacleTypes = (ObstacleTypeEnum[])Enum.GetValues(typeof(ObstacleTypeEnum));
+            float equalChanceOfSpawning = 1.0f / obstacleTypes.Length;
+            foreach (var obstacleType in obstacleTypes)
+            {
+                defaultSpawnChances.Add(obstacleType, equalChanceOfSpawning);
+            }
+
+            SetObstacleSpawnProbabilities(defaultSpawnChances);
+        }
+        /// <summary>
+        /// Retrieves the instance of this singleton.
+        /// </summary>
+        /// <returns></returns>
+        public static ProbabilityDecisionMaker GetInstance()
+        {
+            return _instance ?? (_instance = new ProbabilityDecisionMaker());
+        }
 
         public ObstacleTypeEnum SpawnWhatObstacle()
         {
@@ -52,7 +72,6 @@ namespace Assets.Scripts.Maps
         /// <param name="spawnProbabilities">Key: Type of obstacle, Value: probability of spawning [0:1]. Sum should be lower or equal to 1.</param>
         public void SetObstacleSpawnProbabilities(Dictionary<ObstacleTypeEnum, float> spawnProbabilities)
         {
-            var obstacleTypes = (ObstacleTypeEnum[])Enum.GetValues(typeof(ObstacleTypeEnum));
             ObstacleTypeEnum lastModifiedObstacle = ObstacleTypeEnum.EnergyBlock;
             float overallProbability = 0.0f;
             float lowerBorderProbability = 0.0f;

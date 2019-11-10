@@ -30,7 +30,7 @@ namespace Assets.Scripts.Maps
         /// <summary>
         /// Amount of obstacles created at the beginning.
         /// </summary>
-        public int _beginningObstacles { get; }
+        public int BeginningObstacles { get; }
         
         /// <summary>
         /// Defines what group of obstacles will be stored in the pool.
@@ -64,17 +64,17 @@ namespace Assets.Scripts.Maps
         public ObstaclesPool(ObstacleTypeEnum obstacleTypeEnum, IObstacleFactory obstacleFactory, int maxObstacles,
             int startingObstaclesAmount)
         {
-            if (MaxObstacles < startingObstaclesAmount)
+            if (maxObstacles < startingObstaclesAmount)
             {
-                startingObstaclesAmount = MaxObstacles;
+                startingObstaclesAmount = maxObstacles;
             }
 
             StoredObstaclesType = obstacleTypeEnum;
             _obstacleFactory = obstacleFactory;
             MaxObstacles = maxObstacles;
-            _beginningObstacles = startingObstaclesAmount;
+            BeginningObstacles = startingObstaclesAmount;
 
-            int beginningObstaclesCount = MaxObstacles > _beginningObstacles ? _beginningObstacles : MaxObstacles;
+            int beginningObstaclesCount = MaxObstacles > BeginningObstacles ? BeginningObstacles : MaxObstacles;
             var obstacleData = new ObstacleIniData();
             for (int i = 0; i < beginningObstaclesCount; i++)
             {
@@ -137,3 +137,4 @@ namespace Assets.Scripts.Maps
         }
     }
 }
+//TODO: Add callback to IPoolables so they can deactivate themselves when necessary.

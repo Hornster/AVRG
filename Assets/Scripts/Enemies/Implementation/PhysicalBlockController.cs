@@ -122,6 +122,7 @@ namespace Assets.Scripts.Enemies.Implementation
             gameObject.transform.position = newData.Position;
             gameObject.transform.localScale = newData.Scale;
             gameObject.transform.rotation = newData.Rotation;
+            _rigidBody.mass = newData.Mass;
             if (newData.ParentTransform != null)
             {
                 gameObject.transform.SetParent(newData.ParentTransform);

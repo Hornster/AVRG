@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts.Data;
 using Assets.Scripts.Factories.Interface;
 using Assets.Scripts.Maps.Interfaces;
@@ -12,45 +13,66 @@ namespace Assets.Scripts.Maps
     ///
     /// Enemy spawner that uses a rectangular surface.
     /// </summary>
+    [RequireComponent(typeof(ObstacleDataRandomizer))]
     public class EnemySpawnerRectangular : MonoBehaviour, IEnemySpawner
     {
-
+        /// <summary>
+        /// Factory that will be used to generate objects.
+        /// </summary>
+        private IObstacleFactory _obstacleFactory;
         /// <summary>
         /// Defines amount of time, in seconds, between each spawn. Counts for all pools and all types of obstacles.
         /// By default set to 2 seconds.
         /// </summary>
         public float SpawnCooldown { get; set; } = 2;
-        
+        [SerializeField]
+        private int _maxObstaclesPerPool = SpawnerConstants.MaxPoolObstacles;
+        [SerializeField]
+        private int _startingObstaclesPerPool = SpawnerConstants.StartingPoolObstacles;
+
         /// <summary>
-        /// Factory that will be used to generate objects.
+        /// Stores all available enemy pools.
         /// </summary>
         [SerializeField]
-        private IObstacleFactory _obstacleFactory;
+        private readonly Dictionary<ObstacleTypeEnum, ObstaclesPool> _enemiesPools = new Dictionary<ObstacleTypeEnum, ObstaclesPool>();
+
+        [SerializeField] private ObstacleDataRandomizer _obstacleDataRandomizer;
         /// <summary>
         /// Stores the time that lasted from the most recent obstacle spawn.
         /// </summary>
         private float _currentCooldown = 0.0f;
 
         /// <summary>
-        /// Stores all available enemy pools.
+        /// Spawns randomly selected obstacle.
         /// </summary>
-        [SerializeField]
-        private Dictionary<ObstacleTypeEnum, ObstaclesPool> _enemiesPools = new Dictionary<ObstacleTypeEnum, ObstaclesPool>();
-
-
         private void SpawnObstacle()
         {
-            //TODO ProbabilityDecisionMaker has been recently created.
+            var decisionMaker = ProbabilityDecisionMaker.GetInstance();
+            var obstacleToSpawn = decisionMaker.SpawnWhatObstacle();
+            ObstaclesPool poolToUse;
+            if (_enemiesPools.TryGetValue(obstacleToSpawn, out poolToUse) == false)
+            {
+                throw new Exception($"Tried to spawn obstacle from non-existent pool: {obstacleToSpawn}!");
+            }
+
+            poolToUse.SpawnObstacle(_obstacleDataRandomizer.GetRandomizedObstacleData(obstacleToSpawn));
         }
         /// <summary>
         /// Shall be called when the parameters are set. Creates all pools for the spawner.
         /// </summary>
-        public void Initialize(int maxObstaclesPerPool = SpawnerConstants.MaxPoolObstacles, int startingObstaclesPerPool = SpawnerConstants.StartingPoolObstacles)
+        void Start()
         {
-            var newPool = new ObstaclesPool(ObstacleTypeEnum.EnergyBlock, _obstacleFactory, maxObstaclesPerPool, startingObstaclesPerPool);
+            _obstacleFactory = gameObject.GetComponent<IObstacleFactory>();
+
+            if (_obstacleFactory == null)
+            {
+                throw new Exception("Error: Obstacle factory not found! You must provide a script that inherits after IObstacleFactory!");
+            }
+
+            var newPool = new ObstaclesPool(ObstacleTypeEnum.EnergyBlock, _obstacleFactory, _maxObstaclesPerPool, _startingObstaclesPerPool);
             _enemiesPools.Add(ObstacleTypeEnum.EnergyBlock, newPool);
-            newPool = new ObstaclesPool(ObstacleTypeEnum.PhysicalBlock, _obstacleFactory, maxObstaclesPerPool, startingObstaclesPerPool);
-            _enemiesPools.Add(ObstacleTypeEnum.EnergyBlock, newPool);
+            newPool = new ObstaclesPool(ObstacleTypeEnum.PhysicalBlock, _obstacleFactory, _maxObstaclesPerPool, _startingObstaclesPerPool);
+            _enemiesPools.Add(ObstacleTypeEnum.PhysicalBlock, newPool);
         }
         
         
@@ -59,7 +81,8 @@ namespace Assets.Scripts.Maps
             _currentCooldown += Time.deltaTime;
             if (_currentCooldown >= SpawnCooldown)
             {
-
+                SpawnObstacle();
+                _currentCooldown = 0.0f;
             }
         }
     }

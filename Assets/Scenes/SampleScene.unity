@@ -537,7 +537,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 520ae006c2740634ab6959e59d2576b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _physicalObstaclePrefab: {fileID: 0}
+  _physicalObstaclePrefab: {fileID: 2441844657362548417, guid: 573963018cb2952499bdd449d021d36d,
+    type: 3}
   _energyObstaclePrefab: {fileID: 0}
 --- !u!4 &1177200118
 Transform:
