@@ -144,3 +144,9 @@ namespace Assets.Scripts.Enemies.Implementation
         }
     }
 }
+//TODO:
+// - remove collider from spawner, rigidbody too if any present.
+// - rotate the offset vector by spawner rotation.
+// - add constant force to the obstacles that increases with overall  playtime. Caps at some point, of course.
+// - change the player - they shall move basing on force, too.
+// - Implement the match manager.
