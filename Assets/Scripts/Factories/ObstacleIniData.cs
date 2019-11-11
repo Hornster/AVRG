@@ -28,6 +28,10 @@ namespace Assets.Scripts.Factories
         /// </summary>
         public float Mass { get; set; }
         /// <summary>
+        /// Constant force that will be applied to the obstacle.
+        /// </summary>
+        public Vector3 ConstantForce { get; set; }
+        /// <summary>
         /// Initializes the data with default values.
         /// </summary>
         public ObstacleIniData()
@@ -37,6 +41,7 @@ namespace Assets.Scripts.Factories
             Scale = Vector3.one;
             ParentTransform = null;
             Mass = 1.0f;
+            ConstantForce = Vector3.zero;
         }
 
     }

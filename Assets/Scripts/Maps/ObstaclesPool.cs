@@ -66,7 +66,10 @@ namespace Assets.Scripts.Maps
 
             _lastAssignedIndex++;
         }
-
+        /// <summary>
+        /// Adds new obstacle to the pool.
+        /// </summary>
+        /// <param name="obstacleData">Data defining the obstacle.</param>
         private void AddNewObstacle(ObstacleIniData obstacleData)
         {
             var newObstacle = _obstacleFactory.CreateObstacle(StoredObstaclesType, obstacleData);
@@ -104,11 +107,12 @@ namespace Assets.Scripts.Maps
                 //_obstacles.Add(newObstacle);
             }
         }
-        
+
         /// <summary>
         /// Spawns obstacle using provided obstacle data, if possible.
         /// </summary>
-        /// <param name="obstacleData"></param>
+        /// <param name="obstacleData">Data concerning the obstacle.</param>
+        /// <param name="constantForce">Constant force that will push the object onwards.</param>
         public void SpawnObstacle(ObstacleIniData obstacleData)
         {
             //If there are no free obstacles left - create new one and use it immediately. If possible, of course.
@@ -125,7 +129,7 @@ namespace Assets.Scripts.Maps
 
             }
             //Otherwise mutate first object in the free list and use it.
-            if (_obstacles.Count > 0)
+            else
             {
                 var obstacleToActivate = _obstacles[0];
                 obstacleToActivate.Mutate(obstacleData);

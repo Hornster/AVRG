@@ -68,6 +68,8 @@ namespace Assets.Scripts.Enemies.Implementation
             {
                 throw new Exception("Error - renderer (and material) not found for this energy block.");
             }
+
+            Deactivate();
         }
 
 
@@ -162,6 +164,7 @@ namespace Assets.Scripts.Enemies.Implementation
             gameObject.transform.localScale = newData.Scale;
             gameObject.transform.rotation = newData.Rotation;
             _rigidBody.mass = newData.Mass;
+            _rigidBody.AddForce(newData.ConstantForce);
             if (newData.ParentTransform != null)
             {
                 gameObject.transform.SetParent(newData.ParentTransform);
@@ -180,6 +183,8 @@ namespace Assets.Scripts.Enemies.Implementation
         /// </summary>
         public void Deactivate()
         {
+            _rigidBody.velocity = Vector3.zero;
+            _rigidBody.angularVelocity = Vector3.zero;
             gameObject.SetActive(false);
         }
     }

@@ -25,6 +25,11 @@ namespace Assets.Scripts.Maps
         /// By default set to 2 seconds.
         /// </summary>
         public float SpawnCooldown { get; set; } = 2;
+        /// <summary>
+        /// A constant force applied to each enemy. Makes them move in given direction.
+        /// </summary>
+        public Vector3 EnemiesConstantForce { get; set; }
+
         [SerializeField]
         private int _maxObstaclesPerPool = SpawnerConstants.MaxPoolObstacles;
         [SerializeField]
@@ -55,10 +60,13 @@ namespace Assets.Scripts.Maps
                 throw new Exception($"Tried to spawn obstacle from non-existent pool: {obstacleToSpawn}!");
             }
 
-            poolToUse.SpawnObstacle(_obstacleDataRandomizer.GetRandomizedObstacleData(obstacleToSpawn));
+            var obstacleData = _obstacleDataRandomizer.GetRandomizedObstacleData(obstacleToSpawn);
+            obstacleData.ConstantForce = EnemiesConstantForce;
+
+            poolToUse.SpawnObstacle(obstacleData);
         }
         /// <summary>
-        /// Shall be called when the parameters are set. Creates all pools for the spawner.
+        /// Creates all pools for the spawner.
         /// </summary>
         void Start()
         {

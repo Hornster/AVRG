@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assets.Scripts.Data;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Maps.Interfaces
 {
@@ -19,6 +14,9 @@ namespace Assets.Scripts.Maps.Interfaces
         /// Defines amount of time, in seconds, between each spawn. Counts for all pools and all types of obstacles.
         /// </summary>
         float SpawnCooldown { get; set; }
-          
+        /// <summary>
+        /// A constant force applied to each enemy. Makes them move in given direction.
+        /// </summary>
+        Vector3 EnemiesConstantForce { get; set; }
     }
 }
