@@ -53,6 +53,26 @@ namespace Assets.Scripts.Maps
         /// Stores the last assigned index to an activated obstacle.
         /// </summary>
         private uint _lastAssignedIndex = 0;
+
+        /// <summary>
+        /// Activates the obstacle.
+        /// </summary>
+        /// <param name="index">Index of activated obstacle in _obstacles list.</param>
+        private void ActivateObstacle(int index)
+        {
+            _obstacles[index].Activate(_lastAssignedIndex);
+            _activeObstacles.Add(_lastAssignedIndex, _obstacles[index]);
+            _obstacles.RemoveAt(index);
+
+            _lastAssignedIndex++;
+        }
+
+        private void AddNewObstacle(ObstacleIniData obstacleData)
+        {
+            var newObstacle = _obstacleFactory.CreateObstacle(StoredObstaclesType, obstacleData);
+            newObstacle.DeactivationCallback = DeactivateObstacle;
+            _obstacles.Add(newObstacle);
+        }
         /// <summary>
         /// Creates new obstacles pool. If maxObstacles is smaller than startingObstaclesAmount - the latter will
         /// have assigned the value of the first one.
@@ -78,21 +98,13 @@ namespace Assets.Scripts.Maps
             var obstacleData = new ObstacleIniData();
             for (int i = 0; i < beginningObstaclesCount; i++)
             {
-                _obstacles.Add(_obstacleFactory.CreateObstacle(StoredObstaclesType, obstacleData));
+                AddNewObstacle(obstacleData);
+                //var newObstacle = _obstacleFactory.CreateObstacle(StoredObstaclesType, obstacleData);
+                //newObstacle.DeactivationCallback = DeactivateObstacle;
+                //_obstacles.Add(newObstacle);
             }
         }
-        /// <summary>
-        /// Activates the obstacle.
-        /// </summary>
-        /// <param name="index">Index of activated obstacle in _obstacles list.</param>
-        private void ActivateObstacle(int index)
-        {
-            _obstacles[index].Enable();
-            _activeObstacles.Add(_lastAssignedIndex, _obstacles[index]);
-            _obstacles.RemoveAt(index);
-
-            _lastAssignedIndex++;
-        }
+        
         /// <summary>
         /// Spawns obstacle using provided obstacle data, if possible.
         /// </summary>
@@ -104,7 +116,10 @@ namespace Assets.Scripts.Maps
             {
                 if (_obstaclesInUse < MaxObstacles)
                 {
-                    _obstacles.Add(_obstacleFactory.CreateObstacle(StoredObstaclesType, obstacleData));
+                    AddNewObstacle(obstacleData);
+                    //var newObstacle = _obstacleFactory.CreateObstacle(StoredObstaclesType, obstacleData);
+                    //newObstacle.DeactivationCallback = DeactivateObstacle;
+                    //_obstacles.Add(newObstacle);
                     ActivateObstacle(_obstacles.Count-1);
                 }
 
@@ -131,7 +146,7 @@ namespace Assets.Scripts.Maps
                 throw new Exception($"Tried to deactivate non-existing obstacle of index {obstacleIndex}!");
             }
 
-            obstacle.Disable();
+            obstacle.Deactivate();
             _activeObstacles.Remove(obstacleIndex);
             _obstacles.Add(obstacle);
         }

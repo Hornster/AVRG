@@ -4,6 +4,7 @@ using Assets.Scripts.Factories;
 using Assets.Scripts.Shared.Enums;
 using Assets.Scripts.Shared.Helpers;
 using UnityEngine;
+using UnityEngine.Events;
 using Object = System.Object;
 
 namespace Assets.Scripts.Enemies.Implementation
@@ -13,13 +14,28 @@ namespace Assets.Scripts.Enemies.Implementation
     /// 
     /// Controller for the energy blocks (obstacles).
     /// </summary>
-    class EnergyBlockController : MonoBehaviour, IObstacle
+    public class EnergyBlockController : MonoBehaviour, IObstacle
     {
+        /// <summary>
+        /// All layers that trigger destruction of this block.
+        /// </summary>
+        [SerializeField]
+        private LayerMask _destroyingLayers;
         /// <summary>
         /// Highlight color of the selected obstacle.
         /// </summary>
         [SerializeField]
         private Color _selectedColor;
+        /// <summary>
+        /// Index assigned to poolable obstacle upon activation. Used by the owner pool to recognize the object in collection.
+        /// </summary>
+        public uint ActivationIndex { get; private set; }
+        /// <summary>
+        /// Reference to callback that can be used by the obstacle to call its pool when the obstacle has to be
+        /// deactivated.
+        /// </summary>
+        public UnityAction<uint> DeactivationCallback { get; set; }
+
         /// <summary>
         /// Renderer of the object, stores the material.
         /// </summary>
@@ -59,7 +75,19 @@ namespace Assets.Scripts.Enemies.Implementation
         {
 
         }
+        /// <summary>
+        /// Checks what object has this block collided with.
+        /// </summary>
+        /// <param name="collision">Colliding object data.</param>
+        void OnCollisionEnter(Collision collision)
+        {
+            if ((collision.gameObject.layer & _destroyingLayers.value) != 0)
+            {
+                this.Deactivate();
+                this.DeactivationCallback(ActivationIndex);
+            }
 
+        }
         /// <summary>
         /// Applies force to object.
         /// </summary>
@@ -142,14 +170,15 @@ namespace Assets.Scripts.Enemies.Implementation
         /// <summary>
         /// Enables the gameobject of the obstacle.
         /// </summary>
-        public void Enable()
+        public void Activate(uint activationIndex)
         {
             gameObject.SetActive(true);
+            ActivationIndex = activationIndex;
         }
         /// <summary>
         /// Disables the gameobject of the obstacle.
         /// </summary>
-        public void Disable()
+        public void Deactivate()
         {
             gameObject.SetActive(false);
         }

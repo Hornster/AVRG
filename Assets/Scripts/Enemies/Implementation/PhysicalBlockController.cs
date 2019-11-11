@@ -6,6 +6,7 @@ using Assets.Scripts.Factories;
 using Assets.Scripts.Shared.Enums;
 using Assets.Scripts.Shared.Helpers;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Enemies.Implementation
 {
@@ -16,6 +17,21 @@ namespace Assets.Scripts.Enemies.Implementation
     /// </summary>
     public class PhysicalBlockController : MonoBehaviour, IObstacle
     {
+        /// <summary>
+        /// All layers that trigger destruction of this block.
+        /// </summary>
+        [SerializeField]
+        private LayerMask _destroyingLayers;
+        /// <summary>
+        /// Index assigned to poolable obstacle upon activation. Used by the owner pool to recognize the object in collection.
+        /// </summary>
+        public uint ActivationIndex { get; private set; }
+
+        /// <summary>
+        /// Reference to callback that can be used by the obstacle to call its pool when the obstacle has to be
+        /// deactivated.
+        /// </summary>
+        public UnityAction<uint> DeactivationCallback { get; set; }
         /// <summary>
         /// Highlight color of the selected obstacle.
         /// </summary>
@@ -48,7 +64,19 @@ namespace Assets.Scripts.Enemies.Implementation
                 throw new Exception("Error - renderer (and material) not found for this physical block.");
             }
         }
-
+        /// <summary>
+        /// Checks what object has this block collided with.
+        /// </summary>
+        /// <param name="collision">Colliding object data.</param>
+        void OnCollisionEnter(Collision collision)
+        {
+            if ((collision.gameObject.layer & _destroyingLayers.value) != 0)
+            {
+                this.Deactivate();
+                this.DeactivationCallback(ActivationIndex);
+            }
+            
+        }
         // Update is called once per frame
         void Update()
         {
@@ -113,6 +141,8 @@ namespace Assets.Scripts.Enemies.Implementation
         {
             return _rigidBody.velocity;
         }
+
+
         /// <summary>
         /// Applies new data to obstacle.
         /// </summary>
@@ -131,22 +161,24 @@ namespace Assets.Scripts.Enemies.Implementation
         /// <summary>
         /// Enables the gameobject of the obstacle.
         /// </summary>
-        public void Enable()
+        public void Activate(uint activationIndex)
         {
             gameObject.SetActive(true);
+            ActivationIndex = activationIndex;
         }
         /// <summary>
         /// Disables the gameobject of the obstacle.
         /// </summary>
-        public void Disable()
+        public void Deactivate()
         {
             gameObject.SetActive(false);
         }
     }
 }
 //TODO:
-// - remove collider from spawner, rigidbody too if any present.
-// - rotate the offset vector by spawner rotation.
+// - remove collider from spawner, rigidbody too if any present. DUN
+// - rotate the offset vector by spawner rotation. DUN
+// - Use the Destroyer layer in colliders of obstacles and test it.
 // - add constant force to the obstacles that increases with overall  playtime. Caps at some point, of course.
 // - change the player - they shall move basing on force, too.
 // - Implement the match manager.
