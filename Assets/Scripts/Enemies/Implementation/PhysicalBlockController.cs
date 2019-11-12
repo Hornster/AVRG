@@ -78,7 +78,9 @@ namespace Assets.Scripts.Enemies.Implementation
         /// <param name="collision">Colliding object data.</param>
         void OnCollisionEnter(Collision collision)
         {
-            if ((collision.gameObject.layer & _destroyingLayers.value) != 0)
+            int layerBitValue = 1;
+            layerBitValue = layerBitValue << collision.gameObject.layer;
+            if ((layerBitValue & _destroyingLayers.value) != 0)
             {
                 this.Deactivate();
                 this.DeactivationCallback(ActivationIndex);

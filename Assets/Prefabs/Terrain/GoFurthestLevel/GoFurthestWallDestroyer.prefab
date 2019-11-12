@@ -75,7 +75,7 @@ PrefabInstance:
     - target: {fileID: 7142110612328999234, guid: 7fa05cd32e7be1846a6c8d36628d4d88,
         type: 3}
       propertyPath: m_Name
-      value: GoFurthestWallBack
+      value: GoFurthestWallDestroyer
       objectReference: {fileID: 0}
     - target: {fileID: 7142110612328999234, guid: 7fa05cd32e7be1846a6c8d36628d4d88,
         type: 3}
