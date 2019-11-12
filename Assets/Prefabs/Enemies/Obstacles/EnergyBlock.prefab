@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dcce28df1fddc04a8f715803cc19b90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _destroyingLayers:
+    serializedVersion: 2
+    m_Bits: 2048
   _selectedColor: {r: 0.9716981, g: 0.10450332, b: 0.10450332, a: 0}
 --- !u!1001 &7668203260451975009
 PrefabInstance:

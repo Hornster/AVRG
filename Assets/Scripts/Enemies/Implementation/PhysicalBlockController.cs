@@ -23,16 +23,6 @@ namespace Assets.Scripts.Enemies.Implementation
         [SerializeField]
         private LayerMask _destroyingLayers;
         /// <summary>
-        /// Index assigned to poolable obstacle upon activation. Used by the owner pool to recognize the object in collection.
-        /// </summary>
-        public uint ActivationIndex { get; private set; }
-
-        /// <summary>
-        /// Reference to callback that can be used by the obstacle to call its pool when the obstacle has to be
-        /// deactivated.
-        /// </summary>
-        public UnityAction<uint> DeactivationCallback { get; set; }
-        /// <summary>
         /// Highlight color of the selected obstacle.
         /// </summary>
         [SerializeField]
@@ -46,9 +36,23 @@ namespace Assets.Scripts.Enemies.Implementation
         /// </summary>
         private Rigidbody _rigidBody;
         /// <summary>
+        /// Script that constantly applies constant force.
+        /// </summary>
+        private SimpleMover _simpleMover;
+        /// <summary>
         /// Type of glove the object will react to.
         /// </summary>
         private const ProjectileTypeEnum ObjectType = ProjectileTypeEnum.Physical;
+        /// <summary>
+        /// Index assigned to poolable obstacle upon activation. Used by the owner pool to recognize the object in collection.
+        /// </summary>
+        public uint ActivationIndex { get; private set; }
+
+        /// <summary>
+        /// Reference to callback that can be used by the obstacle to call its pool when the obstacle has to be
+        /// deactivated.
+        /// </summary>
+        public UnityAction<uint> DeactivationCallback { get; set; }
         // Start is called before the first frame update
         void Start()
         {
@@ -63,6 +67,8 @@ namespace Assets.Scripts.Enemies.Implementation
             {
                 throw new Exception("Error - renderer (and material) not found for this physical block.");
             }
+
+            _simpleMover = GetComponent<SimpleMover>();
 
             Deactivate();
         }
@@ -155,7 +161,12 @@ namespace Assets.Scripts.Enemies.Implementation
             gameObject.transform.localScale = newData.Scale;
             gameObject.transform.rotation = newData.Rotation;
             _rigidBody.mass = newData.Mass;
-            _rigidBody.AddForce(newData.ConstantForce);
+
+            if (_simpleMover != null)
+            {
+                _simpleMover.ConstantForce = newData.ConstantForce;
+            }
+
             if (newData.ParentTransform != null)
             {
                 gameObject.transform.SetParent(newData.ParentTransform);
