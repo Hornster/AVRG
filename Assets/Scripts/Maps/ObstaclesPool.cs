@@ -102,9 +102,7 @@ namespace Assets.Scripts.Maps
             for (int i = 0; i < beginningObstaclesCount; i++)
             {
                 AddNewObstacle(obstacleData);
-                //var newObstacle = _obstacleFactory.CreateObstacle(StoredObstaclesType, obstacleData);
-                //newObstacle.DeactivationCallback = DeactivateObstacle;
-                //_obstacles.Add(newObstacle);
+                _obstaclesInUse++;
             }
         }
 
@@ -115,16 +113,14 @@ namespace Assets.Scripts.Maps
         /// <param name="constantForce">Constant force that will push the object onwards.</param>
         public void SpawnObstacle(ObstacleIniData obstacleData)
         {
-            //If there are no free obstacles left - create new one and use it immediately. If possible, of course.
+            //If there are no free obstacles left - create new one. Do not use it yet - it has to be initialized first
+            //what will happen  during next frame.
             if (_obstacles.Count <= 0)
             {
                 if (_obstaclesInUse < MaxObstacles)
                 {
                     AddNewObstacle(obstacleData);
-                    //var newObstacle = _obstacleFactory.CreateObstacle(StoredObstaclesType, obstacleData);
-                    //newObstacle.DeactivationCallback = DeactivateObstacle;
-                    //_obstacles.Add(newObstacle);
-                    ActivateObstacle(_obstacles.Count-1);
+                    _obstaclesInUse++;
                 }
 
             }
@@ -156,4 +152,4 @@ namespace Assets.Scripts.Maps
         }
     }
 }
-//TODO: Add callback to IPoolables so they can deactivate themselves when necessary.
+//TODO: Add callback to IPoolables so they can deactivate themselves when necessary. DUN

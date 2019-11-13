@@ -30,8 +30,11 @@ namespace Assets.Scripts.Player.Weapons
         /// Stores the value of force that this glove can apply to hooked obstacles and allows for its modification
         /// from the editor level.
         /// </summary>
-        [SerializeField]
         private float _strength;
+        /// <summary>
+        /// Max value of force that the weapon can apply to hooked object.
+        /// </summary>
+        private float _maxStrength;
         /// <summary>
         /// Defines what part of velocity is used to generate resistance force.
         /// </summary>
@@ -116,10 +119,15 @@ namespace Assets.Scripts.Player.Weapons
             Vector3 glovePositionalForce = forceCalculator.GlovePositionalForce(currentDistance, _hookingReferenceDistance, Strength);
             Vector3 gloveRotationalForce = forceCalculator.GloveRotationalForce(currentDistance, PlayerConstants.PlayerRotationRefVector, transform.rotation, Strength);
             
-            Vector3 dampeningForce = forceCalculator.DampeningForce(HookedObstacle.GetVelocity(), _dampeningFactor);
-
+            Vector3 dampeningForce = forceCalculator.DampeningForce(HookedObstacle.GetVelocity(), _dampeningFactor, _strength);
+            
             Vector3 totalForce = glovePositionalForce + gloveRotationalForce;
+            Debug.Log("Total force: " + totalForce);
+            Debug.Log("Dampening force: " + dampeningForce);
+            Debug.Log("Velocity: " + HookedObstacle.GetVelocity());
+            Debug.DrawRay(HookedObstacle.GetPosition(), dampeningForce);
             totalForce += dampeningForce;
+            totalForce *= Time.deltaTime;
             HookedObstacle.ApplyForce(totalForce);
         }
         /// <summary>
@@ -153,6 +161,22 @@ namespace Assets.Scripts.Player.Weapons
                 EraseLine();
                 HookedObstacle = null;
             }
+        }
+        /// <summary>
+        /// Sets new glove strength.
+        /// </summary>
+        /// <param name="gloveStrength">New glove strength.</param>
+        public void SetStrength(float gloveStrength)
+        {
+            _strength = gloveStrength;
+        }
+        /// <summary>
+        /// Sets max strength of the glove.
+        /// </summary>
+        /// <param name="maxValue">Max strength value.</param>
+        public void SetMaxValue(float maxValue)
+        {
+            _maxStrength = maxValue;
         }
     }
 }

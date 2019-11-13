@@ -41,15 +41,15 @@ namespace Assets.Scripts.Player.Helpers
         public Vector3 GlovePositionalForce(Vector3 distanceAfterMovement, Vector3 referenceDistance, float gloveStrength)
         {
             Vector3 movementForce = distanceAfterMovement - referenceDistance;
-            float movementForceValue = movementForce.magnitude;
+            float movementForceValue = movementForce.magnitude * gloveStrength;
             movementForce = -movementForce;
 
-            if (movementForceValue >= gloveStrength)
-            {
-                movementForce = movementForce.normalized;
-                movementForce *= gloveStrength;
-                return movementForce;
-            }
+            //if (movementForceValue >= gloveStrength)
+            //{
+            //    movementForce = movementForce.normalized;
+            //    movementForce *= gloveStrength;
+            //    return movementForce;
+            //}
 
             return movementForce;
             //return Vector3.zero;
@@ -68,13 +68,14 @@ namespace Assets.Scripts.Player.Helpers
         {
             Vector3 distanceAfterRotation = rotation * rotationReferenceVector * distanceAfterMovement.magnitude;
             Vector3 rotationForce = distanceAfterRotation - distanceAfterMovement;
+            rotationForce *= gloveStrength;
 
-            if (rotationForce.magnitude >= gloveStrength)
-            {
-                rotationForce = rotationForce.normalized;
-                rotationForce *= gloveStrength;
-                return rotationForce;
-            }
+            //if (rotationForce.magnitude >= gloveStrength)
+            //{
+            //    rotationForce = rotationForce.normalized;
+            //    rotationForce *= gloveStrength;
+            //    return rotationForce;
+            //}
 
             return rotationForce;
         }
@@ -85,10 +86,10 @@ namespace Assets.Scripts.Player.Helpers
         /// <param name="objectVelocity">Current object velocity.</param>
         /// <param name="dampeningFactor">Scales the dampening vector to given percent of the current force.</param>
         /// <returns></returns>
-        public Vector3 DampeningForce(Vector3 objectVelocity, float dampeningFactor)
+        public Vector3 DampeningForce(Vector3 objectVelocity, float dampeningFactor, float gloveStrength)
         {
             objectVelocity = -objectVelocity;
-            objectVelocity *= dampeningFactor;
+            objectVelocity *= gloveStrength * dampeningFactor;
             return objectVelocity;
             //Vector3 dampeningForce = -objectVelocity.normalized;
             //dampeningForce *= dampeningFactor;

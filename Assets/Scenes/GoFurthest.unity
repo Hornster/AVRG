@@ -305,6 +305,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7231112834008008439, guid: 44f2e987085a69a46a1a6959998ca02c,
+        type: 3}
+      propertyPath: _maxVelocity
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 844555037964528027, guid: 44f2e987085a69a46a1a6959998ca02c,
+        type: 3}
+      propertyPath: _cameraSpeed.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 844555037964528027, guid: 44f2e987085a69a46a1a6959998ca02c,
+        type: 3}
+      propertyPath: _cameraSpeed.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 5325301134529055480, guid: 44f2e987085a69a46a1a6959998ca02c,
+        type: 3}
+      propertyPath: _gloveStrength
+      value: 10000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44f2e987085a69a46a1a6959998ca02c, type: 3}
 --- !u!114 &861963422 stripped
@@ -669,7 +689,7 @@ PrefabInstance:
     - target: {fileID: 6091852074760918366, guid: d7049b685cdb1a343ab5e5cafd90b5c2,
         type: 3}
       propertyPath: m_Name
-      value: GoFurthestWallFront
+      value: GoFurthestWallFrontSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 4651574011927542891, guid: d7049b685cdb1a343ab5e5cafd90b5c2,
         type: 3}
@@ -705,6 +725,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _maxPhysicalCubeScale.z
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4651574011927542891, guid: d7049b685cdb1a343ab5e5cafd90b5c2,
+        type: 3}
+      propertyPath: _smallestLengthUnit
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7049b685cdb1a343ab5e5cafd90b5c2, type: 3}
@@ -780,6 +805,21 @@ PrefabInstance:
       propertyPath: _enemySpawner
       value: 
       objectReference: {fileID: 861963422}
+    - target: {fileID: 5038880476288531531, guid: 339c9bd131877b14189421146d8a3ada,
+        type: 3}
+      propertyPath: _spawnTimeChangeInterval
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038880476288531531, guid: 339c9bd131877b14189421146d8a3ada,
+        type: 3}
+      propertyPath: _constantForceStrengthStep
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5038880476288531531, guid: 339c9bd131877b14189421146d8a3ada,
+        type: 3}
+      propertyPath: _spawnMinTime
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 339c9bd131877b14189421146d8a3ada, type: 3}
 --- !u!1001 &5764862563378751371

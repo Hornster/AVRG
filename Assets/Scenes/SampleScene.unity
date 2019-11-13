@@ -966,6 +966,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2441844657362548423, guid: 573963018cb2952499bdd449d021d36d,
+        type: 3}
+      propertyPath: m_Mass
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2441844657362548423, guid: 573963018cb2952499bdd449d021d36d,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2441844657362548423, guid: 573963018cb2952499bdd449d021d36d,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2441844657362548416, guid: 573963018cb2952499bdd449d021d36d,
         type: 3}
       propertyPath: _selectedColor.g
@@ -1244,6 +1259,16 @@ PrefabInstance:
         type: 3}
       propertyPath: field of view
       value: 26.991467
+      objectReference: {fileID: 0}
+    - target: {fileID: 5325301134529055480, guid: 44f2e987085a69a46a1a6959998ca02c,
+        type: 3}
+      propertyPath: _gloveStrength
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5325301134529055480, guid: 44f2e987085a69a46a1a6959998ca02c,
+        type: 3}
+      propertyPath: _maxGloveStrength
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44f2e987085a69a46a1a6959998ca02c, type: 3}

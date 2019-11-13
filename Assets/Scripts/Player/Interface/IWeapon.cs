@@ -41,5 +41,16 @@ namespace Assets.Scripts.Player.Interface
         /// Called when the player stops holding the object.
         /// </summary>
         void StopUsingWeapon();
+        /// <summary>
+        /// Sets new value of the glove strength.
+        /// </summary>
+        /// <param name="gloveStrength">New glove strength.</param>
+        void SetStrength(float gloveStrength);
+        /// <summary>
+        /// Sets the cap for the main ability of the weapon, for example the gloves cannot generate
+        /// more force than max value.
+        /// </summary>
+        /// <param name="maxValue"></param>
+        void SetMaxValue(float maxValue);
     }
 }

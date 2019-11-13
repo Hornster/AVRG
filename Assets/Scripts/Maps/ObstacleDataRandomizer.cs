@@ -62,6 +62,15 @@ namespace Assets.Scripts.Maps
             _maxPosition = (_spawnerTransform.position + offset) / _smallestLengthUnit;
             _minPosition = (_spawnerTransform.position - offset) / _smallestLengthUnit;
         }
+
+        void Update()
+        {
+            _spawnerTransform = gameObject.transform;
+            var offset = _spawnerTransform.localScale * 0.5f; //Scale defines whole width. We need half of it.
+            offset = VectorManipulator.RotateVector(_spawnerTransform.rotation, offset);
+            _maxPosition = (_spawnerTransform.position + offset) / _smallestLengthUnit;
+            _minPosition = (_spawnerTransform.position - offset) / _smallestLengthUnit;
+        }
         /// <summary>
         /// Calculates mass for freshly randomized obstacle.
         /// </summary>

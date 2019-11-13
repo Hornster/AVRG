@@ -56,12 +56,18 @@ namespace Assets.Scripts.Match
                 throw new Exception("No enemy spawner applied to match controller!");
             }
             _constantForceDirection = _constantForceDirection.normalized;
+            _enemySpawner.EnemiesConstantForce = GetConstantForceVector();
         }
         void Update()
         {
             float lastFrameTime = Time.deltaTime;
             UpdateSpawnValues(lastFrameTime);
             
+        }
+
+        private Vector3 GetConstantForceVector()
+        {
+            return _constantForceDirection * _constantForceStrength;
         }
         /// <summary>
         /// Updates spawn time and connected with it constant force strength.
@@ -77,8 +83,7 @@ namespace Assets.Scripts.Match
                     _enemySpawner.SpawnCooldown = _enemySpawner.SpawnCooldown - _spawnAccelerationStep;
 
                     _constantForceStrength += _constantForceStrengthStep;
-                    Vector3 constantForceVector = _constantForceDirection * _constantForceStrength;
-                    _enemySpawner.EnemiesConstantForce = constantForceVector;
+                    _enemySpawner.EnemiesConstantForce = GetConstantForceVector();
                 }
                 else
                 {

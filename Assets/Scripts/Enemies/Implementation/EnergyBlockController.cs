@@ -45,6 +45,10 @@ namespace Assets.Scripts.Enemies.Implementation
         /// </summary>
         private Rigidbody _rigidBody;
         /// <summary>
+        /// Script that constantly applies constant force.
+        /// </summary>
+        private SimpleMover _simpleMover;
+        /// <summary>
         /// Material of the object.
         /// </summary>
         private Material _material;
@@ -69,6 +73,8 @@ namespace Assets.Scripts.Enemies.Implementation
                 throw new Exception("Error - renderer (and material) not found for this energy block.");
             }
 
+            _simpleMover = GetComponent<SimpleMover>();
+
             Deactivate();
         }
 
@@ -83,7 +89,9 @@ namespace Assets.Scripts.Enemies.Implementation
         /// <param name="collision">Colliding object data.</param>
         void OnCollisionEnter(Collision collision)
         {
-            if ((collision.gameObject.layer & _destroyingLayers.value) != 0)
+            int layerBitValue = 1;
+            layerBitValue = layerBitValue << collision.gameObject.layer;
+            if ((layerBitValue & _destroyingLayers.value) != 0)
             {
                 this.Deactivate();
                 this.DeactivationCallback(ActivationIndex);
@@ -164,7 +172,12 @@ namespace Assets.Scripts.Enemies.Implementation
             gameObject.transform.localScale = newData.Scale;
             gameObject.transform.rotation = newData.Rotation;
             _rigidBody.mass = newData.Mass;
-            _rigidBody.AddForce(newData.ConstantForce);
+
+            if (_simpleMover != null)
+            {
+                _simpleMover.ConstantForce = newData.ConstantForce;
+            }
+
             if (newData.ParentTransform != null)
             {
                 gameObject.transform.SetParent(newData.ParentTransform);

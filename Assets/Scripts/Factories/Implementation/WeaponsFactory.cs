@@ -18,6 +18,16 @@ namespace Assets.Scripts.Factories.Implementation
         private GameObject _energyGlovePrefab;
         [SerializeField]
         private GameObject _physicsGlovePrefab;
+        /// <summary>
+        /// Factor defining the strength of the glove.
+        /// Used to multiply the difference vectors created when the player moves around with
+        /// the object hooked to the glove.
+        /// </summary>
+        [SerializeField] private float _gloveStrength = 10.0f;
+        /// <summary>
+        /// Max force that the glove can apply to object.
+        /// </summary>
+        [SerializeField] private float _maxGloveStrength = 10.0f;
 
         /// <summary>
         /// Creates a tool glove - weapon that is capable of hooking objects of the same projectile type and allows
@@ -28,15 +38,25 @@ namespace Assets.Scripts.Factories.Implementation
         /// <returns></returns>
         private IWeapon CreateToolGlove(ProjectileTypeEnum projectileType, Transform parentTransform)
         {
+            IWeapon glove = null;
             switch (projectileType)
             {
                 case ProjectileTypeEnum.Physical:
-                    return Instantiate(_physicsGlovePrefab, parentTransform).GetComponent<IWeapon>();
+                    glove = Instantiate(_physicsGlovePrefab, parentTransform).GetComponent<IWeapon>();
+                    break;
                 case ProjectileTypeEnum.Energy:
-                    return Instantiate(_energyGlovePrefab, parentTransform).GetComponent<IWeapon>();
+                    glove = Instantiate(_energyGlovePrefab, parentTransform).GetComponent<IWeapon>();
+                    break; 
             }
 
-            throw new Exception($"Tool glove with projectiles of type {projectileType} is unknown.");
+            if (glove == null)
+            {
+                throw new Exception($"Tool glove with projectiles of type {projectileType} is unknown.");
+            }
+
+            glove.SetStrength(_gloveStrength);
+            glove.SetMaxValue(_maxGloveStrength);
+            return glove;
         }
 
         /// <summary>
