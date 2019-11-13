@@ -32,9 +32,17 @@ namespace Assets.Scripts.Maps
         /// </summary>
         [SerializeField] private Vector3 _maxPhysicalCubeScale = Vector3.one;
         /// <summary>
+        /// Min scale of a physical cube.
+        /// </summary>
+        [SerializeField] private Vector3 _minPhysicalCubeScale = Vector3.one;
+        /// <summary>
         /// Max scale of energy cube.
         /// </summary>
         [SerializeField] private Vector3 _maxEnergyCubeScale = Vector3.one;
+        /// <summary>
+        /// Min scale of a physical cube.
+        /// </summary>
+        [SerializeField] private Vector3 _minEnergyCubeScale = Vector3.one;
         /// <summary>
         /// Density of energy cube. Measured in Unity units.
         /// </summary>
@@ -53,7 +61,51 @@ namespace Assets.Scripts.Maps
         /// </summary>
         [SerializeField] private Transform _parentTransform;
         private Random _randomGenerator = new Random();
+        /// <summary>
+        /// Checks whether provided mins and maxes for scales of cubes are proper. If there's a ny minimum
+        /// that's bigger than maximum - swaps the two.
+        /// </summary>
+        private void ChkObstacleSizes()
+        {
+            float temp;
+            if (_maxEnergyCubeScale.x < _minEnergyCubeScale.x)
+            {
+                temp = _maxEnergyCubeScale.x;
+                _maxEnergyCubeScale.x = _minEnergyCubeScale.x;
+                _minEnergyCubeScale.x = temp;
+            }
+            if (_maxEnergyCubeScale.y < _minEnergyCubeScale.y)
+            {
+                temp = _maxEnergyCubeScale.y;
+                _maxEnergyCubeScale.y = _minEnergyCubeScale.y;
+                _minEnergyCubeScale.y = temp;
+            }
+            if (_maxEnergyCubeScale.z < _minEnergyCubeScale.z)
+            {
+                temp = _maxEnergyCubeScale.z;
+                _maxEnergyCubeScale.z = _minEnergyCubeScale.z;
+                _minEnergyCubeScale.z = temp;
+            }
 
+            if (_maxPhysicalCubeScale.x < _minPhysicalCubeScale.x)
+            {
+                temp = _maxPhysicalCubeScale.x;
+                _maxPhysicalCubeScale.x = _minPhysicalCubeScale.x;
+                _minPhysicalCubeScale.x = temp;
+            }
+            if (_maxPhysicalCubeScale.y < _minPhysicalCubeScale.y)
+            {
+                temp = _maxPhysicalCubeScale.y;
+                _maxPhysicalCubeScale.y = _minPhysicalCubeScale.y;
+                _minPhysicalCubeScale.y = temp;
+            }
+            if (_maxPhysicalCubeScale.z < _minPhysicalCubeScale.z)
+            {
+                temp = _maxPhysicalCubeScale.z;
+                _maxPhysicalCubeScale.z = _minPhysicalCubeScale.z;
+                _minPhysicalCubeScale.z = temp;
+            }
+        }
         void Start()
         {
             _spawnerTransform = gameObject.transform;
@@ -61,6 +113,8 @@ namespace Assets.Scripts.Maps
             offset = VectorManipulator.RotateVector(_spawnerTransform.rotation, offset);
             _maxPosition = (_spawnerTransform.position + offset) / _smallestLengthUnit;
             _minPosition = (_spawnerTransform.position - offset) / _smallestLengthUnit;
+
+            ChkObstacleSizes();
         }
 
         void Update()
@@ -109,14 +163,14 @@ namespace Assets.Scripts.Maps
             switch (obstacleType)
             {
                 case ObstacleTypeEnum.PhysicalBlock:
-                    scaleVector.x = GetRandomNumber(_maxPhysicalCubeScale.x, 1) * _smallestLengthUnit;
-                    scaleVector.y = GetRandomNumber(_maxPhysicalCubeScale.y, 1) * _smallestLengthUnit;
-                    scaleVector.z = GetRandomNumber(_maxPhysicalCubeScale.z, 1) * _smallestLengthUnit;
+                    scaleVector.x = GetRandomNumber(_maxPhysicalCubeScale.x, _minPhysicalCubeScale.x) * _smallestLengthUnit;
+                    scaleVector.y = GetRandomNumber(_maxPhysicalCubeScale.y, _minPhysicalCubeScale.y) * _smallestLengthUnit;
+                    scaleVector.z = GetRandomNumber(_maxPhysicalCubeScale.z, _minPhysicalCubeScale.z) * _smallestLengthUnit;
                     break;
                 case ObstacleTypeEnum.EnergyBlock:
-                    scaleVector.x = GetRandomNumber(_maxEnergyCubeScale.x, 1) * _smallestLengthUnit;
-                    scaleVector.y = GetRandomNumber(_maxEnergyCubeScale.y, 1) * _smallestLengthUnit;
-                    scaleVector.z = GetRandomNumber(_maxEnergyCubeScale.z, 1) * _smallestLengthUnit;
+                    scaleVector.x = GetRandomNumber(_maxEnergyCubeScale.x, _minEnergyCubeScale.x) * _smallestLengthUnit;
+                    scaleVector.y = GetRandomNumber(_maxEnergyCubeScale.y, _minEnergyCubeScale.y) * _smallestLengthUnit;
+                    scaleVector.z = GetRandomNumber(_maxEnergyCubeScale.z, _minEnergyCubeScale.z) * _smallestLengthUnit;
                     break;
             }
 
