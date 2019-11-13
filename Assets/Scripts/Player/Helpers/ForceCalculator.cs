@@ -41,8 +41,9 @@ namespace Assets.Scripts.Player.Helpers
         public Vector3 GlovePositionalForce(Vector3 distanceAfterMovement, Vector3 referenceDistance, float gloveStrength)
         {
             Vector3 movementForce = distanceAfterMovement - referenceDistance;
-            float movementForceValue = movementForce.magnitude * gloveStrength;
+            //float movementForceValue = movementForce.magnitude * gloveStrength;
             movementForce = -movementForce;
+            movementForce *= gloveStrength;
 
             //if (movementForceValue >= gloveStrength)
             //{

@@ -25,16 +25,8 @@ namespace Assets.Scripts.Player.Weapons
         /// <summary>
         /// Defines the value of force that this glove can apply to hooked obstacles.
         /// </summary>
-        public float Strength { get{ return _strength; } }
-        /// <summary>
-        /// Stores the value of force that this glove can apply to hooked obstacles and allows for its modification
-        /// from the editor level.
-        /// </summary>
-        private float _strength;
-        /// <summary>
-        /// Max value of force that the weapon can apply to hooked object.
-        /// </summary>
-        private float _maxStrength;
+        public float Strength { get; private set; }
+        
         /// <summary>
         /// Defines what part of velocity is used to generate resistance force.
         /// </summary>
@@ -44,14 +36,9 @@ namespace Assets.Scripts.Player.Weapons
         /// </summary>
         private RaycastHit _raycastHit;
         /// <summary>
-        /// Offset of the object towards the glove upon hooking it up.
+        /// Stores data about the currently hooked obstacle by this glove. If none is hooked - null.
         /// </summary>
-        private Vector3 _hookingReferenceDistance;
-
-        /// <summary>
-        /// The currently hooked obstacle by this glove. If none is hooked - null.
-        /// </summary>
-        public IObstacle HookedObstacle { get; private set; }
+        public HookingData HookingData { get; private set; }
         public ProjectileTypeEnum ProjectileType { get; } = ProjectileTypeEnum.Physical;
 
         /// <summary>
@@ -59,17 +46,22 @@ namespace Assets.Scripts.Player.Weapons
         /// </summary>
         private void DrawHookingLine()
         {
-            if (HookedObstacle != null)
+            if (HookingData.HookedObstacle != null)
             {
-                Vector3 secondControlPoint = VectorManipulator.CreateVectorFromRotation(PlayerConstants.PlayerRotationRefVector, transform.rotation, _strength);
+                float halfDistance = HookingData.HookingDistMagnitude * 0.5f;
+                Vector3 secondControlPoint = VectorManipulator.CreateVectorFromRotation(PlayerConstants.PlayerRotationRefVector, transform.rotation, halfDistance);
                 secondControlPoint += transform.position;
-                _lineRenderer.DrawBezierSquared(transform.position, secondControlPoint, HookedObstacle.GetPosition());
+                _lineRenderer.DrawBezierSquared(transform.position, secondControlPoint, HookingData.HookedObstacle.GetPosition());
             }
         }
-
-        private void SaveReferenceVector()
+        /// <summary>
+        /// Saves data of recently hooked object.
+        /// </summary>
+        /// <param name="hookedObstacle">Hooked object.</param>
+        private void SaveHookedObjectData(IObstacle hookedObstacle)
         {
-            _hookingReferenceDistance = HookedObstacle.GetPosition() - transform.position;
+            Vector3 hookingRefDistance = hookedObstacle.GetPosition() - transform.position;
+            HookingData = new HookingData(hookedObstacle, hookingRefDistance);
         }
         /// <summary>
         /// Prompts erasing of previously drawn line between connected object and glove.
@@ -88,20 +80,20 @@ namespace Assets.Scripts.Player.Weapons
         {
             if (Physics.Raycast(gameObject.transform.position, direction, out _raycastHit))
             {
-                HookedObstacle = _raycastHit.transform.gameObject.GetComponent<IObstacle>();
+                var hookedObstacle = _raycastHit.transform.gameObject.GetComponent<IObstacle>();
 
-                if (HookedObstacle == null)
+                if (hookedObstacle == null)
                 {
                     return HookingResultEnum.NoObjectFound;
                 }
 
-                if (HookedObstacle.ChkGloveType(ProjectileType) == false)
+                if (hookedObstacle.ChkGloveType(ProjectileType) == false)
                 {
                     return HookingResultEnum.WrongType;
                 }
 
-                HookedObstacle.SelectObject(team);
-                SaveReferenceVector();
+                hookedObstacle.SelectObject(team);
+                SaveHookedObjectData(hookedObstacle);
                 DrawHookingLine();
 
                 return HookingResultEnum.ObjectHooked;
@@ -114,21 +106,17 @@ namespace Assets.Scripts.Player.Weapons
         /// </summary>
         private void ApplyForceToObstacle()
         {
-            Vector3 currentDistance = HookedObstacle.GetPosition() - transform.position;
+            Vector3 currentDistance = HookingData.HookedObstacle.GetPosition() - transform.position;
             var forceCalculator = ForceCalculator.GetInstance();
-            Vector3 glovePositionalForce = forceCalculator.GlovePositionalForce(currentDistance, _hookingReferenceDistance, Strength);
-            Vector3 gloveRotationalForce = forceCalculator.GloveRotationalForce(currentDistance, PlayerConstants.PlayerRotationRefVector, transform.rotation, Strength);
+            Vector3 glovePositionalForce = forceCalculator.GlovePositionalForce(currentDistance, HookingData.HookingRefDistance, Strength);
+            Vector3 gloveRotationalForce = forceCalculator.GloveRotationalForce(HookingData.HookingRefDistance, PlayerConstants.PlayerRotationRefVector, transform.rotation, Strength);
             
-            Vector3 dampeningForce = forceCalculator.DampeningForce(HookedObstacle.GetVelocity(), _dampeningFactor, _strength);
+            Vector3 dampeningForce = forceCalculator.DampeningForce(HookingData.HookedObstacle.GetVelocity(), _dampeningFactor, Strength);
             
             Vector3 totalForce = glovePositionalForce + gloveRotationalForce;
-            Debug.Log("Total force: " + totalForce);
-            Debug.Log("Dampening force: " + dampeningForce);
-            Debug.Log("Velocity: " + HookedObstacle.GetVelocity());
-            Debug.DrawRay(HookedObstacle.GetPosition(), dampeningForce);
             totalForce += dampeningForce;
             totalForce *= Time.deltaTime;
-            HookedObstacle.ApplyForce(totalForce);
+            HookingData.HookedObstacle.ApplyForce(totalForce);
         }
         /// <summary>
         /// Casts a ray. If any objects are on the way - tries to hook the ray to one of these, starting
@@ -138,7 +126,7 @@ namespace Assets.Scripts.Player.Weapons
         /// <param name="team">Team of the using player.</param>
         public HookingResultEnum UseWeapon(Vector3 direction, TeamEnum team)
         {
-            if (HookedObstacle == null)
+            if (HookingData == null)
             {
                 return TryHookingObject(direction, team);
             }
@@ -155,11 +143,11 @@ namespace Assets.Scripts.Player.Weapons
         /// </summary>
         public void StopUsingWeapon()
         {
-            if (HookedObstacle != null)
+            if (HookingData != null)
             {
-                HookedObstacle.DeselectObject();
+                HookingData.HookedObstacle.DeselectObject();
                 EraseLine();
-                HookedObstacle = null;
+                HookingData = null;
             }
         }
         /// <summary>
@@ -168,15 +156,7 @@ namespace Assets.Scripts.Player.Weapons
         /// <param name="gloveStrength">New glove strength.</param>
         public void SetStrength(float gloveStrength)
         {
-            _strength = gloveStrength;
-        }
-        /// <summary>
-        /// Sets max strength of the glove.
-        /// </summary>
-        /// <param name="maxValue">Max strength value.</param>
-        public void SetMaxValue(float maxValue)
-        {
-            _maxStrength = maxValue;
+            Strength = gloveStrength;
         }
     }
 }

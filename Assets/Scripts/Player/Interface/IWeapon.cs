@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Assets.Scripts.Data;
 using Assets.Scripts.Enemies.Interface;
 using Assets.Scripts.Shared.Enums;
 using UnityEngine;
@@ -19,10 +20,12 @@ namespace Assets.Scripts.Player.Interface
         /// Defines the strength of the weapon (ex. dealt damage per shot).
         /// </summary>
         float Strength { get; }
+
         /// <summary>
-        /// The currently hooked obstacle by this glove. If none is hooked - null.
+        /// Stores data about the currently hooked obstacle by this glove. If none is hooked - null.
         /// </summary>
-        IObstacle HookedObstacle { get; }
+        HookingData HookingData { get; }
+
         /// <summary>
         /// Type of the glove.
         /// </summary>
@@ -46,11 +49,5 @@ namespace Assets.Scripts.Player.Interface
         /// </summary>
         /// <param name="gloveStrength">New glove strength.</param>
         void SetStrength(float gloveStrength);
-        /// <summary>
-        /// Sets the cap for the main ability of the weapon, for example the gloves cannot generate
-        /// more force than max value.
-        /// </summary>
-        /// <param name="maxValue"></param>
-        void SetMaxValue(float maxValue);
     }
 }

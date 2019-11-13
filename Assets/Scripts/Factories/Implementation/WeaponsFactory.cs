@@ -24,10 +24,6 @@ namespace Assets.Scripts.Factories.Implementation
         /// the object hooked to the glove.
         /// </summary>
         [SerializeField] private float _gloveStrength = 10.0f;
-        /// <summary>
-        /// Max force that the glove can apply to object.
-        /// </summary>
-        [SerializeField] private float _maxGloveStrength = 10.0f;
 
         /// <summary>
         /// Creates a tool glove - weapon that is capable of hooking objects of the same projectile type and allows
@@ -55,7 +51,6 @@ namespace Assets.Scripts.Factories.Implementation
             }
 
             glove.SetStrength(_gloveStrength);
-            glove.SetMaxValue(_maxGloveStrength);
             return glove;
         }
 
