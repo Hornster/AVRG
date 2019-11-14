@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Enemies.Interface;
 using Assets.Scripts.Factories;
+using Assets.Scripts.Match.Entities;
 using Assets.Scripts.Shared.Enums;
 using Assets.Scripts.Shared.Helpers;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace Assets.Scripts.Enemies.Implementation
     ///
     /// Controller for obstacles in form of physical blocks.
     /// </summary>
-    public class PhysicalBlockController : MonoBehaviour, IObstacle
+    public class PhysicalBlockController : MonoBehaviour, IObstacle, IDamageDealer
     {
         /// <summary>
         /// All layers that trigger destruction of this block.
@@ -191,12 +192,33 @@ namespace Assets.Scripts.Enemies.Implementation
             _rigidBody.angularVelocity = Vector3.zero;
             gameObject.SetActive(false);
         }
+        /// <summary>
+        /// Deals damage to the receiver.
+        /// </summary>
+        /// <param name="receiver">Damage receiving entity.</param>
+        public void DealDamage(IDamageReceiver receiver)
+        {
+            var calculations = Calculations.GetInstance();
+            var receiverKineticData = receiver.GetKineticData();
+
+            float thisKineticEnergy = calculations.CalcKineticEnergy(_rigidBody.velocity, _rigidBody.mass);
+            float receiverKineticEnergy =
+                calculations.CalcKineticEnergy(receiverKineticData.Velocity, receiverKineticData.Mass);
+            float velocityAngleFactor = VectorManipulator.CalcAngleBetweenVectors(_rigidBody.velocity, receiverKineticData.Velocity);
+            //Head on collision means 0°. Perfect amortization means 180°. -cosa describes this relation, we get cosa.
+            velocityAngleFactor = -velocityAngleFactor;
+            
+            receiverKineticEnergy *= velocityAngleFactor;
+            float totalEnergy = thisKineticEnergy + receiverKineticEnergy;
+
+            receiver.ReceiveDamage(totalEnergy);
+        }
     }
 }
 //TODO:
 // - remove collider from spawner, rigidbody too if any present. DUN
 // - rotate the offset vector by spawner rotation. DUN
-// - Use the Destroyer layer in colliders of obstacles and test it.
-// - add constant force to the obstacles that increases with overall  playtime. Caps at some point, of course.
+// - Use the Destroyer layer in colliders of obstacles and test it. DUN
+// - add constant force to the obstacles that increases with overall  playtime. Caps at some point, of course. DUN
 // - change the player - they shall move basing on force, too.
-// - Implement the match manager.
+// - Implement the match manager. INPR

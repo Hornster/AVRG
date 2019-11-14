@@ -30,5 +30,25 @@ namespace Assets.Scripts.Shared.Helpers
         {
             return RotateVector(rotation, normalizedRotationReference) * length;
         }
+        /// <summary>
+        /// Returns a dot product of two provided vectors.
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static float CalcDotProduct(Vector3 v1, Vector3 v2)
+        {
+            return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+        }
+        /// <summary>
+        /// Returns cosinus of angle between two vectors.
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static float CalcAngleBetweenVectors(Vector3 v1, Vector3 v2)
+        {
+            return CalcDotProduct(v1.normalized, v2.normalized);
+        }
     }
 }

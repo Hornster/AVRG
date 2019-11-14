@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour
     private InputController _inputController;
     [SerializeField]
     private float _maxVelocity = 500f;
+    [SerializeField]
+    private const float _maxHealth = 10000f;
+    [SerializeField]
+    private float _currentHealth = _maxHealth;
 
     private WeaponsManager _weaponsManager;
     private IWeapon _currentWeapon;
