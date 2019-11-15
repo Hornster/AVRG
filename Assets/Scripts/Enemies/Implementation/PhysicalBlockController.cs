@@ -24,6 +24,10 @@ namespace Assets.Scripts.Enemies.Implementation
         [SerializeField]
         private LayerMask _destroyingLayers;
         /// <summary>
+        /// Defines who can receive damage upon collision with this object.
+        /// </summary>
+        [SerializeField] private LayerMask _dealsDamageToLayers;
+        /// <summary>
         /// Highlight color of the selected obstacle.
         /// </summary>
         [SerializeField]
@@ -84,7 +88,18 @@ namespace Assets.Scripts.Enemies.Implementation
             if ((layerBitValue & _destroyingLayers.value) != 0)
             {
                 this.Deactivate();
-                this.DeactivationCallback(ActivationIndex);
+            }
+            else if ((layerBitValue & _dealsDamageToLayers) != 0)
+            {
+                var damageReceiver = collision.gameObject.GetComponent<IDamageReceiver>();
+
+                if (damageReceiver == null)
+                {
+                    return;
+                }
+
+                DealDamage(damageReceiver);
+                this.Deactivate();
             }
             
         }
@@ -191,6 +206,7 @@ namespace Assets.Scripts.Enemies.Implementation
             _rigidBody.velocity = Vector3.zero;
             _rigidBody.angularVelocity = Vector3.zero;
             gameObject.SetActive(false);
+            this.DeactivationCallback(ActivationIndex);
         }
         /// <summary>
         /// Deals damage to the receiver.

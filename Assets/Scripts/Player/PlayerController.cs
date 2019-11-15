@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Assets.Scripts.Data;
+using Assets.Scripts.Match.Entities;
 using Assets.Scripts.Player.Interface;
 using Assets.Scripts.Player.Weapons;
 using Assets.Scripts.Shared.Enums;
@@ -13,7 +14,7 @@ using UnityEngine;
 /// 
 /// Default controller for the player.
 /// </summary>
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageReceiver
 {
     [SerializeField]
     private InputController _inputController;
@@ -23,6 +24,10 @@ public class PlayerController : MonoBehaviour
     private const float _maxHealth = 10000f;
     [SerializeField]
     private float _currentHealth = _maxHealth;
+
+    [SerializeField] private float _mass = 10.0f;
+
+    private Vector3 _currentVelocity;
 
     private WeaponsManager _weaponsManager;
     private IWeapon _currentWeapon;
@@ -68,19 +73,19 @@ public class PlayerController : MonoBehaviour
     void MovePlayer(Vector3 axes)
     {
         float timeDelta = Time.deltaTime;
-        Vector3 currentVelocity = axes;
-        currentVelocity *= _maxVelocity;
-        currentVelocity *= timeDelta;
+        _currentVelocity = axes;
+        _currentVelocity *= _maxVelocity;
+        _currentVelocity *= timeDelta;
 
         //The editor itself applies correction to movement accordingly to player rotation,
         //but the deployed app does not. Apply it manually so the player will walk forward always
         //in the direction they're looking.
         if (Application.isEditor == false)
         {
-            currentVelocity = VectorManipulator.RotateVector(transform.rotation, currentVelocity);
+            _currentVelocity = VectorManipulator.RotateVector(transform.rotation, _currentVelocity);
         }
 
-        gameObject.transform.Translate(currentVelocity);
+        gameObject.transform.Translate(_currentVelocity);
     }
     /// <summary>
     /// Calculates the direction vector, where the player is currently looking.
@@ -109,5 +114,23 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 axes = ReadAxes();
         MovePlayer(axes);
+    }
+    /// <summary>
+    /// Called when player shall receive damage.
+    /// </summary>
+    /// <param name="damage">Amount of damage.</param>
+    public void ReceiveDamage(float damage)
+    {
+        Debug.Log("Health was: " + _currentHealth);
+        _currentHealth -= damage;
+        Debug.Log("Now is: " + _currentHealth);
+    }
+    /// <summary>
+    /// Returns kinetic data of the player.
+    /// </summary>
+    /// <returns></returns>
+    public KineticObjectData GetKineticData()
+    {
+        return new KineticObjectData {Velocity = _currentVelocity, Mass = _mass};
     }
 }
