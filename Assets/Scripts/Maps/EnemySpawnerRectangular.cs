@@ -31,9 +31,9 @@ namespace Assets.Scripts.Maps
         public Vector3 EnemiesConstantForce { get; set; }
 
         [SerializeField]
-        private int _maxObstaclesPerPool = SpawnerConstants.MaxPoolObstacles;
+        private int _maxObstaclesPerPool = GameConstants.MaxPoolObstacles;
         [SerializeField]
-        private int _startingObstaclesPerPool = SpawnerConstants.StartingPoolObstacles;
+        private int _startingObstaclesPerPool = GameConstants.StartingPoolObstacles;
 
         /// <summary>
         /// Stores all available enemy pools.
@@ -92,6 +92,13 @@ namespace Assets.Scripts.Maps
                 SpawnObstacle();
                 _currentCooldown = 0.0f;
             }
+        }
+
+        public void ResetSpawner()
+        {
+            //TODO - modify spawner - make it use local variables during the match, the values provided during startup should
+            //TODO remembered and restored upon stage reset. Add resetting methods to pools (reset obstacles positions and spawning
+            //TODO values). Connect callbacks from MatchController to ResultsMenuController and player.
         }
     }
 }

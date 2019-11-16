@@ -68,6 +68,26 @@ namespace Assets.Scripts.Player.GUI
             UpdateHealthBarWidth(seenPart);
             UpdateHealthBarColor(seenPart);
         }
-
+        /// <summary>
+        /// Resets player's healthbar.
+        /// </summary>
+        public void ResetHealthBar()
+        {
+            UpdateHealthBar(1.0f);
+        }
+        /// <summary>
+        /// Hides health bar.
+        /// </summary>
+        public void HideHealthBar()
+        {
+            gameObject.SetActive(false);
+        }
+        /// <summary>
+        /// Shows health bar.
+        /// </summary>
+        public void ShowHealthBar()
+        {
+            gameObject.SetActive(true);
+        }
     }
 }

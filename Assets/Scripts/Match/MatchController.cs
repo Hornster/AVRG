@@ -3,7 +3,9 @@
 using System;
 using Assets.Scripts.Maps;
 using Assets.Scripts.Maps.Interfaces;
+using Assets.Scripts.Player.GUI;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Match
 {
@@ -18,6 +20,14 @@ namespace Assets.Scripts.Match
         /// Spawns enemies.
         /// </summary>
         [SerializeField] private EnemySpawnerRectangular _enemySpawner;
+        /// <summary>
+        /// Communication with GUI.
+        /// </summary>
+        [SerializeField] private GuiManager _guiManager;
+        /// <summary>
+        /// Reference to the player.
+        /// </summary>
+        [SerializeField] private PlayerController _player;
         /// <summary>
         /// By how many seconds will the spawn cooldown decrease after certain time passes?
         /// </summary>
@@ -90,6 +100,30 @@ namespace Assets.Scripts.Match
                     _spawnTimeChangeIntervalTimer += lastFrameTime;
                 }
             }
+        }
+        /// <summary>
+        /// The round has ended.
+        /// </summary>
+        public void RoundEnded()
+        {
+            _guiManager.RoundEnded();
+        }
+        /// <summary>
+        /// Callback method - user decided to leave the level.
+        /// </summary>
+        public void RoundExit()
+        {
+            //TODO make it return to menu, when it will be created.
+            Application.Quit();
+        }
+        /// <summary>
+        /// Callback method - user decided to restart the level.
+        /// </summary>
+        public void RoundRestart()
+        {
+            _enemySpawner.ResetSpawner();
+            _player.ResetPlayer();
+            _guiManager.RestartRound();
         }
     }
 }

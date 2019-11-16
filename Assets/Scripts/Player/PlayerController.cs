@@ -10,6 +10,7 @@ using Assets.Scripts.Player.Weapons;
 using Assets.Scripts.Shared.Enums;
 using Assets.Scripts.Shared.Helpers;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Author: Karol Kozuch
@@ -37,7 +38,16 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     /// </summary>
     [SerializeField] private GuiManager _guiManager;
 
+    /// <summary>
+    /// Callback to the match controller. Will be called when current round ends (player loses all hp).
+    /// </summary>
+    [SerializeField] private UnityAction _roundEndedEvent;
+
     private Vector3 _currentVelocity;
+    /// <summary>
+    /// Starting position of the player, acquired upon initialization of the script. Do not change.
+    /// </summary>
+    private Vector3 _startingPosition;
 
     private WeaponsManager _weaponsManager;
     private IWeapon _currentWeapon;
@@ -45,6 +55,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     // Start is called before the first frame update
     void Start()
     {
+        _startingPosition = transform.position;
         //Invert the ratio in order to use multiplication instead of division later on. Faster calculations.
         _energyToHPRatio = 1.0f / _energyToHPRatio;
         _weaponsManager = GetComponentInChildren<WeaponsManager>();
@@ -105,7 +116,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     /// <returns></returns>
     private Vector3 CalcDirectionVector()
     {
-        return transform.rotation * PlayerConstants.PlayerRotationRefVector;
+        return transform.rotation * GameConstants.PlayerRotationRefVector;
     }
     /// <summary>
     /// Uses primary weapon.
@@ -145,6 +156,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
         if (_currentHealth < 0.0f)
         {
             _currentHealth = percentageHP = 0.0f;
+            _roundEndedEvent();
         }
 
         _guiManager.HealthBarController.UpdateHealthBar(percentageHP);
@@ -156,5 +168,13 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     public KineticObjectData GetKineticData()
     {
         return new KineticObjectData {Velocity = _currentVelocity, Mass = _mass};
+    }
+    /// <summary>
+    /// Resets the player's stats.
+    /// </summary>
+    public void ResetPlayer()
+    {
+        transform.position = _startingPosition;
+        _currentHealth = _maxHealth;
     }
 }

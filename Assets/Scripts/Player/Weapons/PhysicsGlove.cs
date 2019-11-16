@@ -49,7 +49,7 @@ namespace Assets.Scripts.Player.Weapons
             if (HookingData.HookedObstacle != null)
             {
                 float halfDistance = HookingData.HookingDistMagnitude * 0.5f;
-                Vector3 secondControlPoint = VectorManipulator.CreateVectorFromRotation(PlayerConstants.PlayerRotationRefVector, transform.rotation, halfDistance);
+                Vector3 secondControlPoint = VectorManipulator.CreateVectorFromRotation(GameConstants.PlayerRotationRefVector, transform.rotation, halfDistance);
                 secondControlPoint += transform.position;
                 _lineRenderer.DrawBezierSquared(transform.position, secondControlPoint, HookingData.HookedObstacle.GetPosition());
             }
@@ -109,7 +109,7 @@ namespace Assets.Scripts.Player.Weapons
             Vector3 currentDistance = HookingData.HookedObstacle.GetPosition() - transform.position;
             var forceCalculator = ForceCalculator.GetInstance();
             Vector3 glovePositionalForce = forceCalculator.GlovePositionalForce(currentDistance, HookingData.HookingRefDistance, Strength);
-            Vector3 gloveRotationalForce = forceCalculator.GloveRotationalForce(HookingData.HookingRefDistance, PlayerConstants.PlayerRotationRefVector, transform.rotation, Strength);
+            Vector3 gloveRotationalForce = forceCalculator.GloveRotationalForce(HookingData.HookingRefDistance, GameConstants.PlayerRotationRefVector, transform.rotation, Strength);
             
             Vector3 dampeningForce = forceCalculator.DampeningForce(HookingData.HookedObstacle.GetVelocity(), _dampeningFactor, Strength);
             
