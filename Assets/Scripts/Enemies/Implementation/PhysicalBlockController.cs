@@ -75,7 +75,7 @@ namespace Assets.Scripts.Enemies.Implementation
 
             _simpleMover = GetComponent<SimpleMover>();
 
-            Deactivate();
+            ResetObstacle();
         }
         /// <summary>
         /// Checks what object has this block collided with.
@@ -89,7 +89,7 @@ namespace Assets.Scripts.Enemies.Implementation
             {
                 this.Deactivate();
             }
-            else if ((layerBitValue & _dealsDamageToLayers) != 0)
+            else if ((layerBitValue & _dealsDamageToLayers.value) != 0)
             {
                 var damageReceiver = collision.gameObject.GetComponent<IDamageReceiver>();
 
@@ -107,6 +107,15 @@ namespace Assets.Scripts.Enemies.Implementation
         void Update()
         {
 
+        }
+        /// <summary>
+        /// Resets the obstacle.
+        /// </summary>
+        private void ResetObstacle()
+        {
+            _rigidBody.velocity = Vector3.zero;
+            _rigidBody.angularVelocity = Vector3.zero;
+            gameObject.SetActive(false);
         }
         /// <summary>
         /// Applies force to object.
@@ -203,9 +212,7 @@ namespace Assets.Scripts.Enemies.Implementation
         /// </summary>
         public void Deactivate()
         {
-            _rigidBody.velocity = Vector3.zero;
-            _rigidBody.angularVelocity = Vector3.zero;
-            gameObject.SetActive(false);
+            ResetObstacle();
             this.DeactivationCallback(ActivationIndex);
         }
         /// <summary>
@@ -238,3 +245,4 @@ namespace Assets.Scripts.Enemies.Implementation
 // - add constant force to the obstacles that increases with overall  playtime. Caps at some point, of course. DUN
 // - change the player - they shall move basing on force, too.
 // - Implement the match manager. INPR
+// - Add obstacle - energy siphon. Upon using the glove, generates explosion that will damage the player for quite amount of hp (for example 20%).

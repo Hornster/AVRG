@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using Assets.Scripts.Data;
 using Assets.Scripts.Match.Entities;
+using Assets.Scripts.Player;
+using Assets.Scripts.Player.GUI;
 using Assets.Scripts.Player.Interface;
 using Assets.Scripts.Player.Weapons;
 using Assets.Scripts.Shared.Enums;
@@ -25,7 +27,15 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     [SerializeField]
     private float _currentHealth = _maxHealth;
 
-    [SerializeField] private float _mass = 10.0f;
+    [SerializeField] private float _mass = 1000.0f;
+    /// <summary>
+    /// How much energy is required to decrease the player's HP by 1 point?
+    /// </summary>
+    [SerializeField] private float _energyToHPRatio = 100.0f;
+    /// <summary>
+    /// Controller responsible for displaying player data to the user.
+    /// </summary>
+    [SerializeField] private GuiManager _guiManager;
 
     private Vector3 _currentVelocity;
 
@@ -35,6 +45,8 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     // Start is called before the first frame update
     void Start()
     {
+        //Invert the ratio in order to use multiplication instead of division later on. Faster calculations.
+        _energyToHPRatio = 1.0f / _energyToHPRatio;
         _weaponsManager = GetComponentInChildren<WeaponsManager>();
         if (_weaponsManager == null)
         {
@@ -121,9 +133,21 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     /// <param name="damage">Amount of damage.</param>
     public void ReceiveDamage(float damage)
     {
-        Debug.Log("Health was: " + _currentHealth);
+        if (_currentHealth <= 0.0f)
+        {
+            return;
+        }
+
+        damage *= _energyToHPRatio; //Scale the damage properly.
         _currentHealth -= damage;
-        Debug.Log("Now is: " + _currentHealth);
+
+        float percentageHP = _currentHealth / _maxHealth;
+        if (_currentHealth < 0.0f)
+        {
+            _currentHealth = percentageHP = 0.0f;
+        }
+
+        _guiManager.HealthBarController.UpdateHealthBar(percentageHP);
     }
     /// <summary>
     /// Returns kinetic data of the player.

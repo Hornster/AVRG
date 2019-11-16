@@ -145,8 +145,7 @@ namespace Assets.Scripts.Maps
             {
                 throw new Exception($"Tried to deactivate non-existing obstacle of index {obstacleIndex}!");
             }
-
-            obstacle.Deactivate();
+            
             _activeObstacles.Remove(obstacleIndex);
             _obstacles.Add(obstacle);
         }

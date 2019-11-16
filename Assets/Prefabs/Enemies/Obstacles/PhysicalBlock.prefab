@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2441844657362548423}
   - component: {fileID: 2441844657362548416}
   - component: {fileID: 364019631770293587}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: PhysicalBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,6 +128,9 @@ MonoBehaviour:
   _destroyingLayers:
     serializedVersion: 2
     m_Bits: 2048
+  _dealsDamageToLayers:
+    serializedVersion: 2
+    m_Bits: 5120
   _selectedColor: {r: 0.8584906, g: 0, b: 0, a: 0}
 --- !u!114 &364019631770293587
 MonoBehaviour:
