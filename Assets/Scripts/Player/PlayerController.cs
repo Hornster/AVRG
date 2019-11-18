@@ -24,10 +24,14 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     [SerializeField]
     private float _maxVelocity = 500f;
     [SerializeField]
-    private const float _maxHealth = 10000f;
+    private float _maxHealth = 10000f;
     [SerializeField]
-    private float _currentHealth = _maxHealth;
+    private float _currentHealth;
 
+    private bool _isAlive = true;
+    /// <summary>
+    /// The mass of the player. Has influence on damage received by the player.
+    /// </summary>
     [SerializeField] private float _mass = 1000.0f;
     /// <summary>
     /// How much energy is required to decrease the player's HP by 1 point?
@@ -41,7 +45,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     /// <summary>
     /// Callback to the match controller. Will be called when current round ends (player loses all hp).
     /// </summary>
-    [SerializeField] private UnityAction _roundEndedEvent;
+    [SerializeField] private UnityEvent _roundEndedEvent;
 
     private Vector3 _currentVelocity;
     /// <summary>
@@ -56,6 +60,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     void Start()
     {
         _startingPosition = transform.position;
+        ResetPlayer();
         //Invert the ratio in order to use multiplication instead of division later on. Faster calculations.
         _energyToHPRatio = 1.0f / _energyToHPRatio;
         _weaponsManager = GetComponentInChildren<WeaponsManager>();
@@ -135,6 +140,11 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     // Update is called once per frame
     void Update()
     {
+        if (!_isAlive)
+        {
+            return;
+        }
+
         Vector3 axes = ReadAxes();
         MovePlayer(axes);
     }
@@ -153,10 +163,11 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
         _currentHealth -= damage;
 
         float percentageHP = _currentHealth / _maxHealth;
-        if (_currentHealth < 0.0f)
+        if (_currentHealth <= 0.0f)
         {
             _currentHealth = percentageHP = 0.0f;
-            _roundEndedEvent();
+            _isAlive = false;
+            _roundEndedEvent.Invoke();
         }
 
         _guiManager.HealthBarController.UpdateHealthBar(percentageHP);
@@ -176,5 +187,6 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     {
         transform.position = _startingPosition;
         _currentHealth = _maxHealth;
+        _isAlive = true;
     }
 }

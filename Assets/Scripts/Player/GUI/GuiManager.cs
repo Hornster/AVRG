@@ -23,6 +23,11 @@ namespace Assets.Scripts.Player.GUI
         
         [SerializeField]
         private GameTimeController _gameTimeController;
+
+        void Start()
+        {
+            _gameTimeController.RestartCounting();
+        }
         /// <summary>
         /// Gets the time which the player was playing for.
         /// </summary>

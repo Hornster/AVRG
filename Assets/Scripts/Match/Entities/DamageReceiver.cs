@@ -56,4 +56,3 @@ namespace Assets.Scripts.Match.Entities
         }
     }
 }
-//TODO add to collider gameobject on player and check if can find the Player script.

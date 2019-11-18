@@ -33,6 +33,10 @@ namespace Assets.Scripts.Match
         /// </summary>
         [SerializeField] private float _spawnAccelerationStep = 0.05f;
         /// <summary>
+        /// Starting spawn cooldown.
+        /// </summary>
+        [SerializeField] private readonly float _spawnMaxTime = 2f;
+        /// <summary>
         /// Minimal allowed spawn cooldown. Player is not a robot, after all.
         /// </summary>
         [SerializeField] private float _spawnMinTime = 0.1f;
@@ -65,7 +69,6 @@ namespace Assets.Scripts.Match
             {
                 throw new Exception("No enemy spawner applied to match controller!");
             }
-            _constantForceDirection = _constantForceDirection.normalized;
             _enemySpawner.EnemiesConstantForce = GetConstantForceVector();
         }
         void Update()
@@ -74,9 +77,13 @@ namespace Assets.Scripts.Match
             UpdateSpawnValues(lastFrameTime);
             
         }
-
+        /// <summary>
+        /// Calculates constant force vector.
+        /// </summary>
+        /// <returns></returns>
         private Vector3 GetConstantForceVector()
         {
+            _constantForceDirection = _constantForceDirection.normalized;
             return _constantForceDirection * _constantForceStrength;
         }
         /// <summary>
@@ -121,7 +128,7 @@ namespace Assets.Scripts.Match
         /// </summary>
         public void RoundRestart()
         {
-            _enemySpawner.ResetSpawner();
+            _enemySpawner.ResetSpawner(_spawnMaxTime, GetConstantForceVector());
             _player.ResetPlayer();
             _guiManager.RestartRound();
         }

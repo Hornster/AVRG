@@ -110,7 +110,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.06, y: 0.18}
+  m_AnchoredPosition: {x: -0.05999756, y: 0.17999268}
   m_SizeDelta: {x: 881, y: 339}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7743991332890993472
@@ -259,6 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46e9c0b085c59684d8f732c164267cfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healthBar: {fileID: 2171882772299086525}
   _healthBarFg: {fileID: 5452319928250953603}
   _healthBarImage: {fileID: 3392255654485788942}
   _lowHPBarColor: {r: 1, g: 0, b: 0, a: 0.5019608}

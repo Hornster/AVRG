@@ -15,16 +15,6 @@ namespace Assets.Scripts.Player.GUI
     public class ResultsMenuController : MonoBehaviour
     {
         /// <summary>
-        /// Handler - when user clicks the Exit button.
-        /// </summary>
-        [SerializeField]
-        private UnityEvent _onExitLevel;
-        /// <summary>
-        /// Handler - when user clicks the Restart button.
-        /// </summary>
-        [SerializeField]
-        private UnityEvent _onRestartLevel;
-        /// <summary>
         /// Control that shows the amount of time the player survived.
         /// </summary>
         [SerializeField]
@@ -33,7 +23,7 @@ namespace Assets.Scripts.Player.GUI
 
         void Start()
         {
-            gameObject.SetActive(false);
+            
         }
         /// <summary>
         /// Shows results menu together with the time the player survived.

@@ -149,6 +149,19 @@ namespace Assets.Scripts.Maps
             _activeObstacles.Remove(obstacleIndex);
             _obstacles.Add(obstacle);
         }
+        /// <summary>
+        /// Resets positions of all obstacles in the pool and deactivates them.
+        /// </summary>
+        public void ResetPool()
+        {
+            var obstacleKeys = _activeObstacles.Keys.ToList();
+            foreach (var obstacleKey in obstacleKeys)
+            {
+                IPoolableObstacle obstacle;
+                _activeObstacles.TryGetValue(obstacleKey, out obstacle);
+                obstacle.Deactivate();
+            }
+        }
     }
 }
 //TODO: Add callback to IPoolables so they can deactivate themselves when necessary. DUN

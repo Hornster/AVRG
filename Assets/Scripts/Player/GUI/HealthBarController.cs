@@ -11,6 +11,10 @@ namespace Assets.Scripts.Player.GUI
     public class HealthBarController : MonoBehaviour
     {
         /// <summary>
+        /// Reference to whole health bar. Used to disable and enable health bar.
+        /// </summary>
+        [SerializeField] private GameObject _healthBar;
+        /// <summary>
         /// Transform of the healthbar. Used for scaling.
         /// </summary>
         [SerializeField]
@@ -80,14 +84,14 @@ namespace Assets.Scripts.Player.GUI
         /// </summary>
         public void HideHealthBar()
         {
-            gameObject.SetActive(false);
+            _healthBar.SetActive(false);
         }
         /// <summary>
         /// Shows health bar.
         /// </summary>
         public void ShowHealthBar()
         {
-            gameObject.SetActive(true);
+            _healthBar.SetActive(true);
         }
     }
 }

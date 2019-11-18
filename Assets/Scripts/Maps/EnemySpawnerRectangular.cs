@@ -94,10 +94,18 @@ namespace Assets.Scripts.Maps
             }
         }
 
-        public void ResetSpawner()
+        public void ResetSpawner(float spawnCooldown, Vector3 enemiesConstantForce)
         {
-            //TODO - modify spawner - make it use local variables during the match, the values provided during startup should
-            //TODO remembered and restored upon stage reset. Add resetting methods to pools (reset obstacles positions and spawning
+            foreach (var enemyPool in _enemiesPools.Values)
+            {
+                enemyPool.ResetPool();
+            }
+
+            SpawnCooldown = spawnCooldown;
+            EnemiesConstantForce = enemiesConstantForce;
+            _currentCooldown = 0.0f;
+            //TODO - modify spawner - make it use local variables during the match, the values provided during startup should   DUN
+            //TODO remembered and restored upon stage reset. Add resetting methods to pools (reset obstacles positions and spawning DIN
             //TODO values). Connect callbacks from MatchController to ResultsMenuController and player.
         }
     }
