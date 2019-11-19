@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     /// <returns></returns>
     Vector3 ReadAxes()
     {
-        if (Application.isEditor)
+        if (_inputController.ControllerDetected==false)
         {
             return _inputController.DefaultAxesValues;
         }
@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
         //The editor itself applies correction to movement accordingly to player rotation,
         //but the deployed app does not. Apply it manually so the player will walk forward always
         //in the direction they're looking.
-        if (Application.isEditor == false)
+        if (_inputController.ControllerDetected==false == false)
         {
             _currentVelocity = VectorManipulator.RotateVector(transform.rotation, _currentVelocity);
         }

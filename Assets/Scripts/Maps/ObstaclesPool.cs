@@ -110,7 +110,6 @@ namespace Assets.Scripts.Maps
         /// Spawns obstacle using provided obstacle data, if possible.
         /// </summary>
         /// <param name="obstacleData">Data concerning the obstacle.</param>
-        /// <param name="constantForce">Constant force that will push the object onwards.</param>
         public void SpawnObstacle(ObstacleIniData obstacleData)
         {
             //If there are no free obstacles left - create new one. Do not use it yet - it has to be initialized first
@@ -161,6 +160,8 @@ namespace Assets.Scripts.Maps
                 _activeObstacles.TryGetValue(obstacleKey, out obstacle);
                 obstacle.Deactivate();
             }
+
+            _lastAssignedIndex = 0;
         }
     }
 }

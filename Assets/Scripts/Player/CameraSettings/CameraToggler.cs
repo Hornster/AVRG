@@ -16,6 +16,8 @@ namespace Assets.Scripts.Player.CameraSettings
     public class CameraToggler : MonoBehaviour
     {
         [SerializeField]
+        private InputController _inputController;
+        [SerializeField]
         private GameObject _regularCamera;
         [SerializeField]
         private GameObject _vrCamera;
@@ -31,7 +33,7 @@ namespace Assets.Scripts.Player.CameraSettings
         /// </summary>
         private void SelectCamera()
         {
-            if (Application.isEditor)
+            if (_inputController.ControllerDetected==false)
             {
                 _vrCamera.SetActive(false);
             }

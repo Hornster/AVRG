@@ -69,10 +69,11 @@ public class InputController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (Application.isEditor)
-        {
-            InputAllowed = true;
-        }
+        InputAllowed = true;
+        //if (Application.isEditor)
+        //{
+        //    InputAllowed = true;
+        //}
     }
 
     // Update is called once per frame
@@ -83,7 +84,7 @@ public class InputController : MonoBehaviour
             return;
         }
 
-        if (Application.isEditor)
+        if (ControllerDetected == false)
         {
             CheckDefaultInput();
             CheckMouseInput();
@@ -101,7 +102,9 @@ public class InputController : MonoBehaviour
         OVRManager.HMDMounted -= UserActivated;
         OVRManager.HMDUnmounted -= UserDeactivated;
     }
-
+    /// <summary>
+    /// Performs checks of the VR controller input.
+    /// </summary>
     private void CheckVRInput()
     {
         if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
@@ -127,7 +130,9 @@ public class InputController : MonoBehaviour
         TouchPadAxis = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad);
         TriggerAxis = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger);
     }
-
+    /// <summary>
+    /// Performs checks of the default input.
+    /// </summary>
     private void CheckDefaultInput()
     {
         DefaultAxesValues = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
@@ -149,7 +154,9 @@ public class InputController : MonoBehaviour
             _onMouseLeftDown?.Invoke();
         }
     }
-
+    /// <summary>
+    /// Checks input from the mouse.
+    /// </summary>
     private void CheckMouseInput()
     {
         MouseAxesValues = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
@@ -158,7 +165,11 @@ public class InputController : MonoBehaviour
             _onMouseAxesChange?.Invoke(MouseAxesValues);
         }
     }
-
+    /// <summary>
+    /// Checks if floating point vector differs from 0.
+    /// </summary>
+    /// <param name="vector"></param>
+    /// <returns></returns>
     private bool ChkIfNonZeroVector(Vector2 vector)
     {
         const float detectionThreshold = 0.00001f;

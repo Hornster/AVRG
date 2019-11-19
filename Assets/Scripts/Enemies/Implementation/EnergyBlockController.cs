@@ -202,3 +202,5 @@ namespace Assets.Scripts.Enemies.Implementation
         }
     }
 }
+
+//TODO Make it work like the physical equivalent. Use abstract class for duplicate methods.

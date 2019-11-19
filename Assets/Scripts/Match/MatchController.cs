@@ -45,9 +45,9 @@ namespace Assets.Scripts.Match
         /// </summary>
         [SerializeField] private float _spawnTimeChangeInterval = 5.0f;
         /// <summary>
-        /// Constant force value. Constant force is applied to each obstacle to make it move towards the player.
+        /// Value of the constant force at the beginning of the round.
         /// </summary>
-        [SerializeField] private float _constantForceStrength = 10.0f;
+        [SerializeField] private float _constantForceStartStrength = 10.0f;
         /// <summary>
         /// By how much will be the constant force increased each passed time interval.
         /// </summary>
@@ -61,10 +61,15 @@ namespace Assets.Scripts.Match
         /// </summary>
         private float _spawnTimeChangeIntervalTimer = 0.0f;
         /// <summary>
+        /// Constant force value. Constant force is applied to each obstacle to make it move towards the player.
+        /// </summary>
+        private float _constantForceStrength;
+        /// <summary>
         /// Normalizes the force direction vector.
         /// </summary>
         void Start()
         {
+            ResetLocalValues();
             if (_enemySpawner == null)
             {
                 throw new Exception("No enemy spawner applied to match controller!");
@@ -109,6 +114,13 @@ namespace Assets.Scripts.Match
             }
         }
         /// <summary>
+        /// Resets local values.
+        /// </summary>
+        private void ResetLocalValues()
+        {
+            _constantForceStrength = _constantForceStartStrength;
+        }
+        /// <summary>
         /// The round has ended.
         /// </summary>
         public void RoundEnded()
@@ -128,6 +140,7 @@ namespace Assets.Scripts.Match
         /// </summary>
         public void RoundRestart()
         {
+            ResetLocalValues();
             _enemySpawner.ResetSpawner(_spawnMaxTime, GetConstantForceVector());
             _player.ResetPlayer();
             _guiManager.RestartRound();

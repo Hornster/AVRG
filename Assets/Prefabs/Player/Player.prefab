@@ -531,10 +531,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputController: {fileID: 5457375876019816617}
   _maxVelocity: 5
+  _maxHealth: 10000
   _currentHealth: 10000
   _mass: 10
   _energyToHPRatio: 100
   _guiManager: {fileID: 0}
+  _roundEndedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5457375876019816617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,6 +563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820edaf1e24bc7c478350747dd7a0378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputController: {fileID: 5457375876019816617}
   _regularCamera: {fileID: 3776860531876481227}
   _vrCamera: {fileID: 422663122992029787}
 --- !u!114 &844555037964528027
