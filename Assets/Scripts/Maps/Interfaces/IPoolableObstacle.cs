@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Factories;
+using Assets.Scripts.Shared.Enums;
 using UnityEngine.Events;
 
 namespace Assets.Scripts.Maps.Interfaces

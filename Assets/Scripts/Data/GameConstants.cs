@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -14,6 +15,12 @@ namespace Assets.Scripts.Data
     /// </summary>
     public class GameConstants
     {
+        /////////////////////
+        ///////Coords////////
+        /////////////////////
+        public const string X = "x";
+        public const string Y = "y";
+        public const string Z = "z";
         /////////////////////
         //////Spawners///////
         /////////////////////

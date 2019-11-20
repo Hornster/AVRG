@@ -1,11 +1,10 @@
-﻿using System;
-using Assets.Scripts.Enemies.Interface;
-using Assets.Scripts.Factories;
+﻿using Assets.Scripts.Enemies.Interface;
+using Assets.Scripts.Match.Entities;
 using Assets.Scripts.Shared.Enums;
 using Assets.Scripts.Shared.Helpers;
+using System;
+using Assets.Scripts.Factories;
 using UnityEngine;
-using UnityEngine.Events;
-using Object = System.Object;
 
 namespace Assets.Scripts.Enemies.Implementation
 {
@@ -14,7 +13,7 @@ namespace Assets.Scripts.Enemies.Implementation
     /// 
     /// Controller for the energy blocks (obstacles).
     /// </summary>
-    public class EnergyBlockController : MonoBehaviour, IObstacle
+    public class EnergyBlockController : Block, IDamageDealer
     {
         /// <summary>
         /// All layers that trigger destruction of this block.
@@ -22,32 +21,19 @@ namespace Assets.Scripts.Enemies.Implementation
         [SerializeField]
         private LayerMask _destroyingLayers;
         /// <summary>
+        /// Defines who can receive damage upon collision with this object.
+        /// </summary>
+        [SerializeField] private LayerMask _dealsDamageToLayers;
+        /// <summary>
         /// Highlight color of the selected obstacle.
         /// </summary>
         [SerializeField]
         private Color _selectedColor;
-        /// <summary>
-        /// Index assigned to poolable obstacle upon activation. Used by the owner pool to recognize the object in collection.
-        /// </summary>
-        public uint ActivationIndex { get; private set; }
-        /// <summary>
-        /// Reference to callback that can be used by the obstacle to call its pool when the obstacle has to be
-        /// deactivated.
-        /// </summary>
-        public UnityAction<uint> DeactivationCallback { get; set; }
 
         /// <summary>
-        /// Renderer of the object, stores the material.
+        /// Is the current obstacle used?
         /// </summary>
-        private Renderer _renderer;
-        /// <summary>
-        /// Rigidbody component of the object.
-        /// </summary>
-        private Rigidbody _rigidBody;
-        /// <summary>
-        /// Script that constantly applies constant force.
-        /// </summary>
-        private SimpleMover _simpleMover;
+        private bool _isActive = false;
         /// <summary>
         /// Material of the object.
         /// </summary>
@@ -58,31 +44,7 @@ namespace Assets.Scripts.Enemies.Implementation
         /// </summary>
         private const ProjectileTypeEnum ObjectType = ProjectileTypeEnum.Physical;
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            _rigidBody = GetComponent<Rigidbody>();
-            if (_rigidBody == null)
-            {
-                throw new Exception("Error - rigid body not found in energy block.");
-            }
 
-            _renderer = GetComponent<Renderer>();
-            if (_renderer == null)
-            {
-                throw new Exception("Error - renderer (and material) not found for this energy block.");
-            }
-
-            _simpleMover = GetComponent<SimpleMover>();
-
-            Deactivate();
-        }
-
-
-        void Update()
-        {
-
-        }
         /// <summary>
         /// Checks what object has this block collided with.
         /// </summary>
@@ -94,16 +56,93 @@ namespace Assets.Scripts.Enemies.Implementation
             if ((layerBitValue & _destroyingLayers.value) != 0)
             {
                 this.Deactivate();
-                this.DeactivationCallback(ActivationIndex);
+                //this.DeactivationCallback(ActivationIndex);
+            }
+            else if ((layerBitValue & _dealsDamageToLayers.value) != 0)
+            {
+                var damageReceiver = collision.gameObject.GetComponent<IDamageReceiver>();
+
+                if (damageReceiver == null)
+                {
+                    return;
+                }
+
+                DealDamage(damageReceiver);
+                this.Deactivate();
+            }
+            else
+            {
+                var otherBlock = collision.gameObject.GetComponent<EnergyBlockController>();
+                if (otherBlock != null)
+                {
+                    MergeBlocks(otherBlock);
+                }
+            }
+        }
+        /// <summary>
+        /// Merges two energy blocks together. Smaller block will be deactivated later.
+        /// Bigger block will get bigger on the smallest dimension.
+        /// </summary>
+        private void MergeBlocks(EnergyBlockController otherBlock)
+        {
+            var calculator = Calculations.GetInstance();
+            float thisCuboidVolume = calculator.CalcCuboidVolume(transform.localScale);
+            float otherCuboidVolume = calculator.CalcCuboidVolume(otherBlock.transform.localScale);
+
+            var biggerCuboid = thisCuboidVolume >= otherCuboidVolume ? this : otherBlock;
+            var smallerCuboid = biggerCuboid == this ? otherBlock : this;
+            Vector3 biggerCuboidDims = biggerCuboid.transform.localScale;
+            //Find out which dimension is the biggest, which smallest and which is in between.
+            float biggestDim = Math.Max(biggerCuboidDims.x, Math.Max(biggerCuboidDims.y, biggerCuboidDims.z));
+            float smallestDim = Math.Min(biggerCuboidDims.x, Math.Min(biggerCuboidDims.y, biggerCuboidDims.z));
+            float mediocreDim = biggerCuboidDims.z;
+            if (biggerCuboidDims.x < biggestDim && biggerCuboidDims.x > smallestDim)
+            {
+                mediocreDim = biggerCuboidDims.x;
+            }
+            else if (biggerCuboidDims.y < biggestDim && biggerCuboidDims.y > smallestDim)
+            {
+                mediocreDim = biggerCuboidDims.y;
+            }
+            //Calculate value by which the smallest dimension of the bigger cuboid will be increased.
+            float smallestDimAddition = calculator.DivideVolumeByArea(biggestDim, mediocreDim,
+                Math.Min(thisCuboidVolume, otherCuboidVolume));
+            //Find which dimension of the scale vector is the smallest. Could use equal operator, but these are floats after all...
+            if (biggerCuboidDims.x < biggestDim && biggerCuboidDims.x < mediocreDim)
+            {
+                biggerCuboidDims.x += smallestDimAddition;
+            }
+            else if (biggerCuboidDims.y < biggestDim && biggerCuboidDims.y < mediocreDim)
+            {
+                biggerCuboidDims.y += smallestDimAddition;
+            }
+            else
+            {
+                biggerCuboidDims.z += smallestDimAddition;
             }
 
+            float newMass = _rigidBody.mass + otherBlock._rigidBody.mass;
+            Vector3 newConstantForce = _simpleMover.ConstantForce + otherBlock._simpleMover.ConstantForce;
+            //Prepare mutation data.
+            var mutationData = new ObstacleIniData()
+            {
+                Mass = newMass,
+                ConstantForce = newConstantForce,
+                Scale = biggerCuboidDims,
+                Rotation = transform.rotation,
+                ParentTransform = transform.parent,
+                Position = transform.position
+            };
+
+            otherBlock.Deactivate();
+            Mutate(mutationData);
         }
         /// <summary>
         /// Applies force to object.
         /// </summary>
         /// <param name="direction">Normalized force vector.</param>
         /// <param name="value">Value by which the vector shall be multiplied.</param>
-        public void ApplyForce(Vector3 direction, float value)
+        public override void ApplyForce(Vector3 direction, float value)
         {
             direction *= value;
             ApplyForce(direction);
@@ -112,7 +151,7 @@ namespace Assets.Scripts.Enemies.Implementation
         /// Applies force to object.
         /// </summary>
         /// <param name="direction">Direction of force, including its value.</param>
-        public void ApplyForce(Vector3 direction)
+        public override void ApplyForce(Vector3 direction)
         {
             _rigidBody.AddForce(direction);
         }
@@ -120,87 +159,19 @@ namespace Assets.Scripts.Enemies.Implementation
         /// Applies highlight to the object.
         /// </summary>
         /// <param name="team">What team color should the highlight have?</param>
-        public void SelectObject(TeamEnum team)
+        public override void SelectObject(TeamEnum team)
         {
             _renderer.material.color = ColorHelper.GetHighlightColor(team);
         }
-        /// <summary>
-        /// Resets the color of the material, removing the highlight.
-        /// </summary>
-        public void DeselectObject()
-        {
-            _renderer.material.color = Color.white;
-        }
-
         /// <summary>
         /// Checks if type of object is the same as type of the glove that tried to hook it.
         /// </summary>
         /// <param name="projectileType">Type of hooking glove.</param>
         /// <returns>True if types match, false otherwise.</returns>
-        public bool ChkGloveType(ProjectileTypeEnum projectileType)
+        public override bool ChkGloveType(ProjectileTypeEnum projectileType)
         {
             return projectileType == ObjectType;
         }
-
-
-        /// <summary>
-        /// Retrieves position of the gameobject.
-        /// </summary>
-        /// <returns></returns>
-        public Vector3 GetPosition()
-        {
-            return gameObject.transform.position;
-        }
-
-
-        /// <summary>
-        /// Returns the velocity of the block.
-        /// </summary>
-        /// <returns></returns>
-        public Vector3 GetVelocity()
-        {
-            return _rigidBody.velocity;
-        }
-
-        /// <summary>
-        /// Applies new data to obstacle.
-        /// </summary>
-        /// <param name="newData">Data to be applied to obstacle.</param>
-        public void Mutate(ObstacleIniData newData)
-        {
-            gameObject.transform.position = newData.Position;
-            gameObject.transform.localScale = newData.Scale;
-            gameObject.transform.rotation = newData.Rotation;
-            _rigidBody.mass = newData.Mass;
-
-            if (_simpleMover != null)
-            {
-                _simpleMover.ConstantForce = newData.ConstantForce;
-            }
-
-            if (newData.ParentTransform != null)
-            {
-                gameObject.transform.SetParent(newData.ParentTransform);
-            }
-        }
-        /// <summary>
-        /// Enables the gameobject of the obstacle.
-        /// </summary>
-        public void Activate(uint activationIndex)
-        {
-            gameObject.SetActive(true);
-            ActivationIndex = activationIndex;
-        }
-        /// <summary>
-        /// Disables the gameobject of the obstacle.
-        /// </summary>
-        public void Deactivate()
-        {
-            _rigidBody.velocity = Vector3.zero;
-            _rigidBody.angularVelocity = Vector3.zero;
-            gameObject.SetActive(false);
-        }
     }
 }
-
-//TODO Make it work like the physical equivalent. Use abstract class for duplicate methods.
+//TODO test merging abilities
