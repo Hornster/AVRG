@@ -22,7 +22,11 @@ namespace Assets.Scripts.Player.GUI
         /// <summary>
         /// Time since the beginning of the measurement.
         /// </summary>
-        public int CurrentPlayTime { get; private set; }
+        public TimeSpan CurrentPlayTime { get; private set; }
+        /// <summary>
+        /// Stores the time that the round started at.
+        /// </summary>
+        private TimeSpan _roundStartTime = new TimeSpan();
         
 
         void Update()
@@ -39,9 +43,9 @@ namespace Assets.Scripts.Player.GUI
         /// </summary>
         private void UpdateTimer()
         {
-            CurrentPlayTime += (int)(Time.deltaTime*1000);//Get milliseconds.
-            var formattedTime = new TimeSpan(0,0,0,0, CurrentPlayTime);
-            _gameElapsedTime.text = formattedTime.ToString(GameConstants.TimeFormat);// + $".{formattedTime.Milliseconds}";
+            var currentTime = DateTime.Now.TimeOfDay;
+            CurrentPlayTime = currentTime - _roundStartTime;//+= (int)(Time.deltaTime*1000);//Get milliseconds.
+            _gameElapsedTime.text = CurrentPlayTime.ToString(GameConstants.TimeFormat);// + $".{formattedTime.Milliseconds}";
         }
         /// <summary>
         /// Halts the clock.
@@ -55,7 +59,8 @@ namespace Assets.Scripts.Player.GUI
         /// </summary>
         public void RestartCounting()
         {
-            CurrentPlayTime = 0;
+            CurrentPlayTime = new TimeSpan();
+            _roundStartTime = DateTime.Now.TimeOfDay;
             _isCounting = true;
         }
         /// <summary>

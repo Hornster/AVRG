@@ -32,7 +32,7 @@ namespace Assets.Scripts.Player.GUI
         /// Gets the time which the player was playing for.
         /// </summary>
         /// <returns></returns>
-        public int GetPlayTime()
+        public TimeSpan GetPlayTime()
         {
             return _gameTimeController.CurrentPlayTime;
         }
@@ -45,7 +45,7 @@ namespace Assets.Scripts.Player.GUI
             _gameTimeController.StopCounting();
             _gameTimeController.HideTimer();
 
-            int playedTimeMs = _gameTimeController.CurrentPlayTime;
+            TimeSpan playedTimeMs = _gameTimeController.CurrentPlayTime;
             _resultsMenuController.ShowResultsMenu(playedTimeMs);
         }
         /// <summary>

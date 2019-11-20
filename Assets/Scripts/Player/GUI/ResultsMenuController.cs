@@ -28,11 +28,11 @@ namespace Assets.Scripts.Player.GUI
         /// <summary>
         /// Shows results menu together with the time the player survived.
         /// </summary>
-        /// <param name="playedTimeMs">The time the player survived, in milliseconds.</param>
-        public void ShowResultsMenu(int playedTimeMs)
+        /// <param name="playedTimeMs">The time the player survived.</param>
+        public void ShowResultsMenu(TimeSpan playedTimeMs)
         {
-            var formattedTime = new TimeSpan(0, 0, 0, 0, playedTimeMs);
-            _playTimeText.text = formattedTime.ToString(GameConstants.TimeFormat);
+            //var formattedTime = playedTimeMs;
+            _playTimeText.text = playedTimeMs.ToString(GameConstants.TimeFormat);
 
             gameObject.SetActive(true);
         }

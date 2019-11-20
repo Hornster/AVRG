@@ -30,9 +30,9 @@ namespace Assets.Scripts.Player.CameraSettings
         /// <param name="newAxesValue"></param>
         void RotatePlayer(Vector2 newAxesValue)
         {
-            var deltaTime = Time.deltaTime;
-            rotationX += _cameraSpeed.x * newAxesValue.x * deltaTime;
-            rotationY -= _cameraSpeed.y * newAxesValue.y * deltaTime;
+            //var deltaTime = Time.deltaTime;
+            rotationX += _cameraSpeed.x * newAxesValue.x;// * deltaTime;
+            rotationY -= _cameraSpeed.y * newAxesValue.y;// * deltaTime;
 
             transform.localEulerAngles = new Vector3(rotationY, rotationX, 0.0f);
         }

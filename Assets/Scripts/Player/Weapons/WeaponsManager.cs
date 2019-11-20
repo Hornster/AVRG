@@ -25,7 +25,7 @@ namespace Assets.Scripts.Player.Weapons
         [SerializeField]
         private IWeaponsFactory _weaponsFactory;
 
-        void Start()
+        void Awake()
         {
             _weaponsFactory = gameObject.GetComponentInChildren<IWeaponsFactory>();
             if (_weaponsFactory == null)
