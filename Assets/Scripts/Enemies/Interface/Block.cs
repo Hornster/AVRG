@@ -35,7 +35,7 @@ namespace Assets.Scripts.Enemies.Interface
         /// <summary>
         /// Is the current obstacle used?
         /// </summary>
-        protected bool _isActive = false;
+        protected bool _isActive;
 
         /// <summary>
         /// Index assigned to poolable obstacle upon activation. Used by the owner pool to recognize the object in collection.

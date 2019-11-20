@@ -29,11 +29,7 @@ namespace Assets.Scripts.Enemies.Implementation
         /// </summary>
         [SerializeField]
         private Color _selectedColor;
-
-        /// <summary>
-        /// Is the current obstacle used?
-        /// </summary>
-        private bool _isActive = false;
+        
         /// <summary>
         /// Material of the object.
         /// </summary>
@@ -85,6 +81,11 @@ namespace Assets.Scripts.Enemies.Implementation
         /// </summary>
         private void MergeBlocks(EnergyBlockController otherBlock)
         {
+            if (otherBlock._isActive == false || this._isActive == false)
+            {
+                return;
+            }
+
             var calculator = Calculations.GetInstance();
             float thisCuboidVolume = calculator.CalcCuboidVolume(transform.localScale);
             float otherCuboidVolume = calculator.CalcCuboidVolume(otherBlock.transform.localScale);
