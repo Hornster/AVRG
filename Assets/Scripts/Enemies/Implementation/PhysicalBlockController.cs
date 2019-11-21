@@ -111,6 +111,6 @@ namespace Assets.Scripts.Enemies.Implementation
 // - rotate the offset vector by spawner rotation. DUN
 // - Use the Destroyer layer in colliders of obstacles and test it. DUN
 // - add constant force to the obstacles that increases with overall  playtime. Caps at some point, of course. DUN
-// - change the player - they shall move basing on force, too.
+// - change the player - they shall move basing on force, too. NOPE
 // - Implement the match manager. INPR
 // - Add obstacle - energy siphon. Upon using the glove, generates explosion that will damage the player for quite amount of hp (for example 20%).
