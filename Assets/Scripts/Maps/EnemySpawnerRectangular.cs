@@ -93,7 +93,11 @@ namespace Assets.Scripts.Maps
                 _currentCooldown = 0.0f;
             }
         }
-
+        /// <summary>
+        /// Resets the spawner to beginning state.
+        /// </summary>
+        /// <param name="spawnCooldown">Cooldown between spawning two enemies.</param>
+        /// <param name="enemiesConstantForce">Force that will be applied to obstacles.</param>
         public void ResetSpawner(float spawnCooldown, Vector3 enemiesConstantForce)
         {
             foreach (var enemyPool in _enemiesPools.Values)
@@ -104,9 +108,6 @@ namespace Assets.Scripts.Maps
             SpawnCooldown = spawnCooldown;
             EnemiesConstantForce = enemiesConstantForce;
             _currentCooldown = 0.0f;
-            //TODO - modify spawner - make it use local variables during the match, the values provided during startup should   DUN
-            //TODO remembered and restored upon stage reset. Add resetting methods to pools (reset obstacles positions and spawning DIN
-            //TODO values). Connect callbacks from MatchController to ResultsMenuController and player.
         }
     }
 }
