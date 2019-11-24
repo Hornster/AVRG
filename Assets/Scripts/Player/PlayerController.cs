@@ -19,6 +19,10 @@ using UnityEngine.Events;
 /// </summary>
 public class PlayerController : MonoBehaviour, IDamageReceiver
 {
+    /// <summary>
+    /// The main transform of the player hierarchy which will be used to move the player around.
+    /// </summary>
+    [SerializeField] private Transform _movingTransform;
     [SerializeField]
     private InputController _inputController;
     [SerializeField]
@@ -27,6 +31,8 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     private float _maxHealth = 10000f;
     [SerializeField]
     private float _currentHealth;
+
+    [SerializeField] private CollisionResolver _collisionResolver;
 
     private bool _isAlive = true;
     /// <summary>
@@ -59,7 +65,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     // Start is called before the first frame update
     void Start()
     {
-        _startingPosition = transform.position;
+        _startingPosition = _movingTransform.position;
         ResetPlayer();
         //Invert the ratio in order to use multiplication instead of division later on. Faster calculations.
         _energyToHPRatio = 1.0f / _energyToHPRatio;
@@ -67,6 +73,11 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
         if (_weaponsManager == null)
         {
             throw new Exception("Error: weapon manager not found in player.");
+        }
+
+        if (_collisionResolver == null)
+        {
+            throw new Exception("Error: Collision Resolver not found in player!");
         }
         var playerWeapons = new List<WeaponData>();
         playerWeapons.Add(new WeaponData()
@@ -108,12 +119,14 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
         //The editor itself applies correction to movement accordingly to player rotation,
         //but the deployed app does not. Apply it manually so the player will walk forward always
         //in the direction they're looking.
-        if (_inputController.ControllerDetected==false == false)
+        if (_inputController.ControllerDetected)
         {
             _currentVelocity = VectorManipulator.RotateVector(transform.rotation, _currentVelocity);
         }
-
-        gameObject.transform.Translate(_currentVelocity);
+        Vector3 rotatedVelocity = VectorManipulator.RotateVector(transform.rotation, _currentVelocity);
+        rotatedVelocity = _collisionResolver.SolveCollisions(_movingTransform.position, rotatedVelocity, transform.rotation);
+        _currentVelocity = VectorManipulator.RotateVector(Quaternion.Inverse(transform.rotation), rotatedVelocity);
+        _movingTransform.Translate(_currentVelocity);
     }
     /// <summary>
     /// Calculates the direction vector, where the player is currently looking.
@@ -144,7 +157,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
         {
             return;
         }
-
+        
         Vector3 axes = ReadAxes();
         MovePlayer(axes);
     }
@@ -185,7 +198,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     /// </summary>
     public void ResetPlayer()
     {
-        transform.position = _startingPosition;
+        _movingTransform.position = _startingPosition;
         _currentHealth = _maxHealth;
         _isAlive = true;
     }
