@@ -31,7 +31,6 @@ namespace Assets.Scripts.Player.GUI
         /// <param name="playedTimeMs">The time the player survived.</param>
         public void ShowResultsMenu(TimeSpan playedTimeMs)
         {
-            //var formattedTime = playedTimeMs;
             _playTimeText.text = playedTimeMs.ToString(GameConstants.TimeFormat);
 
             gameObject.SetActive(true);

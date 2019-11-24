@@ -226,9 +226,6 @@ namespace Assets.Scripts.Player
                     if (hit.distance < closestDistance)
                     {
                         closestDistance = hit.distance;
-                        Vector3 distance = hit.point - rayData.rayPosition;
-                        Debug.Log("Distance by points: " + distance.magnitude);
-                        Debug.Log("Distance by distance: " + hit.distance);
                     }
                 }
 
@@ -301,9 +298,7 @@ namespace Assets.Scripts.Player
             MoveNormalsToCorners(rayData);
             Vector3 correctionVector = CastRays(rayData);
 
-
-            //Debug.Log("Velocity vector: " + currentVelocity);
-            //Debug.Log("Correction vector: " + correctionVector);
+            
             ShowDebugRays(rayData);
             return correctionVector;
         }
