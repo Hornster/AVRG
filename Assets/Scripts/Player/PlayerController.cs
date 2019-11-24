@@ -123,9 +123,12 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
         {
             _currentVelocity = VectorManipulator.RotateVector(transform.rotation, _currentVelocity);
         }
+
+        Debug.Log("Velocity before: " + _currentVelocity);
         Vector3 rotatedVelocity = VectorManipulator.RotateVector(transform.rotation, _currentVelocity);
-        rotatedVelocity = _collisionResolver.SolveCollisions(_movingTransform.position, rotatedVelocity, transform.rotation);
-        _currentVelocity = VectorManipulator.RotateVector(Quaternion.Inverse(transform.rotation), rotatedVelocity);
+        rotatedVelocity = _collisionResolver.SolveCollisions(_movingTransform.position, rotatedVelocity, _movingTransform.rotation);
+        _currentVelocity = VectorManipulator.RotateVector(Quaternion.Inverse(_movingTransform.rotation), rotatedVelocity);
+        Debug.Log("velocity after: " + _currentVelocity);
         _movingTransform.Translate(_currentVelocity);
     }
     /// <summary>

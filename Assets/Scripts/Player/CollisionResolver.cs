@@ -61,8 +61,7 @@ namespace Assets.Scripts.Player
             {
                 throw new Exception("At least 2 rays are required per edge.");
             }
-
-            _collisionLayerMask.value = ~_collisionLayerMask.value;
+            
         }
 
         /// <summary>
@@ -165,7 +164,7 @@ namespace Assets.Scripts.Player
             float velocityLength = currentVelocity.magnitude;
             foreach (var ray in rays)
             {
-                ray.rayLength = velocityLength * ray.dpAgainstVelocity;
+                ray.rayLength = velocityLength * ray.dpAgainstVelocity + _skinWidth;
             }
         }
         /// <summary>
@@ -236,7 +235,7 @@ namespace Assets.Scripts.Player
                 Debug.DrawRay(ray.origin, ray.direction * rayData.rayLength, Color.magenta);
             }
 
-            return rayData.normal * closestDistance;
+            return rayData.normal * (closestDistance - _skinWidth);
         }
         /// <summary>
         /// Casts rays for given collider walls. Returns max velocity allowed for the object during the frame.
@@ -306,10 +305,6 @@ namespace Assets.Scripts.Player
             //Debug.Log("Velocity vector: " + currentVelocity);
             //Debug.Log("Correction vector: " + correctionVector);
             ShowDebugRays(rayData);
-            if (correctionVector.magnitude < 0.001f)
-            {
-                return Vector3.zero;
-            }
             return correctionVector;
         }
 
