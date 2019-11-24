@@ -574,7 +574,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 26.991467
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -1168,7 +1168,7 @@ PrefabInstance:
     - target: {fileID: 6237832134400088045, guid: 4cb325f4a24bffb4da45f74b270e82fc,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.85
+      value: 1.68
       objectReference: {fileID: 0}
     - target: {fileID: 6237832134400088045, guid: 4cb325f4a24bffb4da45f74b270e82fc,
         type: 3}
@@ -1218,7 +1218,7 @@ PrefabInstance:
     - target: {fileID: 6237832134400088045, guid: 4cb325f4a24bffb4da45f74b270e82fc,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.23
+      value: -0.21
       objectReference: {fileID: 0}
     - target: {fileID: 6237832134400088045, guid: 4cb325f4a24bffb4da45f74b270e82fc,
         type: 3}
@@ -1294,6 +1294,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.a
       value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631689953279235503, guid: 4cb325f4a24bffb4da45f74b270e82fc,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 82.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cb325f4a24bffb4da45f74b270e82fc, type: 3}
@@ -1391,7 +1396,7 @@ PrefabInstance:
     - target: {fileID: 1676078977091941872, guid: 84559f3a80b29b441b86402a2ab9bac3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 216
+      value: 175.2
       objectReference: {fileID: 0}
     - target: {fileID: 1676078977091941872, guid: 84559f3a80b29b441b86402a2ab9bac3,
         type: 3}
