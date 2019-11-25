@@ -60,5 +60,17 @@ namespace Assets.Scripts.Shared.Helpers
         {
             return new Vector3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z);
         }
+        /// <summary>
+        /// Casts one vector onto another.
+        /// </summary>
+        /// <param name="castVector">Vector to cast.</param>
+        /// <param name="targetVector">Vector to cast onto.</param>
+        /// <returns></returns>
+        public static Vector3 CastVectorOntoVector(Vector3 castVector, Vector3 targetVector)
+        {
+            float dp = CalcAngleBetweenVectors(castVector, targetVector);
+            dp /= castVector.sqrMagnitude;
+            return targetVector * dp;
+        }
     }
 }
