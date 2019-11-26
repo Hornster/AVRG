@@ -68,8 +68,8 @@ namespace Assets.Scripts.Shared.Helpers
         /// <returns></returns>
         public static Vector3 CastVectorOntoVector(Vector3 castVector, Vector3 targetVector)
         {
-            float dp = CalcAngleBetweenVectors(castVector, targetVector);
-            dp /= castVector.sqrMagnitude;
+            float dp = CalcDotProduct(castVector, targetVector);
+            dp /= targetVector.sqrMagnitude;
             return targetVector * dp;
         }
     }

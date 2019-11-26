@@ -584,11 +584,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2136235463}
     m_Modifications:
-    - target: {fileID: 3468403389796248910, guid: b817c9d2f32326b488a3a85b2b58c0c7,
-        type: 3}
-      propertyPath: m_Name
-      value: PlayerBlockerBack
-      objectReference: {fileID: 0}
     - target: {fileID: 3468403389796248906, guid: b817c9d2f32326b488a3a85b2b58c0c7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -644,6 +639,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 3468403389796248910, guid: b817c9d2f32326b488a3a85b2b58c0c7,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerBlockerBack
+      objectReference: {fileID: 0}
     - target: {fileID: 6543506892413806832, guid: b817c9d2f32326b488a3a85b2b58c0c7,
         type: 3}
       propertyPath: _blockedEntityTransform
@@ -658,6 +658,16 @@ PrefabInstance:
         type: 3}
       propertyPath: _normalVector.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6543506892413806832, guid: b817c9d2f32326b488a3a85b2b58c0c7,
+        type: 3}
+      propertyPath: _reactionDistance
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6543506892413806832, guid: b817c9d2f32326b488a3a85b2b58c0c7,
+        type: 3}
+      propertyPath: _smallestColorIntensity
+      value: 0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b817c9d2f32326b488a3a85b2b58c0c7, type: 3}
@@ -811,11 +821,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2136235463}
     m_Modifications:
-    - target: {fileID: 3468403389796248910, guid: b817c9d2f32326b488a3a85b2b58c0c7,
-        type: 3}
-      propertyPath: m_Name
-      value: PlayerBlockerFront
-      objectReference: {fileID: 0}
     - target: {fileID: 3468403389796248906, guid: b817c9d2f32326b488a3a85b2b58c0c7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -871,6 +876,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 3468403389796248910, guid: b817c9d2f32326b488a3a85b2b58c0c7,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerBlockerFront
+      objectReference: {fileID: 0}
     - target: {fileID: 6543506892413806832, guid: b817c9d2f32326b488a3a85b2b58c0c7,
         type: 3}
       propertyPath: _normalVector.x
@@ -886,6 +896,16 @@ PrefabInstance:
       propertyPath: _blockedEntityTransform
       value: 
       objectReference: {fileID: 2087390584}
+    - target: {fileID: 6543506892413806832, guid: b817c9d2f32326b488a3a85b2b58c0c7,
+        type: 3}
+      propertyPath: _reactionDistance
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6543506892413806832, guid: b817c9d2f32326b488a3a85b2b58c0c7,
+        type: 3}
+      propertyPath: _smallestColorIntensity
+      value: 0.05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b817c9d2f32326b488a3a85b2b58c0c7, type: 3}
 --- !u!1001 &3500337342720879836
