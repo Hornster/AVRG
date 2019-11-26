@@ -10,6 +10,7 @@ using UnityEngine.UIElements;
 public class InputController : MonoBehaviour
 {
     #region VR Controller
+    //TODO add pause caller
     private static UnityAction<bool> _onHasController = null;
 
     private static UnityAction _onTriggerUp = null;
@@ -39,7 +40,10 @@ public class InputController : MonoBehaviour
     /// Used mainly when in editor. Called when the left mouse button is constantly being pressed.
     /// </summary>
     private static UnityAction _onMouseLeftDown = null;
-
+    /// <summary>
+    /// Used mainly when in editor. Called when the escape key has been pressed.
+    /// </summary>
+    private static UnityAction _onEscKeyPressed = null;
     #endregion Keyboard and Mouse
 
     public bool ControllerDetected { get; private set; } = false;
@@ -153,6 +157,11 @@ public class InputController : MonoBehaviour
         {
             _onMouseLeftDown?.Invoke();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            _onEscKeyPressed?.Invoke();
+        }
     }
     /// <summary>
     /// Checks input from the mouse.
@@ -257,6 +266,11 @@ public class InputController : MonoBehaviour
     public static void RegisterOnMouseLeftUp(UnityAction action)
     {
         _onMouseLeftUp += action;
+    }
+
+    public static void RegisterOnEscKeyPressed(UnityAction action)
+    {
+        _onEscKeyPressed += action;
     }
     #endregion EventRegistering
 

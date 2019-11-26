@@ -75,6 +75,7 @@ namespace Assets.Scripts.Match
                 throw new Exception("No enemy spawner applied to match controller!");
             }
             _enemySpawner.EnemiesConstantForce = GetConstantForceVector();
+            InputController.RegisterOnEscKeyPressed(RoundPause);
         }
         void Update()
         {
@@ -144,6 +145,20 @@ namespace Assets.Scripts.Match
             _enemySpawner.ResetSpawner(_spawnMaxTime, GetConstantForceVector());
             _player.ResetPlayer();
             _guiManager.RestartRound();
+        }
+        /// <summary>
+        /// Pauses the round.
+        /// </summary>
+        public void RoundPause()
+        {
+            _guiManager.RoundPaused();
+        }
+        /// <summary>
+        /// Resumes the paused round.
+        /// </summary>
+        public void RoundResume()
+        {
+            _guiManager.RoundResumed();
         }
     }
 }

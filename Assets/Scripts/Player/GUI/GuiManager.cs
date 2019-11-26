@@ -24,6 +24,9 @@ namespace Assets.Scripts.Player.GUI
         [SerializeField]
         private GameTimeController _gameTimeController;
 
+        [SerializeField]
+        private PauseMenuController _pauseMenuController;
+
         void Start()
         {
             _gameTimeController.RestartCounting();
@@ -37,6 +40,22 @@ namespace Assets.Scripts.Player.GUI
             return _gameTimeController.CurrentPlayTime;
         }
         /// <summary>
+        /// Turns off pause GUI, resumes time measurement.
+        /// </summary>
+        public void RoundResumed()
+        {
+            _gameTimeController.ResumeCounting();
+            _pauseMenuController.HidePauseMenu();
+        }
+        /// <summary>
+        /// Turns on pause GUI, stops time measurement.
+        /// </summary>
+        public void RoundPaused()
+        {
+            _gameTimeController.StopCounting();
+            _pauseMenuController.ShowPauseMenu();
+        }
+        /// <summary>
         /// Performs tasks connected with ending of a round, for example stopping the timer.
         /// </summary>
         public void RoundEnded()
@@ -47,6 +66,7 @@ namespace Assets.Scripts.Player.GUI
 
             TimeSpan playedTimeMs = _gameTimeController.CurrentPlayTime;
             _resultsMenuController.ShowResultsMenu(playedTimeMs);
+            _pauseMenuController.HidePauseMenu();
         }
         /// <summary>
         /// Performs tasks connected with restarting the round.
@@ -58,6 +78,7 @@ namespace Assets.Scripts.Player.GUI
             _gameTimeController.ShowTimer();
             _gameTimeController.RestartCounting();
             _resultsMenuController.HideResultsMenu();
+            _pauseMenuController.HidePauseMenu();
         }
     }
 }
