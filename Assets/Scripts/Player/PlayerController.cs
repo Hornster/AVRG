@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Assets.Scripts.Data;
+using Assets.Scripts.Match;
 using Assets.Scripts.Match.Entities;
 using Assets.Scripts.Player;
 using Assets.Scripts.Player.GUI;
@@ -17,7 +18,7 @@ using UnityEngine.Events;
 /// 
 /// Default controller for the player.
 /// </summary>
-public class PlayerController : MonoBehaviour, IDamageReceiver
+public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
 {
     /// <summary>
     /// The main transform of the player hierarchy which will be used to move the player around.
@@ -58,13 +59,18 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     /// Starting position of the player, acquired upon initialization of the script. Do not change.
     /// </summary>
     private Vector3 _startingPosition;
-
+    /// <summary>
+    /// Set to true when execution of this monobehavior behavior is on hold.
+    /// </summary>
+    private bool _isPaused = false;
     private WeaponsManager _weaponsManager;
     private IWeapon _currentWeapon;
     public TeamEnum TeamEnum { get; private set; }
     // Start is called before the first frame update
     void Start()
     {
+        MatchController.RegisterOnPause(Pause);
+        MatchController.RegisterOnResume(Resume);
         _startingPosition = _movingTransform.position;
         ResetPlayer();
         //Invert the ratio in order to use multiplication instead of division later on. Faster calculations.
@@ -143,6 +149,10 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     /// </summary>
     private void UsePrimaryWeapon()
     {
+        if (_isPaused || !_isAlive)
+        {
+            return;
+        }
         _currentWeapon.UseWeapon(CalcDirectionVector(), TeamEnum);
     }
     /// <summary>
@@ -155,7 +165,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
     // Update is called once per frame
     void Update()
     {
-        if (!_isAlive)
+        if (_isPaused || !_isAlive)
         {
             return;
         }
@@ -203,5 +213,20 @@ public class PlayerController : MonoBehaviour, IDamageReceiver
         _movingTransform.position = _startingPosition;
         _currentHealth = _maxHealth;
         _isAlive = true;
+        _isPaused = false;
+    }
+    /// <summary>
+    /// Causes the object to halt executing its behavior.
+    /// </summary>
+    public void Pause()
+    {
+        _isPaused = true;
+    }
+    /// <summary>
+    /// Causes the object to resume executing its behavior.
+    /// </summary>
+    public void Resume()
+    {
+        _isPaused = false;
     }
 }

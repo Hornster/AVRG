@@ -27,24 +27,33 @@ namespace Assets.Scripts.Player.GUI
         /// Stores the time that the round started at.
         /// </summary>
         private TimeSpan _roundStartTime = new TimeSpan();
-        
 
-        void Update()
+        void FixedUpdate()
         {
             if (_isCounting == false)
             {
                 return;
             }
-
             UpdateTimer();
         }
+        //void Update()
+        //{
+        //    if (_isCounting == false)
+        //    {
+        //        return;
+        //    }
+
+        //    UpdateTimer();
+        //}
         /// <summary>
         /// Updates what shows the timer on the screen.
         /// </summary>
         private void UpdateTimer()
         {
-            var currentTime = DateTime.Now.TimeOfDay;
-            CurrentPlayTime = currentTime - _roundStartTime;//+= (int)(Time.deltaTime*1000);//Get milliseconds.
+            var timeDelta = Time.deltaTime * 1000;
+            CurrentPlayTime += new TimeSpan(0,0,0,0,(int)timeDelta);
+            //var currentTime = DateTime.Now.TimeOfDay;
+            //CurrentPlayTime = currentTime - _roundStartTime;//+= (int)(Time.deltaTime*1000);//Get milliseconds.
             _gameElapsedTime.text = CurrentPlayTime.ToString(GameConstants.TimeFormat);// + $".{formattedTime.Milliseconds}";
         }
         /// <summary>

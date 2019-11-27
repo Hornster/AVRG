@@ -32,6 +32,24 @@ namespace Assets.Scripts.Player.GUI
             _gameTimeController.RestartCounting();
         }
         /// <summary>
+        /// Hides all parts of GUI that are used to inform the player about the state of the round, like
+        /// the health bar and the timer.
+        /// </summary>
+        private void HidePlayerGameUi()
+        {
+            _healthbarController.HideHealthBar();
+            _gameTimeController.HideTimer();
+        }
+        /// <summary>
+        /// Shows all parts of GUI that are used to inform the player about the state of the round, like
+        /// the health bar and the timer.
+        /// </summary>
+        private void ShowPlayerGameUi()
+        {
+            _healthbarController.ShowHealthBar();
+            _gameTimeController.ShowTimer();
+        }
+        /// <summary>
         /// Gets the time which the player was playing for.
         /// </summary>
         /// <returns></returns>
@@ -46,12 +64,16 @@ namespace Assets.Scripts.Player.GUI
         {
             _gameTimeController.ResumeCounting();
             _pauseMenuController.HidePauseMenu();
+
+            ShowPlayerGameUi();
         }
         /// <summary>
         /// Turns on pause GUI, stops time measurement.
         /// </summary>
         public void RoundPaused()
         {
+            HidePlayerGameUi();
+
             _gameTimeController.StopCounting();
             _pauseMenuController.ShowPauseMenu();
         }
@@ -60,9 +82,9 @@ namespace Assets.Scripts.Player.GUI
         /// </summary>
         public void RoundEnded()
         {
-            _healthbarController.HideHealthBar();
+            RoundResumed();
+            HidePlayerGameUi();
             _gameTimeController.StopCounting();
-            _gameTimeController.HideTimer();
 
             TimeSpan playedTimeMs = _gameTimeController.CurrentPlayTime;
             _resultsMenuController.ShowResultsMenu(playedTimeMs);
@@ -73,9 +95,9 @@ namespace Assets.Scripts.Player.GUI
         /// </summary>
         public void RestartRound()
         {
-            _healthbarController.ShowHealthBar();
+            ShowPlayerGameUi();
+
             _healthbarController.ResetHealthBar();
-            _gameTimeController.ShowTimer();
             _gameTimeController.RestartCounting();
             _resultsMenuController.HideResultsMenu();
             _pauseMenuController.HidePauseMenu();

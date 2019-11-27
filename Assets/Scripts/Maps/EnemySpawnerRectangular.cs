@@ -111,6 +111,7 @@ namespace Assets.Scripts.Maps
         /// <param name="enemiesConstantForce">Force that will be applied to obstacles.</param>
         public void ResetSpawner(float spawnCooldown, Vector3 enemiesConstantForce)
         {
+            _isPaused = false;
             foreach (var enemyPool in _enemiesPools.Values)
             {
                 enemyPool.ResetPool();

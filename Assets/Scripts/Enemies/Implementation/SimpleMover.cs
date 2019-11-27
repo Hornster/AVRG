@@ -37,10 +37,19 @@ namespace Assets.Scripts.Enemies.Implementation
         {
             if (_isPaused)
             {
+                _rigidbody.velocity = Vector3.zero;
+                _rigidbody.angularVelocity = Vector3.zero;
                 return;
             }
 
             _rigidbody.AddForce(ConstantForce);
+        }
+        /// <summary>
+        /// Resets the paused state of the object to unpaused.
+        /// </summary>
+        public void ResetPause()
+        {
+            _isPaused = false;
         }
         /// <summary>
         /// Causes the object to halt executing its behavior.

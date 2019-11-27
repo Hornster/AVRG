@@ -143,6 +143,7 @@ namespace Assets.Scripts.Match
         private void ResetLocalValues()
         {
             _constantForceStrength = _constantForceStartStrength;
+            _isPaused = false;
         }
         /// <summary>
         /// The round has ended.
@@ -164,7 +165,6 @@ namespace Assets.Scripts.Match
         /// </summary>
         public void RoundRestart()
         {
-            _isPaused = false;
             ResetLocalValues();
             _enemySpawner.ResetSpawner(_spawnMaxTime, GetConstantForceVector());
             _player.ResetPlayer();
