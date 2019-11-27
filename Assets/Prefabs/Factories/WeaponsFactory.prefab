@@ -43,6 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb90f1581764b0e4bbdded27f142fc56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _energyGlovePrefab: {fileID: 0}
+  _energyGlovePrefab: {fileID: 5159572943436519312, guid: 00594b724caacfc41a45598e73554cee,
+    type: 3}
   _physicsGlovePrefab: {fileID: 7146447238921161583, guid: d3256b554d93c404690765c4184c3549,
     type: 3}
+  _gloveStrength: 10
