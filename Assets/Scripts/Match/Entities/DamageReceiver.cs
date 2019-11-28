@@ -67,6 +67,14 @@ namespace Assets.Scripts.Match.Entities
         }
 
         /// <summary>
+        /// Deals given percent of entire hp as damage to the player.
+        /// </summary>
+        /// <param name="percent">Percentage of full hp dealt as damage.</param>
+        public void ReceivePercentalDamage(float percent)
+        {
+            _damageReceiver.ReceivePercentalDamage(percent);
+        }
+        /// <summary>
         /// Returns kinetic data of the _damageReceiver, like velocity and mass.
         /// </summary>
         /// <returns></returns>

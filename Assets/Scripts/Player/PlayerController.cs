@@ -45,6 +45,11 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
     /// </summary>
     [SerializeField] private float _energyToHPRatio = 100.0f;
     /// <summary>
+    /// Defines how much percent of hp will be taken away from the player upon hooking
+    /// the wrong type of enemy/obstacle.
+    /// </summary>
+    [SerializeField] private float _wrongGloveUsedPenalty = .1f;
+    /// <summary>
     /// Controller responsible for displaying player data to the user.
     /// </summary>
     [SerializeField] private GuiManager _guiManager;
@@ -63,6 +68,10 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
     /// Set to true when execution of this monobehavior behavior is on hold.
     /// </summary>
     private bool _isPaused = false;
+    /// <summary>
+    /// Set to true when player tried to hook wrong tye of the object (for example energy block with physics glove).
+    /// </summary>
+    private bool _hasHookedWrongObject = false;
     private WeaponsManager _weaponsManager;
     private IWeapon _currentWeapon;
     public TeamEnum TeamEnum { get; private set; }
@@ -91,11 +100,17 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
             GloveType = GloveType.Glove,
             ProjectileType = ProjectileTypeEnum.Physical
         });
+        playerWeapons.Add(new WeaponData()
+        {
+            GloveType = GloveType.Glove,
+            ProjectileType = ProjectileTypeEnum.Energy
+        });
         _weaponsManager.CreateWeapons(playerWeapons);
         _currentWeapon = _weaponsManager.GetCurrentWeapon();
-        //TODO change back to OnLMBPressed later, when will be working
+        //TODO register VR controller counterparts
         InputController.RegisterOnMouseLeftDown(UsePrimaryWeapon);
         InputController.RegisterOnMouseLeftUp(StopUsingPrimaryWeapon);
+        InputController.RegisterOnMouseRightPressed(SwitchPrimaryWeapon);
     }
     /// <summary>
     /// Reads horizontal and vertical axes, depending on whether is the game in editor mode or not.
@@ -145,15 +160,33 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
         return transform.rotation * GameConstants.PlayerRotationRefVector;
     }
     /// <summary>
-    /// Uses primary weapon.
+    /// Weapon switch callback. Switches the player's weapon.
     /// </summary>
-    private void UsePrimaryWeapon()
+    private void SwitchPrimaryWeapon()
     {
         if (_isPaused || !_isAlive)
         {
             return;
         }
-        _currentWeapon.UseWeapon(CalcDirectionVector(), TeamEnum);
+
+        StopUsingPrimaryWeapon();
+        _currentWeapon = _weaponsManager.GetNextWeapon();
+    }
+    /// <summary>
+    /// Uses primary weapon.
+    /// </summary>
+    private void UsePrimaryWeapon()
+    {
+        if (_isPaused || !_isAlive || _hasHookedWrongObject)
+        {
+            return;
+        }
+        var usageResult = _currentWeapon.UseWeapon(CalcDirectionVector(), TeamEnum);
+        if (usageResult == HookingResultEnum.WrongType)
+        {
+            ReceivePercentalDamage(_wrongGloveUsedPenalty);
+            _hasHookedWrongObject = true;
+        }
     }
     /// <summary>
     /// User stopped using primary weapon.
@@ -161,6 +194,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
     private void StopUsingPrimaryWeapon()
     {
         _currentWeapon.StopUsingWeapon();
+        _hasHookedWrongObject = false;
     }
     // Update is called once per frame
     void Update()
@@ -172,6 +206,53 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
         
         Vector3 axes = ReadAxes();
         MovePlayer(axes);
+    }
+    /// <summary>
+    /// Called when the player runs out of health point..
+    /// </summary>
+    /// <returns></returns>
+    private void PlayerDied()
+    {
+        _currentHealth = 0.0f;
+        _isAlive = false;
+        _roundEndedEvent.Invoke();
+    }
+    /// <summary>
+    /// Updates the info connected with player health.
+    /// </summary>
+    private void UpdatePlayerHealthState()
+    {
+        float percentageHp = GetHpPercentage();
+        if (_currentHealth <= 0.0f)
+        {
+            percentageHp = 0.0f;
+            PlayerDied();
+        }
+
+        _guiManager.HealthBarController.UpdateHealthBar(percentageHp);
+    }
+    /// <summary>
+    /// Returns the ratio of current HP towards max HP.
+    /// </summary>
+    /// <returns></returns>
+    private float GetHpPercentage()
+    {
+        return _currentHealth / _maxHealth;
+    }
+    /// <summary>
+    /// Deals given percent of entire hp as damage to the player.
+    /// </summary>
+    /// <param name="percent">Percentage of full hp dealt as damage.</param>
+    public void ReceivePercentalDamage(float percent)
+    {
+        if (_currentHealth <= 0.0f)
+        {
+            return;
+        }
+        
+        _currentHealth -= _maxHealth * percent;
+
+        UpdatePlayerHealthState();
     }
     /// <summary>
     /// Called when player shall receive damage.
@@ -186,16 +267,8 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
 
         damage *= _energyToHPRatio; //Scale the damage properly.
         _currentHealth -= damage;
-
-        float percentageHP = _currentHealth / _maxHealth;
-        if (_currentHealth <= 0.0f)
-        {
-            _currentHealth = percentageHP = 0.0f;
-            _isAlive = false;
-            _roundEndedEvent.Invoke();
-        }
-
-        _guiManager.HealthBarController.UpdateHealthBar(percentageHP);
+        
+        UpdatePlayerHealthState();
     }
     /// <summary>
     /// Returns kinetic data of the player.

@@ -76,37 +76,15 @@ namespace Assets.Scripts.Player.Interface
         {
             _lineRenderer.EraseLine();
         }
+
         /// <summary>
         /// Seeks for any hookable obstacles/enemies and if found - hooks them to the glove, if possible.
         /// </summary>
         /// <param name="direction">Direction of the seeking raycast.</param>
         /// <param name="team">Team of the seeking caster.</param>
         /// <returns></returns>
-        protected HookingResultEnum TryHookingObject(Vector3 direction, TeamEnum team)
-        {
-            if (Physics.Raycast(gameObject.transform.position, direction, out _raycastHit))
-            {
-                var hookedObstacle = _raycastHit.transform.gameObject.GetComponent<IObstacle>();
-
-                if (hookedObstacle == null)
-                {
-                    return HookingResultEnum.NoObjectFound;
-                }
-
-                if (hookedObstacle.ChkGloveType(ProjectileType) == false)
-                {
-                    return HookingResultEnum.WrongType;
-                }
-
-                hookedObstacle.SelectObject(team);
-                SaveHookedObjectData(hookedObstacle);
-                DrawHookingLine();
-
-                return HookingResultEnum.ObjectHooked;
-            }
-
-            return HookingResultEnum.NoObjectFound;
-        }
+        protected abstract HookingResultEnum TryHookingObject(Vector3 direction, TeamEnum team);
+        
         /// <summary>
         /// Applies force to the held obstacle, if necessary.
         /// </summary>
@@ -163,6 +141,20 @@ namespace Assets.Scripts.Player.Interface
         public void SetStrength(float gloveStrength)
         {
             Strength = gloveStrength;
+        }
+        /// <summary>
+        /// Deactivates the gameobject of the weapon.
+        /// </summary>
+        public void DeactivateWeapon()
+        {
+            gameObject.SetActive(false);
+        }
+        /// <summary>
+        /// Activates the gameobject of the weapon.
+        /// </summary>
+        public void ActivateWeapon()
+        {
+            gameObject.SetActive(true);
         }
     }
 }

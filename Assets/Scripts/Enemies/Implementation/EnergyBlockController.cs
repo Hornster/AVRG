@@ -38,7 +38,7 @@ namespace Assets.Scripts.Enemies.Implementation
         /// <summary>
         /// Type of glove the object will react to.
         /// </summary>
-        private const ProjectileTypeEnum ObjectType = ProjectileTypeEnum.Physical;
+        private const ProjectileTypeEnum ObjectType = ProjectileTypeEnum.Energy;
 
 
         /// <summary>
@@ -175,4 +175,3 @@ namespace Assets.Scripts.Enemies.Implementation
         }
     }
 }
-//TODO test merging abilities
