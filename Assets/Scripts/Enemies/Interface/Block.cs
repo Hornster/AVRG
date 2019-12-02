@@ -132,6 +132,7 @@ namespace Assets.Scripts.Enemies.Interface
         {
             gameObject.SetActive(true);
             _isActive = true;
+            _simpleMover.ResetPause();
             ActivationIndex = activationIndex;
         }
         /// <summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Data;
 using Assets.Scripts.Factories.Interface;
 using Assets.Scripts.Maps.Interfaces;
+using Assets.Scripts.Match;
 using Assets.Scripts.Shared.Enums;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace Assets.Scripts.Maps
     /// Enemy spawner that uses a rectangular surface.
     /// </summary>
     [RequireComponent(typeof(ObstacleDataRandomizer))]
-    public class EnemySpawnerRectangular : MonoBehaviour, IEnemySpawner
+    public class EnemySpawnerRectangular : MonoBehaviour, IEnemySpawner, IPausable
     {
         /// <summary>
         /// Factory that will be used to generate objects.
@@ -46,7 +47,10 @@ namespace Assets.Scripts.Maps
         /// Stores the time that lasted from the most recent obstacle spawn.
         /// </summary>
         private float _currentCooldown = 0.0f;
-
+        /// <summary>
+        /// Set to true when this object is paused.
+        /// </summary>
+        private bool _isPaused = false;
         /// <summary>
         /// Spawns randomly selected obstacle.
         /// </summary>
@@ -70,6 +74,9 @@ namespace Assets.Scripts.Maps
         /// </summary>
         void Start()
         {
+            MatchController.RegisterOnPause(Pause);
+            MatchController.RegisterOnResume(Resume);
+
             _obstacleFactory = gameObject.GetComponent<IObstacleFactory>();
 
             if (_obstacleFactory == null)
@@ -86,6 +93,10 @@ namespace Assets.Scripts.Maps
         
         void Update()
         {
+            if (_isPaused)
+            {
+                return;
+            }
             _currentCooldown += Time.deltaTime;
             if (_currentCooldown >= SpawnCooldown)
             {
@@ -100,6 +111,7 @@ namespace Assets.Scripts.Maps
         /// <param name="enemiesConstantForce">Force that will be applied to obstacles.</param>
         public void ResetSpawner(float spawnCooldown, Vector3 enemiesConstantForce)
         {
+            _isPaused = false;
             foreach (var enemyPool in _enemiesPools.Values)
             {
                 enemyPool.ResetPool();
@@ -108,6 +120,21 @@ namespace Assets.Scripts.Maps
             SpawnCooldown = spawnCooldown;
             EnemiesConstantForce = enemiesConstantForce;
             _currentCooldown = 0.0f;
+        }
+        /// <summary>
+        /// Causes the object to halt executing its behavior.
+        /// </summary>
+        public void Pause()
+        {
+            _isPaused = true;
+        }
+
+        /// <summary>
+        /// Causes the object to resume executing its behavior.
+        /// </summary>
+        public void Resume()
+        {
+            _isPaused = false;
         }
     }
 }

@@ -1,26 +1,26 @@
-﻿using Assets.Scripts.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Assets.Scripts.Enemies.Interface;
 using Assets.Scripts.Player.Interface;
-using Assets.Scripts.Player.Weapons.Aesthetics;
 using Assets.Scripts.Shared.Enums;
-using Assets.Scripts.Player.Helpers;
-using Assets.Scripts.Shared.Helpers;
 using UnityEngine;
-using HookingResultEnum = Assets.Scripts.Shared.Enums.HookingResultEnum;
 
 namespace Assets.Scripts.Player.Weapons
 {
     /// <summary>
     /// Author: Karol Kozuch
     ///
-    /// Physical glove which is used by the player to interact with the world.
+    /// Energy glove which is used by the player to interact with the world.
     /// </summary>
-    public class PhysicsGlove : Glove
+    public class EnergyGlove : Glove
     {
         /// <summary>
         /// Type of the glove.
         /// </summary>
-        public new ProjectileTypeEnum ProjectileType { get; } = ProjectileTypeEnum.Physical;
+        public new ProjectileTypeEnum ProjectileType { get; } = ProjectileTypeEnum.Energy;
 
         /// <summary>
         /// Seeks for any hookable obstacles/enemies and if found - hooks them to the glove, if possible.

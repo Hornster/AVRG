@@ -49,5 +49,13 @@ namespace Assets.Scripts.Player.Interface
         /// </summary>
         /// <param name="gloveStrength">New glove strength.</param>
         void SetStrength(float gloveStrength);
+        /// <summary>
+        /// Deactivates the gameobject of the weapon.
+        /// </summary>
+        void DeactivateWeapon();
+        /// <summary>
+        /// Activates the gameobject of the weapon.
+        /// </summary>
+        void ActivateWeapon();
     }
 }

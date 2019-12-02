@@ -63,10 +63,14 @@ namespace Assets.Scripts.Player.Weapons
             _availableWeapons = new List<IWeapon>(weapons.Count);
             foreach (var weapon in weapons)
             {
-                _availableWeapons.Add(_weaponsFactory.CreateWeapon(weapon, transform));
+                var createdWeapon = _weaponsFactory.CreateWeapon(weapon, transform);
+                createdWeapon.DeactivateWeapon();
+                _availableWeapons.Add(createdWeapon);
             }
 
             CurrentWeaponIndex = 0;
+
+            _availableWeapons[CurrentWeaponIndex].ActivateWeapon();
             return _availableWeapons[CurrentWeaponIndex];
         }
         /// <summary>
@@ -75,8 +79,10 @@ namespace Assets.Scripts.Player.Weapons
         /// <returns></returns>
         public IWeapon GetNextWeapon()
         {
+            _availableWeapons[CurrentWeaponIndex].DeactivateWeapon();
             CurrentWeaponIndex++;
             ChkWeaponIndex();
+            _availableWeapons[CurrentWeaponIndex].ActivateWeapon();
 
             return _availableWeapons[CurrentWeaponIndex];
         }

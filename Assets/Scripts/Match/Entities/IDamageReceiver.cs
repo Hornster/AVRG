@@ -15,6 +15,11 @@ namespace Assets.Scripts.Match.Entities
         /// <param name="damage">Amount of damage to be received.</param>
         void ReceiveDamage(float damage);
         /// <summary>
+        /// Deals given percent of entire hp as damage to the player.
+        /// </summary>
+        /// <param name="percent">Percentage of full hp dealt as damage.</param>
+        void ReceivePercentalDamage(float percent);
+        /// <summary>
         /// Returns kinetic data of the object, like velocity and mass.
         /// </summary>
         /// <returns></returns>

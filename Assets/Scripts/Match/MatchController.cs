@@ -57,6 +57,14 @@ namespace Assets.Scripts.Match
         /// </summary>
         [SerializeField] private Vector3 _constantForceDirection = Vector3.forward;
         /// <summary>
+        /// Called when a pause has been triggered. Can be null.
+        /// </summary>
+        private static UnityAction _pauseScriptExecution = null;
+        /// <summary>
+        /// Called when the game has been resumed. Can be null.
+        /// </summary>
+        private static UnityAction _resumeScriptExecution = null;
+        /// <summary>
         /// Stores the time that passed since last spawn time modification.
         /// </summary>
         private float _spawnTimeChangeIntervalTimer = 0.0f;
@@ -64,6 +72,10 @@ namespace Assets.Scripts.Match
         /// Constant force value. Constant force is applied to each obstacle to make it move towards the player.
         /// </summary>
         private float _constantForceStrength;
+        /// <summary>
+        /// Is the execution of the controller halted?
+        /// </summary>
+        private bool _isPaused = false;
         /// <summary>
         /// Normalizes the force direction vector.
         /// </summary>
@@ -75,12 +87,24 @@ namespace Assets.Scripts.Match
                 throw new Exception("No enemy spawner applied to match controller!");
             }
             _enemySpawner.EnemiesConstantForce = GetConstantForceVector();
+            InputController.RegisterOnEscKeyPressed(RoundPause);
         }
         void Update()
         {
+            if (_isPaused)
+            {
+                return;
+            }
+
             float lastFrameTime = Time.deltaTime;
             UpdateSpawnValues(lastFrameTime);
             
+        }
+
+        void OnDestroy()
+        {
+            _pauseScriptExecution = null;
+            _resumeScriptExecution = null;
         }
         /// <summary>
         /// Calculates constant force vector.
@@ -119,6 +143,7 @@ namespace Assets.Scripts.Match
         private void ResetLocalValues()
         {
             _constantForceStrength = _constantForceStartStrength;
+            _isPaused = false;
         }
         /// <summary>
         /// The round has ended.
@@ -144,6 +169,40 @@ namespace Assets.Scripts.Match
             _enemySpawner.ResetSpawner(_spawnMaxTime, GetConstantForceVector());
             _player.ResetPlayer();
             _guiManager.RestartRound();
+        }
+        /// <summary>
+        /// Pauses the round.
+        /// </summary>
+        public void RoundPause()
+        {
+            _isPaused = true;
+            _pauseScriptExecution?.Invoke();
+            _guiManager.RoundPaused();
+        }
+        /// <summary>
+        /// Resumes the paused round.
+        /// </summary>
+        public void RoundResume()
+        {
+            _isPaused = false;
+            _resumeScriptExecution?.Invoke();
+            _guiManager.RoundResumed();
+        }
+        /// <summary>
+        /// Registers provided method as pause event callback.
+        /// </summary>
+        /// <param name="action"></param>
+        public static void RegisterOnPause(UnityAction action)
+        {
+            _pauseScriptExecution += action;
+        }
+        /// <summary>
+        /// Registers provided method as resume event callback.
+        /// </summary>
+        /// <param name="action"></param>
+        public static void RegisterOnResume(UnityAction action)
+        {
+            _resumeScriptExecution += action;
         }
     }
 }
