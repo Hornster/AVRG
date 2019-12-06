@@ -215,7 +215,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
     {
         _currentHealth = 0.0f;
         _isAlive = false;
-        _roundEndedEvent.Invoke();
+        //_roundEndedEvent.Invoke();
     }
     /// <summary>
     /// Updates the info connected with player health.
