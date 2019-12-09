@@ -19,8 +19,19 @@ namespace Assets.Scripts.Player.CameraSettings
         private InputController _inputController;
         [SerializeField]
         private GameObject _regularCamera;
+        /// <summary>
+        /// Parent gameobject for whole VR camera structure.
+        /// </summary>
         [SerializeField]
-        private GameObject _vrCamera;
+        private GameObject _vrCameraHierarchy;
+        /// <summary>
+        /// Reference to canvas showing the GUI seen by the player.
+        /// </summary>
+        [SerializeField] private Canvas _playerCanvas;
+        /// <summary>
+        /// Camera component which shall be used to see the player GUI.
+        /// </summary>
+        [SerializeField] private Camera _vrCameraComponent;
         /// <summary>
         /// Called at initialization of the gameobject.
         /// </summary>
@@ -35,11 +46,13 @@ namespace Assets.Scripts.Player.CameraSettings
         {
             if (_inputController.ControllerDetected==false)
             {
-                _vrCamera.SetActive(false);
+                _vrCameraHierarchy.SetActive(false);
+                _playerCanvas.worldCamera = _regularCamera.GetComponent<Camera>();
             }
             else
             {
                 _regularCamera.SetActive(false);
+                _playerCanvas.worldCamera = _vrCameraComponent;
             }
         }
 

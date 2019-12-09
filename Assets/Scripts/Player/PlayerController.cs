@@ -111,6 +111,10 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
         InputController.RegisterOnMouseLeftDown(UsePrimaryWeapon);
         InputController.RegisterOnMouseLeftUp(StopUsingPrimaryWeapon);
         InputController.RegisterOnMouseRightPressed(SwitchPrimaryWeapon);
+
+        InputController.RegisterOnTriggerDown(UsePrimaryWeapon);
+        InputController.RegisterOnTriggerUp(StopUsingPrimaryWeapon);
+        InputController.RegisterOnTouchPressed(SwitchPrimaryWeapon);
     }
     /// <summary>
     /// Reads horizontal and vertical axes, depending on whether is the game in editor mode or not.

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 
@@ -15,8 +16,10 @@ public class InputController : MonoBehaviour
     private static UnityAction<bool> _onHasController = null;
 
     private static UnityAction _onTriggerUp = null;
+    private static UnityAction _onTriggerPressed = null;
     private static UnityAction _onTriggerDown = null;
     private static UnityAction _onTouchUp = null;
+    private static UnityAction _onTouchPressed = null;
     private static UnityAction _onTouchDown = null;
     #endregion VR Controller
 
@@ -118,7 +121,7 @@ public class InputController : MonoBehaviour
     {
         if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
         {
-            _onTriggerDown?.Invoke();
+            _onTriggerPressed?.Invoke();
         }
 
         if (OVRInput.GetUp(OVRInput.Button.PrimaryIndexTrigger))
@@ -126,14 +129,24 @@ public class InputController : MonoBehaviour
             _onTriggerUp?.Invoke();
         }
 
+        if (OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger))
+        {
+            _onTriggerDown?.Invoke();
+        }
+
         if (OVRInput.GetDown(OVRInput.Button.PrimaryTouchpad))
         {
-            _onTouchDown?.Invoke();
+            _onTouchPressed?.Invoke();
         }
 
         if (OVRInput.GetUp(OVRInput.Button.PrimaryTouchpad))
         {
             _onTouchUp?.Invoke();
+        }
+
+        if (OVRInput.Get(OVRInput.Button.PrimaryTouchpad))
+        {
+            _onTouchDown?.Invoke();
         }
 
         TouchPadAxis = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad);
@@ -233,15 +246,33 @@ public class InputController : MonoBehaviour
     {
         _onTriggerDown += action;
     }
-
+    public static void RegisterOnTriggerPressed(UnityAction action)
+    {
+        _onTriggerPressed += action;
+    }
+    /// <summary>
+    /// Register handler - VR Touch pad has just been released.
+    /// </summary>
+    /// <param name="action"></param>
     public static void RegisterOnTouchUp(UnityAction action)
     {
         _onTouchUp += action;
     }
-
+    /// <summary>
+    /// Register handler - VR Touch pad is being constantly pressed down.
+    /// </summary>
+    /// <param name="action"></param>
     public static void RegisterOnTouchDown(UnityAction action)
     {
         _onTouchDown += action;
+    }
+    /// <summary>
+    /// Register handler - Touch Pad was pressed last frame (non-continuous).
+    /// </summary>
+    /// <param name="action"></param>
+    public static void RegisterOnTouchPressed(UnityAction action)
+    {
+        _onTouchPressed += action;
     }
 
     public static void RegisterOnDefaultAxesChange(UnityAction<Vector3> action)
