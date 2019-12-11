@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
@@ -81,21 +82,22 @@ public class InputController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InputAllowed = true;
-        //if (Application.isEditor)
-        //{
-        //    InputAllowed = true;
-        //}
+        //InputAllowed = true;
+        if (Application.isEditor)
+        {
+            InputAllowed = true;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Check for active input
         if (InputAllowed == false)
         {
             return;
         }
-
+        //Check if controller present
         if (ControllerDetected == false)
         {
             CheckDefaultInput();

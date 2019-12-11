@@ -37,7 +37,7 @@ namespace Assets.Scripts.Player.CameraSettings
         /// </summary>
         void Awake()
         {
-            SelectCamera();
+            //SelectCamera();
         }
         /// <summary>
         /// Turns off either VR or regular camera, judging by whether is the app running in the editor or not.
@@ -48,11 +48,13 @@ namespace Assets.Scripts.Player.CameraSettings
             {
                 _vrCameraHierarchy.SetActive(false);
                 _playerCanvas.worldCamera = _regularCamera.GetComponent<Camera>();
+                Debug.Log("Using default Camera.");
             }
             else
             {
                 _regularCamera.SetActive(false);
                 _playerCanvas.worldCamera = _vrCameraComponent;
+                Debug.Log("Using VR Camera set.");
             }
         }
 
