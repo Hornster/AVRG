@@ -9,11 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 0
-    path: Assets/Scenes/GoFurthest.unity
-    guid: a3236ecc3cebd1947aa10597275b6735
-  - enabled: 1
     path: Assets/Scenes/VRTest.unity
     guid: a7bacb878ab63a94692f56250c459f62
-  m_configObjects:
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8112c262924485b44a3939b50aa7c1fb,
-      type: 2}
+  - enabled: 1
+    path: Assets/Scenes/GoFurthest.unity
+    guid: a3236ecc3cebd1947aa10597275b6735
+  m_configObjects: {}

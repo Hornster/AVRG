@@ -19,6 +19,11 @@ namespace Assets.Scripts.Player.Weapons
         /// </summary>
         public int CurrentWeaponIndex { get; private set; }
         /// <summary>
+        /// The parent transform which the weapons gameobjects  will be assigned to as children.
+        /// </summary>
+        [SerializeField]
+        private Transform _weaponsParentTransform = null;
+        /// <summary>
         /// Stories all available weapons for the player.
         /// </summary>
         private List<IWeapon> _availableWeapons = new List<IWeapon>();
@@ -63,7 +68,7 @@ namespace Assets.Scripts.Player.Weapons
             _availableWeapons = new List<IWeapon>(weapons.Count);
             foreach (var weapon in weapons)
             {
-                var createdWeapon = _weaponsFactory.CreateWeapon(weapon, transform);
+                var createdWeapon = _weaponsFactory.CreateWeapon(weapon, _weaponsParentTransform);
                 createdWeapon.DeactivateWeapon();
                 _availableWeapons.Add(createdWeapon);
             }

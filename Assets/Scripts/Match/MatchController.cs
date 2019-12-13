@@ -3,7 +3,9 @@
 using System;
 using Assets.Scripts.Maps;
 using Assets.Scripts.Maps.Interfaces;
+using Assets.Scripts.Player.Controller;
 using Assets.Scripts.Player.GUI;
+using Assets.Scripts.Shared.Enums;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -28,6 +30,10 @@ namespace Assets.Scripts.Match
         /// Reference to the player.
         /// </summary>
         [SerializeField] private PlayerController _player;
+        /// <summary>
+        /// Used to toggle between the canvas and match (3D scene) pointers.
+        /// </summary>
+        [SerializeField] private PointerToggler _pointerToggler = null;
         /// <summary>
         /// By how many seconds will the spawn cooldown decrease after certain time passes?
         /// </summary>
@@ -88,6 +94,7 @@ namespace Assets.Scripts.Match
             }
             _enemySpawner.EnemiesConstantForce = GetConstantForceVector();
             InputController.RegisterOnEscKeyPressed(RoundPause);
+            InputController.RegisterOnBackPressed(RoundPause);
         }
         void Update()
         {
@@ -151,13 +158,14 @@ namespace Assets.Scripts.Match
         public void RoundEnded()
         {
             _guiManager.RoundEnded();
+
+            _pointerToggler.SwitchToPointer(PointerType.CanvasPointer);
         }
         /// <summary>
         /// Callback method - user decided to leave the level.
         /// </summary>
         public void RoundExit()
         {
-            //TODO make it return to menu, when it will be created.
             Application.Quit();
         }
         /// <summary>
@@ -169,6 +177,8 @@ namespace Assets.Scripts.Match
             _enemySpawner.ResetSpawner(_spawnMaxTime, GetConstantForceVector());
             _player.ResetPlayer();
             _guiManager.RestartRound();
+
+            _pointerToggler.SwitchToPointer(PointerType.ThreeDScenePointer);
         }
         /// <summary>
         /// Pauses the round.
@@ -178,6 +188,7 @@ namespace Assets.Scripts.Match
             _isPaused = true;
             _pauseScriptExecution?.Invoke();
             _guiManager.RoundPaused();
+            _pointerToggler.SwitchToPointer(PointerType.CanvasPointer);
         }
         /// <summary>
         /// Resumes the paused round.
@@ -187,6 +198,8 @@ namespace Assets.Scripts.Match
             _isPaused = false;
             _resumeScriptExecution?.Invoke();
             _guiManager.RoundResumed();
+
+            _pointerToggler.SwitchToPointer(PointerType.ThreeDScenePointer);
         }
         /// <summary>
         /// Registers provided method as pause event callback.

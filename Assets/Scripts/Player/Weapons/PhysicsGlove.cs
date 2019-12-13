@@ -53,5 +53,10 @@ namespace Assets.Scripts.Player.Weapons
 
             return HookingResultEnum.NoObjectFound;
         }
+
+        public override ProjectileTypeEnum GetProjectileType()
+        {
+            return ProjectileType;
+        }
     }
 }

@@ -5,6 +5,7 @@ using Assets.Scripts.Data;
 using Assets.Scripts.Match;
 using Assets.Scripts.Match.Entities;
 using Assets.Scripts.Player;
+using Assets.Scripts.Player.Controller;
 using Assets.Scripts.Player.GUI;
 using Assets.Scripts.Player.Interface;
 using Assets.Scripts.Player.Weapons;
@@ -20,6 +21,19 @@ using UnityEngine.Events;
 /// </summary>
 public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
 {
+    /// <summary>
+    /// Transform of the weapon.
+    /// </summary>
+    [SerializeField] private Transform _currentWeaponTransform;
+    /// <summary>
+    /// Script used to manipulate the controller pointer.
+    /// </summary>
+    [SerializeField] private PointerToggler _pointerToggler;
+    /// <summary>
+    /// The transform of the main camera through which the player sees.
+    /// It's rotation will be used to move the player around.
+    /// </summary>
+    [SerializeField] private Transform _mainCameraTransform;
     /// <summary>
     /// The main transform of the player hierarchy which will be used to move the player around.
     /// </summary>
@@ -146,12 +160,12 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
         //in the direction they're looking.
         if (_inputController.ControllerDetected)
         {
-            _currentVelocity = VectorManipulator.RotateVector(transform.rotation, _currentVelocity);
+            _currentVelocity = VectorManipulator.RotateVector(_mainCameraTransform.rotation, _currentVelocity);
         }
-        
-        Vector3 rotatedVelocity = VectorManipulator.RotateVector(transform.rotation, _currentVelocity);
-        rotatedVelocity = _collisionResolver.SolveCollisions(_movingTransform.position, rotatedVelocity, _movingTransform.rotation);
-        _currentVelocity = VectorManipulator.RotateVector(Quaternion.Inverse(_movingTransform.rotation), rotatedVelocity);
+
+        //Vector3 rotatedVelocity = VectorManipulator.RotateVector(transform.rotation, _currentVelocity);
+        _currentVelocity = _collisionResolver.SolveCollisions(_movingTransform.position, _currentVelocity, _movingTransform.rotation);
+        //_currentVelocity = VectorManipulator.RotateVector(Quaternion.Inverse(_movingTransform.rotation), rotatedVelocity);
         
         _movingTransform.Translate(_currentVelocity);
     }
@@ -161,7 +175,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
     /// <returns></returns>
     private Vector3 CalcDirectionVector()
     {
-        return transform.rotation * GameConstants.PlayerRotationRefVector;
+        return _currentWeaponTransform.forward;//transform.rotation * GameConstants.PlayerRotationRefVector;
     }
     /// <summary>
     /// Weapon switch callback. Switches the player's weapon.
@@ -175,6 +189,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
 
         StopUsingPrimaryWeapon();
         _currentWeapon = _weaponsManager.GetNextWeapon();
+        _pointerToggler.Switch3DPointerColor(_currentWeapon.GetProjectileType());
     }
     /// <summary>
     /// Uses primary weapon.
@@ -190,6 +205,9 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
         {
             ReceivePercentalDamage(_wrongGloveUsedPenalty);
             _hasHookedWrongObject = true;
+        }else if (usageResult == HookingResultEnum.ObjectHooked)
+        {
+            _pointerToggler.DisableAllPointers();
         }
     }
     /// <summary>
@@ -199,6 +217,10 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
     {
         _currentWeapon.StopUsingWeapon();
         _hasHookedWrongObject = false;
+        if (_isAlive)
+        {
+            _pointerToggler.SwitchToPointer(PointerType.ThreeDScenePointer);
+        }
     }
     // Update is called once per frame
     void Update()
@@ -219,6 +241,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
     {
         _currentHealth = 0.0f;
         _isAlive = false;
+        StopUsingPrimaryWeapon();
         _roundEndedEvent.Invoke();
     }
     /// <summary>
@@ -289,6 +312,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
     {
         _movingTransform.position = _startingPosition;
         _currentHealth = _maxHealth;
+        _hasHookedWrongObject = false;
         _isAlive = true;
         _isPaused = false;
     }

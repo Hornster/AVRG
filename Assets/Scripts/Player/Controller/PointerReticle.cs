@@ -30,6 +30,7 @@ namespace Assets.Scripts.Player.Controller
         private void Awake()
         {
             Pointer.RegisterOnPointerUpdate(UpdateSprite);
+            Pointer.RegisterSetReticleEnabled(ToggleReticle);
         }
         private void Update()
         {
@@ -40,7 +41,14 @@ namespace Assets.Scripts.Player.Controller
         {
 
         }
-
+        /// <summary>
+        /// Toggles the reticle.
+        /// </summary>
+        /// <param name="isEnabled">Pass true to enable reticle. False to disable.</param>
+        private void ToggleReticle(bool isEnabled)
+        {
+            gameObject.SetActive(isEnabled);
+        }
         /// <summary>
         /// Event handler. Updates reticle sprite accordingly to type of the object currently pointed at.
         /// </summary>

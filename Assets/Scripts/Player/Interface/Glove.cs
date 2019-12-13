@@ -42,10 +42,11 @@ namespace Assets.Scripts.Player.Interface
         /// Stores data about the currently hooked obstacle by this glove. If none is hooked - null.
         /// </summary>
         public HookingData HookingData { get; protected set; }
+
         /// <summary>
         /// Type of the glove.
         /// </summary>
-        public ProjectileTypeEnum ProjectileType { get; }
+        public ProjectileTypeEnum ProjectileType { get; } = ProjectileTypeEnum.Energy;
 
         /// <summary>
         /// Prompts drawing line between connected object and the glove.
@@ -102,6 +103,9 @@ namespace Assets.Scripts.Player.Interface
             totalForce *= Time.deltaTime;
             HookingData.HookedObstacle.ApplyForce(totalForce);
         }
+
+        public abstract ProjectileTypeEnum GetProjectileType();
+
         /// <summary>
         /// Casts a ray. If any objects are on the way - tries to hook the ray to one of these, starting
         /// from the closest one.

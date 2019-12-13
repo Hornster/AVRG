@@ -37,6 +37,7 @@ namespace Assets.Scripts.Player.CameraSettings
         /// </summary>
         void Awake()
         {
+            _playerCanvas.worldCamera = _vrCameraComponent;
             //SelectCamera();
         }
         /// <summary>

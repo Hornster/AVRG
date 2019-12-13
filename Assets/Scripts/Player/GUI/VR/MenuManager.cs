@@ -31,5 +31,10 @@ namespace Assets.Scripts.Player.GUI.VR
 
             _currentPanel.Show();
         }
+
+        private void LeaveGame()
+        {
+            OVRManager.PlatformUIConfirmQuit();
+        }
     }
 }

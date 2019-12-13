@@ -29,6 +29,21 @@ namespace Assets.Scripts.Player.Controller
         private EventSystem _eventSystem = null;
 
         [SerializeField] private StandaloneInputModule _inputModule = null;
+        
+        /// <summary>
+        /// The color of the beam at the base (origin).
+        /// </summary>
+        [SerializeField] private Color _beamStartColor = Color.white;
+        /// <summary>
+        /// The color of the beam at its end.
+        /// </summary>
+        [SerializeField] private Color _beamEndColor = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+
+        private void OnEnable()
+        {
+            _beamRenderer.enabled = true;
+            SetLineColor();
+        }
 
         private void Update()
         {
@@ -87,6 +102,20 @@ namespace Assets.Scripts.Player.Controller
         private Vector3 CalculateEnd(float length)
         {
             return transform.position + (transform.forward * length);
+        }
+
+        /// <summary>
+        /// Sets the color of the pointer line.
+        /// </summary>
+        private void SetLineColor()
+        {
+            if (_beamRenderer == null)
+            {
+                return;
+            }
+
+            _beamRenderer.startColor = _beamStartColor;
+            _beamRenderer.endColor = _beamEndColor;
         }
     }
 }

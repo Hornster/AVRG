@@ -138,7 +138,7 @@ namespace Assets.Scripts.Player
 
             _onControllerChanged?.Invoke(current, newController);
 
-            return current;//TODO
+            return current;
         }
         /// <summary>
         /// Checks for the presence of controllers and for what types is the one connected.
@@ -229,35 +229,6 @@ namespace Assets.Scripts.Player
         {
             _onControllerChanged += action;
         }
-        public static void RegisterOnTriggerUp(UnityAction action)
-        {
-            _onTriggerUp += action;
-        }
-
-        public static void RegisterOnTriggerDown(UnityAction action)
-        {
-            _onTriggerDown += action;
-        }
-        public static void RegisterOnTriggerPressed(UnityAction action)
-        {
-            _onTriggerPressed += action;
-        }
-        /// <summary>
-        /// Register handler - VR Touch pad has just been released.
-        /// </summary>
-        /// <param name="action"></param>
-        public static void RegisterOnTouchUp(UnityAction action)
-        {
-            _onTouchUp += action;
-        }
-        /// <summary>
-        /// Register handler - VR Touch pad is being constantly pressed down.
-        /// </summary>
-        /// <param name="action"></param>
-        public static void RegisterOnTouchDown(UnityAction action)
-        {
-            _onTouchDown += action;
-        }
         /// <summary>
         /// Register handler - Touch Pad was pressed last frame (non-continuous).
         /// </summary>
@@ -270,48 +241,6 @@ namespace Assets.Scripts.Player
         public static void RegisterOnDefaultAxesChange(UnityAction<Vector3> action)
         {
             _onDefaultAxesChange += action;
-        }
-        /// <summary>
-        /// Register handler - LMB was released last frame.
-        /// </summary>
-        /// <param name="action"></param>
-        public static void RegisterOnMouseAxesChange(UnityAction<Vector2> action)
-        {
-            _onMouseAxesChange += action;
-        }
-        /// <summary>
-        /// Register handler - LMB was pressed last frame (non-continuous).
-        /// </summary>
-        /// <param name="action"></param>
-        public static void RegisterOnMouseLeftPressed(UnityAction action)
-        {
-            _onMouseLeftPressed += action;
-        }
-        /// <summary>
-        /// Register handler - LMB is being constantly pressed down.
-        /// </summary>
-        /// <param name="action"></param>
-        public static void RegisterOnMouseLeftDown(UnityAction action)
-        {
-            _onMouseLeftDown += action;
-        }
-
-        /// <summary>
-        /// Register handler - RMB was pressed last frame (non-continuous).
-        /// </summary>
-        /// <param name="action"></param>
-        public static void RegisterOnMouseRightPressed(UnityAction action)
-        {
-            _onMouseRightPressed += action;
-        }
-        public static void RegisterOnMouseLeftUp(UnityAction action)
-        {
-            _onMouseLeftUp += action;
-        }
-
-        public static void RegisterOnEscKeyPressed(UnityAction action)
-        {
-            _onEscKeyPressed += action;
         }
         #endregion EventRegistering
 

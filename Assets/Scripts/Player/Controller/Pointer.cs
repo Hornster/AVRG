@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Shared.Enums;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Scripts.Player.Controller
@@ -9,6 +10,10 @@ namespace Assets.Scripts.Player.Controller
     public class Pointer : MonoBehaviour
     {
         private static UnityAction<Vector3, GameObject> _onPointerUpdate = null;
+        /// <summary>
+        /// Used to turn on and off the reticle of the pointer.
+        /// </summary>
+        private static UnityAction<bool> _setReticleEnabled = null;
 
 
         [SerializeField]
@@ -20,13 +25,19 @@ namespace Assets.Scripts.Player.Controller
         [SerializeField]
         private LayerMask _interactableMask = 0;
         /// <summary>
-        /// The color of the beam at the base (origin).
+        /// The color of the beam at the base (origin) - energy glove version.
         /// </summary>
-        [SerializeField] private Color _beamStartColor = Color.white;
+        [SerializeField] private Color _beamStartColorEnergy = Color.cyan;
+        /// <summary>
+        /// The color of the beam at the base (origin) - physics glove version.
+        /// </summary>
+        [SerializeField] private Color _beamStartColorPhysic = Color.grey;
         /// <summary>
         /// The color of the beam at its end.
         /// </summary>
         [SerializeField] private Color _beamEndColor = new Color(0.0f,0.0f,0.0f,0.0f);
+
+        private Color _currentSelectedColor;
 
         private GameObject _currentlyPointedObject = null;
         private Transform _origin = null;
@@ -37,12 +48,24 @@ namespace Assets.Scripts.Player.Controller
             PlayerEvents.RegisterOnTouchPressed(TouchPadPresed);
         }
 
+        private void OnDisable()
+        {
+            _setReticleEnabled.Invoke(false);
+            _beamRenderer.enabled = false;
+        }
+        private void OnEnable()
+        {
+            SetLineColor();
+            _setReticleEnabled.Invoke(true);
+            _beamRenderer.enabled = true;
+        }
         private void Start()
         {
+            _currentSelectedColor = _beamStartColorPhysic;
             SetLineColor();
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             if (_origin == null)
             {
@@ -62,8 +85,6 @@ namespace Assets.Scripts.Player.Controller
         /// <returns></returns>
         private Vector3 UpdateLine()
         {
-           
-
             RaycastHit hit = CastRay(ref _everythingMask);
 
             Vector3 endPosition = _origin.position + (_origin.forward * _rayLength);
@@ -100,7 +121,7 @@ namespace Assets.Scripts.Player.Controller
                 return;
             }
 
-            _beamRenderer.startColor = _beamStartColor;
+            _beamRenderer.startColor = _currentSelectedColor;
             _beamRenderer.endColor = _beamEndColor;
         }
         /// <summary>
@@ -136,10 +157,39 @@ namespace Assets.Scripts.Player.Controller
         {
             //TODO
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="action"></param>
         public static void RegisterOnPointerUpdate(UnityAction<Vector3, GameObject> action)
         {
             _onPointerUpdate += action;
+        }
+        /// <summary>
+        /// Registers event handler for toggling reticle. For example if pointer is disabled, this will be called to disable the reticle as well.
+        /// </summary>
+        /// <param name="action"></param>
+        public static void RegisterSetReticleEnabled(UnityAction<bool> action)
+        {
+            _setReticleEnabled += action;
+        }
+        /// <summary>
+        /// Changes color of the beam, accordingly to new equipped glove.
+        /// </summary>
+        /// <param name="newSetGlove"></param>
+        public void SwitchColor(ProjectileTypeEnum newSetGlove)
+        {
+            switch (newSetGlove)
+            {
+                case ProjectileTypeEnum.Physical:
+                    _beamRenderer.startColor = _beamStartColorPhysic;
+                    break;
+                case ProjectileTypeEnum.Energy:
+                    _beamRenderer.startColor = _beamStartColorEnergy;
+                    break;
+            }
+
+            _currentSelectedColor = _beamRenderer.startColor;
         }
     }
 }

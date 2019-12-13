@@ -12,10 +12,9 @@ using UnityEngine.UIElements;
 public class InputController : MonoBehaviour
 {
     #region VR Controller
-    //TODO add pause caller (back button)
-    //TODO add glove switch (pad button)
     private static UnityAction<bool> _onHasController = null;
 
+    private static UnityAction _onBackPressed = null;
     private static UnityAction _onTriggerUp = null;
     private static UnityAction _onTriggerPressed = null;
     private static UnityAction _onTriggerDown = null;
@@ -97,6 +96,7 @@ public class InputController : MonoBehaviour
         {
             return;
         }
+        ControllerDetected = CheckControllerPresence(ControllerDetected);
         //Check if controller present
         if (ControllerDetected == false)
         {
@@ -107,7 +107,6 @@ public class InputController : MonoBehaviour
         {
             CheckVRInput();
 
-            ControllerDetected = CheckControllerPresence(ControllerDetected);
         }
     }
 
@@ -149,6 +148,11 @@ public class InputController : MonoBehaviour
         if (OVRInput.Get(OVRInput.Button.PrimaryTouchpad))
         {
             _onTouchDown?.Invoke();
+        }
+
+        if (OVRInput.GetDown(OVRInput.Button.Back))
+        {
+            _onBackPressed?.Invoke();
         }
 
         TouchPadAxis = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad);
@@ -275,6 +279,14 @@ public class InputController : MonoBehaviour
     public static void RegisterOnTouchPressed(UnityAction action)
     {
         _onTouchPressed += action;
+    }
+    /// <summary>
+    /// Register handler - back button was pressed once.
+    /// </summary>
+    /// <param name="action"></param>
+    public static void RegisterOnBackPressed(UnityAction action)
+    {
+        _onBackPressed += action;
     }
 
     public static void RegisterOnDefaultAxesChange(UnityAction<Vector3> action)

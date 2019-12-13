@@ -20,7 +20,7 @@ namespace Assets.Scripts.Player.Weapons
         /// <summary>
         /// Type of the glove.
         /// </summary>
-        public new ProjectileTypeEnum ProjectileType { get; } = ProjectileTypeEnum.Energy;
+        public ProjectileTypeEnum ProjectileType { get; } = ProjectileTypeEnum.Energy;
 
         /// <summary>
         /// Seeks for any hookable obstacles/enemies and if found - hooks them to the glove, if possible.
@@ -52,6 +52,11 @@ namespace Assets.Scripts.Player.Weapons
             }
 
             return HookingResultEnum.NoObjectFound;
+        }
+
+        public override ProjectileTypeEnum GetProjectileType()
+        {
+            return ProjectileType;
         }
     }
 }

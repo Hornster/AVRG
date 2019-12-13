@@ -29,7 +29,7 @@ namespace Assets.Scripts.Player.Interface
         /// <summary>
         /// Type of the glove.
         /// </summary>
-        ProjectileTypeEnum ProjectileType { get; }
+        ProjectileTypeEnum GetProjectileType();
 
         /// <summary>
         /// Casts a ray. If any objects are on the way - tries to hook the ray to one of these, starting
