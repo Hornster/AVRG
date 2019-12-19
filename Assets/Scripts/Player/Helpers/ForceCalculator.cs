@@ -41,19 +41,10 @@ namespace Assets.Scripts.Player.Helpers
         public Vector3 GlovePositionalForce(Vector3 distanceAfterMovement, Vector3 referenceDistance, float gloveStrength)
         {
             Vector3 movementForce = distanceAfterMovement - referenceDistance;
-            //float movementForceValue = movementForce.magnitude * gloveStrength;
             movementForce = -movementForce;
             movementForce *= gloveStrength;
-
-            //if (movementForceValue >= gloveStrength)
-            //{
-            //    movementForce = movementForce.normalized;
-            //    movementForce *= gloveStrength;
-            //    return movementForce;
-            //}
-
+            
             return movementForce;
-            //return Vector3.zero;
         }
 
         /// <summary>
@@ -71,13 +62,6 @@ namespace Assets.Scripts.Player.Helpers
             Vector3 rotationForce = distanceAfterRotation - distanceAfterMovement;
             rotationForce *= gloveStrength;
 
-            //if (rotationForce.magnitude >= gloveStrength)
-            //{
-            //    rotationForce = rotationForce.normalized;
-            //    rotationForce *= gloveStrength;
-            //    return rotationForce;
-            //}
-
             return rotationForce;
         }
         /// <summary>
@@ -92,11 +76,6 @@ namespace Assets.Scripts.Player.Helpers
             objectVelocity = -objectVelocity;
             objectVelocity *= gloveStrength * dampeningFactor;
             return objectVelocity;
-            //Vector3 dampeningForce = -objectVelocity.normalized;
-            //dampeningForce *= dampeningFactor;
-
-            //return dampeningForce;
-            //return Vector3.zero;
         }
 
         /// <summary>

@@ -106,5 +106,3 @@ namespace Assets.Scripts.Enemies.Implementation
         }
     }
 }
-//TODO:
-// - Add obstacle - energy siphon. Upon using the glove, generates explosion that will damage the player for quite amount of hp (for example 20%).

@@ -7,13 +7,22 @@ using UnityEngine;
 
 namespace Assets.Scripts.Factories.Implementation
 {
+    /// <summary>
+    /// Author: Karol Kozuch
+    ///
+    /// Factory of obstacles.
+    /// </summary>
     public class ObstacleFactory : MonoBehaviour, IObstacleFactory
     {
         [SerializeField]
         private GameObject _physicalObstaclePrefab;
         [SerializeField]
         private GameObject _energyObstaclePrefab;
-
+        /// <summary>
+        /// Returns a new physical obstacle.
+        /// </summary>
+        /// <param name="iniData">Initialization data for the obstacle.</param>
+        /// <returns></returns>
         private IObstacle CreatePhysicalObstacle(ObstacleIniData iniData)
         {
             var newObstacle = Instantiate(_physicalObstaclePrefab, iniData.Position, iniData.Rotation, iniData.ParentTransform);
@@ -28,7 +37,11 @@ namespace Assets.Scripts.Factories.Implementation
 
             return newObstacleController;
         }
-
+        /// <summary>
+        /// Creates energy obstacle.
+        /// </summary>
+        /// <param name="iniData">Initialization data for the obstacle.</param>
+        /// <returns></returns>
         private IObstacle CreateEnergyObstacle(ObstacleIniData iniData)
         {
             var newObstacle = Instantiate(_energyObstaclePrefab, iniData.Position, iniData.Rotation);
@@ -43,7 +56,12 @@ namespace Assets.Scripts.Factories.Implementation
 
             return newObstacleController;
         }
-
+        /// <summary>
+        /// Creates obstacle basing on provided arguments.
+        /// </summary>
+        /// <param name="type">Type of the obstacle to create.</param>
+        /// <param name="iniData">Initialization data for the obstacle.</param>
+        /// <returns></returns>
         public IObstacle CreateObstacle(ObstacleTypeEnum type, ObstacleIniData iniData)
         {
             switch (type)

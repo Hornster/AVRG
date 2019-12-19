@@ -45,7 +45,6 @@ namespace Assets.Scripts.Player.Controller
         private void Awake()
         {
             PlayerEvents.RegisterOnControllerChanged(UpdateOrigin);
-            PlayerEvents.RegisterOnTouchPressed(TouchPadPresed);
         }
 
         private void OnDisable()
@@ -149,13 +148,6 @@ namespace Assets.Scripts.Player.Controller
             _origin = controllerObject.transform;
 
             _beamRenderer.enabled = controllerType != OVRInput.Controller.Touchpad;
-        }
-        /// <summary>
-        /// Event handler for touch pad pressed once event.
-        /// </summary>
-        private void TouchPadPresed()
-        {
-            //TODO
         }
         /// <summary>
         /// 

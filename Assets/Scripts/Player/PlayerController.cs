@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
         });
         _weaponsManager.CreateWeapons(playerWeapons);
         _currentWeapon = _weaponsManager.GetCurrentWeapon();
-        //TODO register VR controller counterparts
+        
         InputController.RegisterOnMouseLeftDown(UsePrimaryWeapon);
         InputController.RegisterOnMouseLeftUp(StopUsingPrimaryWeapon);
         InputController.RegisterOnMouseRightPressed(SwitchPrimaryWeapon);
@@ -162,10 +162,9 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
         {
             _currentVelocity = VectorManipulator.RotateVector(_mainCameraTransform.rotation, _currentVelocity);
         }
-
-        //Vector3 rotatedVelocity = VectorManipulator.RotateVector(transform.rotation, _currentVelocity);
+        
         _currentVelocity = _collisionResolver.SolveCollisions(_movingTransform.position, _currentVelocity, _movingTransform.rotation);
-        //_currentVelocity = VectorManipulator.RotateVector(Quaternion.Inverse(_movingTransform.rotation), rotatedVelocity);
+        
         
         _movingTransform.Translate(_currentVelocity);
     }
@@ -175,7 +174,7 @@ public class PlayerController : MonoBehaviour, IDamageReceiver, IPausable
     /// <returns></returns>
     private Vector3 CalcDirectionVector()
     {
-        return _currentWeaponTransform.forward;//transform.rotation * GameConstants.PlayerRotationRefVector;
+        return _currentWeaponTransform.forward;
     }
     /// <summary>
     /// Weapon switch callback. Switches the player's weapon.

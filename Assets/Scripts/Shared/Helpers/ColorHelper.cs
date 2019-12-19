@@ -20,7 +20,11 @@ namespace Assets.Scripts.Shared.Helpers
             _highlightColor.Add(TeamEnum.PlayerGreen, Color.green);
             _highlightColor.Add(TeamEnum.PlayerRed, Color.red);
         }
-
+        /// <summary>
+        /// Returns color by which a selected object can be highlighted, basing on provided team.
+        /// </summary>
+        /// <param name="team">Team that selected an object.</param>
+        /// <returns></returns>
         public static Color GetHighlightColor(TeamEnum team)
         {
             Color color;

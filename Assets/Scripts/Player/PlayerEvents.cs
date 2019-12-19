@@ -107,7 +107,6 @@ namespace Assets.Scripts.Player
             CheckInputSource();
             //Check input
             Input();
-            //InputController (CheckControllerPresence)
         }
         private void OnDestroy()
         {

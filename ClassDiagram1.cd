@@ -1,0 +1,845 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OVRCameraComposition" Collapsed="true">
+    <Position X="1.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAiIBAAADAAAAlAAAAIQAQCEAAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Composition\OVRCameraComposition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRComposition" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAQAAAAAABAAAACAAAAAAAAAAAAAAEAAAAAGAAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Composition\OVRComposition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRCompositionUtil" Collapsed="true">
+    <Position X="24.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAACAgAAAAAAAkAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Composition\OVRCompositionUtil.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRDirectComposition" Collapsed="true">
+    <Position X="0.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAEAAAAAAAAAAQAAAAAAAAGAAAIA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Composition\OVRDirectComposition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRExternalComposition" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAgAAAAAAAAAAAAAAAAABAAAAIAAIAAAAGAAgAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Composition\OVRExternalComposition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRMRForegroundCameraManager" Collapsed="true">
+    <Position X="10.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAIABAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Composition\OVRExternalComposition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRSandwichComposition" Collapsed="true">
+    <Position X="3" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AYxIDAAACABAAABQAAAAAAAABAAAAAAAAEIAAGAAgAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Composition\OVRSandwichComposition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRBoundary" Collapsed="true">
+    <Position X="19" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAgAAIAAABAAAAEAAAAAAEAAAARIAAAEAAgIA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRBoundary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRCameraRig" Collapsed="true">
+    <Position X="20.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAcAIAgIQjACAAAAAAACAMAACADAVCAACAAADgAEAkQ=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRCameraRig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRExtensions" Collapsed="true">
+    <Position X="15.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAgAAIACAAgIQAQIAAAAQEAgIACAAAgABAAAAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRCommon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRNativeBuffer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAABAAACBgBAAAAAAAAAQAAAAAAAAAAAgAABAAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRCommon.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OVRDebugHeadController" Collapsed="true">
+    <Position X="10.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASAAAgAACAAAgUEAAAAAEAAAAAAAAAAAAAQQAAAAEA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRDebugHeadController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRDisplay" Collapsed="true">
+    <Position X="13.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gASAAAAAAAAAAABACBAAAAAABAEAAQxAEAQYIAQAAAI=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRDisplay.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRHaptics" Collapsed="true">
+    <Position X="26" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAgAAAAAAAAAAAEAAIAAAAAAAEAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRHaptics.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRHapticsClip" Collapsed="true">
+    <Position X="10.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAQCAAAAAAAgAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRHapticsClip.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRInput" Collapsed="true">
+    <Position X="12" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JCQKAEACgjAUoAnAIAJABYCgIAACAQBQADihCsAACBA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRInput.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRLayerAttribute" Collapsed="true">
+    <Position X="15.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRLayerAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRLint" Collapsed="true">
+    <Position X="17.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQEAAEAEQAAAIIAAAAAAQEAAAAAAAEAAgADCAAAAAgA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRLint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRManager" Collapsed="true">
+    <Position X="19" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>bIxONBpcS+CFIW2RAD2g4QAHBiHhEhBPSAAVU1zxQWw=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRMixedReality" Collapsed="true">
+    <Position X="20.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIAAAAAAAAAAEACAEQAAAAAAAAAAAAQACAAEAAAIA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRMixedReality.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVROverlay" Collapsed="true">
+    <Position X="13.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABBAAEAAlCgAAAQACMCIgAUABBhAEAJCAAAaDQgCEg=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVROverlay.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRPlatformMenu" Collapsed="true">
+    <Position X="17.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAiAAAAAAAgAAAAAAAAEAAAAAAABAAAAAAiAAEA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRPlatformMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRPlugin" Collapsed="true">
+    <Position X="20.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>4yd+TDQcTxbUNaGT0iGhNIANIsRgUwtJJPmkF3vQLEM=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRPlugin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRProfile" Collapsed="true">
+    <Position X="24.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAQAAAAAAAAAEYAAgAAEAAgA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRTracker" Collapsed="true">
+    <Position X="20.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAATAABAAAAAAAAAAAAAAAAAAAAQQAAAE=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRTracker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRChromaticAberration" Collapsed="true">
+    <Position X="22.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AARAAAAAACAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRChromaticAberration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRCubemapCapture" Collapsed="true">
+    <Position X="26" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAIAgBAIgAAAAAAQAAABAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRCubemapCapture.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRDebugInfo" Collapsed="true">
+    <Position X="12" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQJABAARAQoAEVASAC4AAAAKBBICAAQQJQiYWAhAMA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRDebugInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRGazePointer" Collapsed="true">
+    <Position X="17.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAyGBAAACAAEBAAAEEEAIgAiCABEQiAAgAQAIGAAAUA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRGazePointer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRGearVrControllerTest" Collapsed="true">
+    <Position X="19" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAAAACAAAAAAAAAAAACAAAAAAAAAgAAQAAAQAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRGearVrControllerTest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRGrabbable" Collapsed="true">
+    <Position X="20.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CGABAAgAACAAAAAgAgAIAAAACEAAAIQSAABAEAAAAEI=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRGrabbable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRGrabber" Collapsed="true">
+    <Position X="22.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAhIAAAAiAISAoACAA6QMaACEAAAIAAQFAAiAAAgGI=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRGrabber.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRGridCube" Collapsed="true">
+    <Position X="24.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQAAAAAgAAACAAACAAIAAAAEgCAAAAAAgAAAAAIAAQ=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRGridCube.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRMixedRealityCaptureSettings" Collapsed="true">
+    <Position X="22.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>DABgBAJAAIABIEQAAAAACAAgAgCBAAABSAAQMABBAAg=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRMixedRealityCaptureSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRModeParms" Collapsed="true">
+    <Position X="24.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAQ=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRModeParms.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRMonoscopic" Collapsed="true">
+    <Position X="26" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAABAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRMonoscopic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRPlayerController" Collapsed="true">
+    <Position X="19" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIQBEAIwEyEhAiCBCwhCBIAUAAAECAApYAJUACBBCFA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRPlayerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRProfiler" Collapsed="true">
+    <Position X="26" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIBAAAEBQIgAAAAAAEAAAAAAAAAAAACCAAAAAIA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRProfiler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRProgressIndicator" Collapsed="true">
+    <Position X="10.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAFA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRProgressIndicator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRRaycaster" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAQCABAAAAQAAgAKAAAAAAEAAEAAAwgAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRRaycaster.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="OVRResetOrientation" Collapsed="true">
+    <Position X="13.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRResetOrientation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRSceneSampleController" Collapsed="true">
+    <Position X="15.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQIAAAEACAIABAAAAAAAAEBEAAAAAAAAABAAABAAEA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRSceneSampleController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRScreenFade" Collapsed="true">
+    <Position X="17.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CACHEAAQAKAAACAACAAABAAAEAAFIAAAAAAAEEAACEA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRScreenFade.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRTrackedRemote" Collapsed="true">
+    <Position X="19" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAAAACAAAAoAAAAAAAAAAABAAAAAAAAAAAAAiAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRTrackedRemote.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OVRWaitCursor" Collapsed="true">
+    <Position X="22.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRWaitCursor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InputController" Collapsed="true">
+    <Position X="19" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAUJiAAgyiEQEoCQBCSAAEwBAAJAAoACCAoAASgAAFA=</HashCode>
+      <FileName>Assets\Scripts\Player\InputController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerController" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UIwgBCoAICgAKAFQASQAQRZAAAAAOABCAACABAgAAQg=</HashCode>
+      <FileName>Assets\Scripts\Player\PlayerController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Rotator" Collapsed="true">
+    <Position X="24.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAACAAAAAAAAAAAAAAAAAAAAAiAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Rotator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityEngine.EventSystems.OVRInputModule" Collapsed="true">
+    <Position X="13.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABhAeEAogQQ0BhrQBqhwgEESAgoAACgIAAAAQEiJAwA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRInputModule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityEngine.EventSystems.OVRPhysicsRaycaster" Collapsed="true">
+    <Position X="15.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAACAQAABAAAAQAAAAAAEAAAAAAAABAIgBAAEA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRPhysicsRaycaster.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityEngine.EventSystems.OVRPointerEventData" Collapsed="true">
+    <Position X="22.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAEAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRPointerEventData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityEngine.EventSystems.PointerEventDataExtension" Collapsed="true">
+    <Position X="13.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAQAAEAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRPointerEventData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.OVR.Scripts.Record" Collapsed="true">
+    <Position X="6.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAACA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.OVR.Scripts.RangedRecord" Collapsed="true">
+    <Position X="7.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAQAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.OVR.Scripts.FixRecord" Collapsed="true">
+    <Position X="5.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAACAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Data.GameConstants" Collapsed="true">
+    <Position X="26" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgEAAAAAAAAAAAAAAIAgAAAAAAAAAABgAYAE=</HashCode>
+      <FileName>Assets\Scripts\Data\GameConstants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Data.HookingData" Collapsed="true">
+    <Position X="17.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAQAgAABAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Data\HookingData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Data.KineticObjectData" Collapsed="true">
+    <Position X="20.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAA=</HashCode>
+      <FileName>Assets\Scripts\Data\KineticData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Data.WeaponData" Collapsed="true">
+    <Position X="13.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Data\WeaponData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Enemies.Implementation.EnergyBlockController" Collapsed="true">
+    <Position X="5.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAABAAAACAAAAAAAAAAICcAAACAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemies\Implementation\EnergyBlockController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Assets.Scripts.Enemies.Implementation.PhysicalBlockController" Collapsed="true">
+    <Position X="7.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAABAAAACAAAAAAAAAAICcAAAQAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemies\Implementation\PhysicalBlockController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Assets.Scripts.Enemies.Implementation.SimpleMover" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgAAIAgCgAAAAAAAAAAAQAAAAAACAAAAAAACgAAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemies\Implementation\SimpleMover.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Assets.Scripts.Enemies.Interface.Block" Collapsed="true">
+    <Position X="6.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAABQAACBAAABBAIAgAAAAEAAAAEABCEAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemies\Interface\Block.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Assets.Scripts.Factories.Implementation.ObstacleFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAEAAAAAAAAAAAAAAAAAAAIQACAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Factories\Implementation\ObstacleFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Assets.Scripts.Factories.Implementation.WeaponsFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAIgAAAAAAAAAAAAAAAIAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Factories\Implementation\WeaponsFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Assets.Scripts.Factories.ObstacleIniData" Collapsed="true">
+    <Position X="15.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAIAgAAIAAAAAAAAAAAAAAAAAAASAAAA=</HashCode>
+      <FileName>Assets\Scripts\Factories\ObstacleIniData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Maps.EnemySpawnerRectangular" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgAAIgAKAAAAAAAAAAEgAAAAAMAAAAAAAASCgAIAA=</HashCode>
+      <FileName>Assets\Scripts\Maps\EnemySpawnerRectangular.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Assets.Scripts.Maps.EntityBlockerScript" Collapsed="true">
+    <Position X="22.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAASAACAAAQAAAAAAAAAAEgAAAAAQAAAAAABAAAA=</HashCode>
+      <FileName>Assets\Scripts\Maps\EntityBlockerScript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Maps.ObstacleActivator" Collapsed="true">
+    <Position X="10.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Assets\Scripts\Maps\ObstacleActivator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Maps.ObstacleDataRandomizer" Collapsed="true">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAABBAACAARAQABQCAAAiAAAASAEQAAABAAAABBAA=</HashCode>
+      <FileName>Assets\Scripts\Maps\ObstacleDataRandomizer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Maps.ObstaclesPool" Collapsed="true">
+    <Position X="17.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAIAAAAAgAlQEAAACAAAAAAAAEAAQIAAgAA=</HashCode>
+      <FileName>Assets\Scripts\Maps\ObstaclesPool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Maps.ProbabilityDecisionMaker" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAECAAAACAAAIAAAAAAAAgEBAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Assets\Scripts\Maps\ProbabilityDecisionMaker.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Assets.Scripts.Match.Entities.DamageReceiver" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAIAACgAAAAAAAAAAAAAAAAAIAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Match\Entities\DamageReceiver.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Assets.Scripts.Match.MatchController" Collapsed="true">
+    <Position X="22.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EIQFACIRBDEAAgARACBAiAQAAAAAEEAAAgAQAAAIAAA=</HashCode>
+      <FileName>Assets\Scripts\Match\MatchController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.CameraSettings.CameraToggler" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAgAAAAAAAAAAAAQAAAAAAIAAAAAAAAEg=</HashCode>
+      <FileName>Assets\Scripts\Player\CameraSettings\CameraToggler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.CameraSettings.RegularCameraController" Collapsed="true">
+    <Position X="20.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAACAAAAAAEACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\CameraSettings\RegularCameraController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.CollisionResolver" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hACggAAkMCAAAAQCAAABUACAAAAAAoCAAABAAAABQAA=</HashCode>
+      <FileName>Assets\Scripts\Player\CollisionResolver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.PlayerEvents" Collapsed="true">
+    <Position X="10.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQBSAIiCAUAEAARBCSAAEwAGABACAICCAoIAUBAAFA=</HashCode>
+      <FileName>Assets\Scripts\Player\PlayerEvents.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.Controller.CanvasPointer" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAgAAAAAAAABCAAUAAAAgAAAGEAAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\Player\Controller\CanvasPointer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.Controller.Pointer" Collapsed="true">
+    <Position X="12" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAABACQEASBAAAAARQAAIIAEEAAAAgMIAEAQAIAADEA=</HashCode>
+      <FileName>Assets\Scripts\Player\Controller\Pointer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.Controller.PointerReticle" Collapsed="true">
+    <Position X="15.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAEAAAAQAAAAAAAAAAAAAAACIAAAAAAAACAAAEE=</HashCode>
+      <FileName>Assets\Scripts\Player\Controller\PointerReticle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.Controller.PointerToggler" Collapsed="true">
+    <Position X="17.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACIAIAAAQAAAAAAAEAAAAAAAAAIAAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\Player\Controller\PointerToggler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.Controller.StandaloneInputVROverride" Collapsed="true">
+    <Position X="10.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAABAAAQABAAAAAAAAAAABAAAAAAAgQAEA=</HashCode>
+      <FileName>Assets\Scripts\Player\Controller\StandaloneInputVROverride.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.GUI.GameTimeController" Collapsed="true">
+    <Position X="10.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgAAAEAAAAAAAgAAAAAAAAAAAAAEAABBGAAAAIIAA=</HashCode>
+      <FileName>Assets\Scripts\Player\GUI\GameTimeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.GUI.GuiManager" Collapsed="true">
+    <Position X="13.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACQAACAgAgAAAACAQAAAAAAEAAAAAACQAQAgAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\GUI\GuiManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.GUI.HealthBarController" Collapsed="true">
+    <Position X="15.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACCBCAAAIAAACAAAAAAAAEAUAEBAIAAAAgAA=</HashCode>
+      <FileName>Assets\Scripts\Player\GUI\HealthBarController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.GUI.PauseMenuController" Collapsed="true">
+    <Position X="24.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\GUI\PauseMenuController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.GUI.ResultsMenuController" Collapsed="true">
+    <Position X="22.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAQAAAAAAAAAAQAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\GUI\ResultsMenuController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.GUI.VR.MenuManager" Collapsed="true">
+    <Position X="24.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAgAAAACAAAAAAAIACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\GUI\VR\MenuManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.GUI.VR.MenuPanel" Collapsed="true">
+    <Position X="26" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAABAIAAEAAAAAAAAAAEAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Player\GUI\VR\MenuPanel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.Helpers.ForceCalculator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIACAAAAAAAAAAAAAABABAAAAIAAAAAAAEAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\Helpers\ForceCalculator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Assets.Scripts.Player.Interface.Glove" Collapsed="true">
+    <Position X="1.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QEECABAIBoAAAAEAAAAAAEAAAABIBAAAAAAAIAAACAE=</HashCode>
+      <FileName>Assets\Scripts\Player\Interface\Glove.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Assets.Scripts.Player.Weapons.Aesthetics.GloveLineRenderer" Collapsed="true">
+    <Position X="12" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACIAAgAAAAAAAFAAABAgBAAAQQAAQAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\Weapons\Aesthetics\GloveLineRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.Weapons.EnergyGlove" Collapsed="true">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAABAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\Weapons\EnergyGlove.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.Weapons.PhysicsGlove" Collapsed="true">
+    <Position X="2.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAABAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\Weapons\PhysicsGlove.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Player.Weapons.WeaponsManager" Collapsed="true">
+    <Position X="17.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JAAACAAAAIAAAAAAAQAAAAAAAAAAAAAAAAAAAEIAgEA=</HashCode>
+      <FileName>Assets\Scripts\Player\Weapons\WeaponsManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Shared.Helpers.Calculations" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAKAAAAAAAAAAAAAAhAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Shared\Helpers\Calculations.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Assets.Scripts.Shared.Helpers.ColorHelper" Collapsed="true">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Shared\Helpers\ColorHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Assets.Scripts.Shared.Helpers.VectorManipulator" Collapsed="true">
+    <Position X="12" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAABAEAAAAAAAAAAAAAAAAACQCAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Shared\Helpers\VectorManipulator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="OVRPose" Collapsed="true">
+    <Position X="10.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAhAAAAAAAAAAAAoAIAIAAAAAAAAIAAAAAAAABAAiA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\OVRCommon.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="Assets.Scripts.Enemies.Interface.IObstacle" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAACAAAAABAAAAAAAAAAAAAEAACEAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Enemies\Interface\IObstacle.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Assets.Scripts.Factories.Interface.IObstacleFactory" Collapsed="true">
+    <Position X="15.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Factories\Interface\IObstacleFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Assets.Scripts.Factories.Interface.IWeaponsFactory" Collapsed="true">
+    <Position X="20.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Factories\Interface\IWeaponsFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Assets.Scripts.Maps.Interfaces.IEnemySpawner" Collapsed="true">
+    <Position X="13.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Assets\Scripts\Maps\Interfaces\IEnemySpawner.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Assets.Scripts.Maps.Interfaces.IPoolableObstacle" Collapsed="true">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAABAAABAAAAgAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Maps\Interfaces\IPoolableObstacle.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Assets.Scripts.Match.Entities.IDamageDealer" Collapsed="true">
+    <Position X="10.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Match\Entities\IDamageDealer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Assets.Scripts.Match.Entities.IDamageReceiver" Collapsed="true">
+    <Position X="12" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAgAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Match\Entities\IDamageReceiver.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Assets.Scripts.Match.IPausable" Collapsed="true">
+    <Position X="17.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Assets\Scripts\Match\IPausable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Assets.Scripts.Player.Interface.IWeapon" Collapsed="true">
+    <Position X="19" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEEAABAIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAACAE=</HashCode>
+      <FileName>Assets\Scripts\Player\Interface\IWeapon.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Assets.Scripts.Shared.Enums.AxisEnum" Collapsed="true">
+    <Position X="10.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAE=</HashCode>
+      <FileName>Assets\Scripts\Shared\Enums\AxisEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Assets.Scripts.Shared.Enums.BoxColliderWallsEnum" Collapsed="true">
+    <Position X="12" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAIAAAAAAAAAAAAAAAAAAAAAAAAACACAAAAAAAI=</HashCode>
+      <FileName>Assets\Scripts\Shared\Enums\BoxColliderWallsEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Assets.Scripts.Shared.Enums.GloveType" Collapsed="true">
+    <Position X="13.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Shared\Enums\GloveType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Assets.Scripts.Shared.Enums.HookingResultEnum" Collapsed="true">
+    <Position X="15.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAgAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Shared\Enums\HookingResultEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Assets.Scripts.Shared.Enums.ObstacleTypeEnum" Collapsed="true">
+    <Position X="17.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Assets\Scripts\Shared\Enums\ObstacleTypeEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Assets.Scripts.Shared.Enums.PointerType" Collapsed="true">
+    <Position X="19" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Shared\Enums\PointerType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Assets.Scripts.Shared.Enums.ProjectileTypeEnum" Collapsed="true">
+    <Position X="20.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Shared\Enums\ProjectileTypeEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Assets.Scripts.Shared.Enums.TeamEnum" Collapsed="true">
+    <Position X="22.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAQAAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Shared\Enums\TeamEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="Assets.OVR.Scripts.FixMethodDelegate" Collapsed="true">
+    <Position X="10.25" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABgAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Oculus\VR\Scripts\Util\OVRRecord.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
